@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 class Melody:
     def __init__ (self, scale=1, n=5, coeff_range=(-3,3)):
+        self.x = sp.Symbol('x')
         self.f = self.generate_trig(n, coeff_range) * scale
 
     def generate_trig(self, n, coeff_range):
@@ -50,11 +51,12 @@ class Melody:
         return f"f(x) = {self.f}"
 
 
-m = Melody(0.1, 4)
-m.plot_function()
-n = Melody(1, 4)
-n.plot_function()
-o = Melody(-1, 4)
-o.shift_up(2)
-o.plot_function()
-plt.show()
+if __name__ == "__main__":
+    # m = Melody(0.1, 4)
+    # m.plot_function()
+    n = Melody(1, 9)
+    n.plot_function()
+    # o = Melody(-1, 4)
+    # o.shift_up(2)
+    # o.plot_function()
+    plt.show()
