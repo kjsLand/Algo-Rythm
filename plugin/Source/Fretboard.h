@@ -1,76 +1,99 @@
 #pragma once
 
+#include "ScaleRegistry.h"
+
 #include <array>
 #include <string>
-#include <optional>
+#include <vector>
 #include <functional>
+#include <set>
 
-// Represents a single note on the fretboard
+// =============================================================================
+// FretNote
+// =============================================================================
+
 struct FretNote
 {
-    int midiNote;       // MIDI note number (0-127)
-    std::string name;   // e.g. "E2", "A2", "D3"
-    bool isOpen;        // true if this is an open string (fret 0)
+    int         midiNote = 0;
+    std::string name;       // e.g. "A3", "C#4"
+    bool        isOpen = false;
 };
 
-// GuitarFretboard models a standard 6-string guitar, frets 0-12.
-// String index 0 = low E (E2), string index 5 = high e (E4).
-// Fret  index 0 = open string, fret index 1-12 = frets 1-12.
+// =============================================================================
+// GuitarFretboard
+// =============================================================================
+
 class GuitarFretboard
 {
 public:
+    // Standard 6-string guitar, EADGBE, 24 frets (fret 0 = open string)
     static constexpr int NUM_STRINGS = 6;
-    static constexpr int NUM_FRETS   = 13; // 0 (open) + frets 1-12
+    static constexpr int NUM_FRETS   = 25; // 0-24
+
+    // MIDI note numbers for open strings (low E to high E)
+    static constexpr std::array<int, NUM_STRINGS> OPEN_MIDI = { 40, 45, 50, 55, 59, 64 };
+
+    struct Position { int string; int fret; };
 
     GuitarFretboard();
 
     // -------------------------------------------------------------------------
-    // Access
+    // Basic access
     // -------------------------------------------------------------------------
-
-    // Returns the note at [string][fret]. Bounds-checked via assert in debug.
-    const FretNote& getNote (int stringIndex, int fretIndex) const;
-
-    // Returns the MIDI note number at [string][fret].
-    int getMidiNote (int stringIndex, int fretIndex) const;
-
-    // Returns a human-readable name, e.g. "E2", for the note at [string][fret].
-    std::string getNoteName (int stringIndex, int fretIndex) const;
+    const FretNote& getNote      (int string, int fret) const;
+    int             getMidiNote  (int string, int fret) const;
+    std::string     getNoteName  (int string, int fret) const;
 
     // -------------------------------------------------------------------------
     // Search
     // -------------------------------------------------------------------------
-
-    // Returns every (string, fret) position that matches the given MIDI note.
-    struct Position { int string; int fret; };
-    std::vector<Position> findNote (int midiNote) const;
-
-    // Returns every (string, fret) position whose note name contains `name`
-    // (case-insensitive), e.g. "A" matches "A2", "A3", "A#3", etc.
-    std::vector<Position> findNoteByName (const std::string& name) const;
+    std::vector<Position> findNote       (int midiNote)              const;
+    std::vector<Position> findNoteByName (const std::string& name)   const;
 
     // -------------------------------------------------------------------------
     // Iteration
     // -------------------------------------------------------------------------
-
-    // Calls fn(stringIndex, fretIndex, FretNote) for every cell in the matrix.
     void forEach (std::function<void(int, int, const FretNote&)> fn) const;
 
     // -------------------------------------------------------------------------
-    // Utility
+    // Scale utilities
     // -------------------------------------------------------------------------
 
-    // Prints the full 6x13 grid to stdout (useful for debugging).
+    // Returns the set of pitch classes (0-11) that belong to the given scale.
+    // key:       note name without octave, e.g. "C", "F#", "Bb"
+    // scaleName: must exist in ScaleRegistry, e.g. "Major", "Dorian"
+    static std::set<int> getScalePitchClasses (const std::string& key,
+                                               const std::string& scaleName);
+
+    // Returns all fretboard positions whose pitch class is in the scale.
+    std::vector<Position> getScalePositions (const std::string& key,
+                                             const std::string& scaleName) const;
+
+    // Prints the fretboard grid showing only notes in the requested scale.
+    //
+    //  key       - root note, e.g. "C", "G", "F#", "Bb"
+    //  scaleName - scale name from the registry, e.g. "Major", "Natural Minor"
+    //  maxFret   - highest fret column to print (default: 12)
+    //
+    // Cells that belong to the scale show the note name.
+    // The root note is marked with [brackets].
+    // All other cells show a dash.
+    void printScale (const std::string& key,
+                     const std::string& scaleName,
+                     int maxFret = 12) const;
+
+    // Prints the full chromatic grid (original behaviour).
     void printGrid() const;
 
+    // -------------------------------------------------------------------------
+    // Convenience: list available scale names
+    // -------------------------------------------------------------------------
+    static std::vector<std::string> availableScales();
+
 private:
-    // [string][fret]
     std::array<std::array<FretNote, NUM_FRETS>, NUM_STRINGS> m_grid;
 
-    void buildGrid();
-
-    // Standard tuning open-string MIDI notes (E2 A2 D3 G3 B3 E4)
-    static constexpr std::array<int, NUM_STRINGS> OPEN_MIDI = { 40, 45, 50, 55, 59, 64 };
-
-    static std::string midiToName (int midiNote);
+    void        buildGrid();
+    static std::string midiToName  (int midiNote);
+    static int         nameToPC    (const std::string& noteName); // pitch class 0-11
 };

@@ -27,6 +27,8 @@ target_sources(JUCEProject
         Source/Main.cpp
         Source/MainComponent.cpp
         Source/MainComponent.h
+        Source/Fretboard.cpp
+        Source/Fretboard.h
 )
 
 # Set include directories
