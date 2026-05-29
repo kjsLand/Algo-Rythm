@@ -1,0 +1,29 @@
+# Build directories
+build/
+Builds/
+cmake-build-*/
+
+# Projucer-generated files
+JuceLibraryCode/
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.xcodeproj/
+*.xcworkspace/
+
+# macOS
+.DS_Store
+*.dSYM/
+
+# Windows
+Thumbs.db
+*.user
+
+# Linux
+*.o
+*.a
+
+# JUCE (if not submoduled)
+JUCE/
