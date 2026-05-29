@@ -1,12 +1,15 @@
 #pragma once
 
 #include "ScaleRegistry.h"
+#include "ChordRegistry.h"
 
 #include <array>
 #include <string>
 #include <vector>
 #include <functional>
 #include <set>
+#include <random>
+#include <optional>
 
 // =============================================================================
 // FretNote
@@ -86,9 +89,65 @@ public:
     void printGrid() const;
 
     // -------------------------------------------------------------------------
-    // Convenience: list available scale names
+    // Chord utilities
+    // -------------------------------------------------------------------------
+
+    // Given a root pitch class and a chord name, return the note name strings
+    // for every chord tone, e.g. { "A", "C", "E" } for A minor.
+    static std::vector<std::string> getChordNotes (int rootPC,
+                                                   const std::string& chordName);
+
+    // Print all requested chord types built on a given root pitch class.
+    // chordNames: list of chord names from ChordRegistry
+    //             (pass an empty vector to print all registered chords)
+    static void printChords (int rootPC,
+                             const std::vector<std::string>& chordNames = {});
+
+    // -------------------------------------------------------------------------
+    // Random scale-note picker
+    // -------------------------------------------------------------------------
+
+    // ChordSuggestion bundles a picked fretboard position with chord data for
+    // every chord type built on that note.
+    struct ChordNote
+    {
+        std::string              chordName;   // e.g. "Major"
+        std::string              symbol;      // e.g. "m7"
+        std::vector<std::string> noteNames;   // e.g. { "A", "C", "E", "G" }
+    };
+
+    struct ScaleNotePick
+    {
+        Position                  position;   // where on the neck
+        std::string               noteName;   // e.g. "A"
+        int                       pitchClass; // 0-11
+        std::vector<ChordNote>    chords;     // one entry per requested chord type
+    };
+
+    // Pick `count` random positions from the scale and return chord suggestions.
+    //
+    //  key        - scale root, e.g. "A"
+    //  scaleName  - scale from ScaleRegistry, e.g. "Major"
+    //  chordNames - chord types to build on each picked note
+    //               (pass {} for the default set used in the task:
+    //                Major, Minor, Maj7, M7, Dom7, Sus2, Sus4, Add9, Dim, Dim7, M7b5)
+    //  count      - how many notes to pick (default 1)
+    //  seed       - RNG seed; use std::nullopt for a random seed
+    std::vector<ScaleNotePick> pickRandomScaleNotes (
+        const std::string&        key,
+        const std::string&        scaleName,
+        const std::vector<std::string>& chordNames = {},
+        int                       count  = 1,
+        std::optional<uint32_t>   seed   = std::nullopt) const;
+
+    // Pretty-print the result of pickRandomScaleNotes().
+    static void printScaleNotePicks (const std::vector<ScaleNotePick>& picks);
+
+    // -------------------------------------------------------------------------
+    // Convenience: list available scale / chord names
     // -------------------------------------------------------------------------
     static std::vector<std::string> availableScales();
+    static std::vector<std::string> availableChords();
 
 private:
     std::array<std::array<FretNote, NUM_FRETS>, NUM_STRINGS> m_grid;

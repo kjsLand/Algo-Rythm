@@ -6,6 +6,8 @@
 #include <iostream>
 #include <iomanip>
 #include <stdexcept>
+#include <optional>
+#include <random>
 
 // =============================================================================
 // Construction
@@ -269,12 +271,191 @@ void GuitarFretboard::printScale (const std::string& key,
 }
 
 // =============================================================================
-// Available scales
+// Chord utilities
+// =============================================================================
+
+std::vector<std::string> GuitarFretboard::getChordNotes (int rootPC,
+                                                         const std::string& chordName)
+{
+    const ChordDefinition& def = ChordRegistry::instance().get (chordName);
+    return ChordRegistry::noteNames (rootPC, def);
+}
+
+void GuitarFretboard::printChords (int rootPC,
+                                   const std::vector<std::string>& chordNames)
+{
+    static const std::array<std::string, 12> CHROMATIC = {
+        "C","C#","D","D#","E","F","F#","G","G#","A","A#","B"
+    };
+
+    const std::string rootName = CHROMATIC[rootPC % 12];
+
+    // Resolve which chords to print
+    std::vector<std::string> names = chordNames.empty()
+                                     ? ChordRegistry::instance().allNames()
+                                     : chordNames;
+
+    constexpr int NAME_W   = 10;
+    constexpr int SYMBOL_W = 8;
+
+    std::cout << "\n  Chords on root: " << rootName << "\n";
+    std::cout << "  " << std::string (50, '-') << "\n";
+    std::cout << "  " << std::left
+              << std::setw (NAME_W)   << "Type"
+              << std::setw (SYMBOL_W) << "Symbol"
+              << "Notes\n";
+    std::cout << "  " << std::string (50, '-') << "\n";
+
+    for (const auto& cname : names)
+    {
+        const ChordDefinition& def  = ChordRegistry::instance().get (cname);
+        auto                   tones = ChordRegistry::noteNames (rootPC, def);
+
+        std::string notesStr;
+        for (std::size_t i = 0; i < tones.size(); ++i)
+        {
+            if (i) notesStr += " - ";
+            notesStr += tones[i];
+        }
+
+        std::string fullSymbol = rootName + def.symbol;
+
+        std::cout << "  " << std::left
+                  << std::setw (NAME_W)   << def.name
+                  << std::setw (SYMBOL_W) << fullSymbol
+                  << notesStr << "\n";
+    }
+
+    std::cout << "\n";
+}
+
+// =============================================================================
+// Random scale-note picker
+// =============================================================================
+
+// Default chord set for the task
+static const std::vector<std::string> DEFAULT_CHORD_TYPES = {
+    "Major", "Minor", "Maj7", "M7", "Dom7",
+    "Sus2",  "Sus4",  "Add9", "Dim", "Dim7", "M7b5"
+};
+
+std::vector<GuitarFretboard::ScaleNotePick>
+GuitarFretboard::pickRandomScaleNotes (const std::string&             key,
+                                       const std::string&             scaleName,
+                                       const std::vector<std::string>& chordNames,
+                                       int                            count,
+                                       std::optional<uint32_t>        seed) const
+{
+    // Gather all in-scale positions
+    std::vector<Position> pool = getScalePositions (key, scaleName);
+    if (pool.empty())
+        return {};
+
+    // Set up RNG
+    std::mt19937 rng;
+    if (seed.has_value())
+        rng.seed (*seed);
+    else
+        rng.seed (std::random_device{}());
+
+    const std::vector<std::string>& types =
+        chordNames.empty() ? DEFAULT_CHORD_TYPES : chordNames;
+
+    static const std::array<std::string, 12> CHROMATIC = {
+        "C","C#","D","D#","E","F","F#","G","G#","A","A#","B"
+    };
+
+    std::vector<ScaleNotePick> picks;
+    picks.reserve (count);
+
+    std::uniform_int_distribution<int> dist (0, static_cast<int> (pool.size()) - 1);
+
+    for (int i = 0; i < count; ++i)
+    {
+        Position pos = pool[dist (rng)];
+        int midi     = m_grid[pos.string][pos.fret].midiNote;
+        int pc       = midi % 12;
+
+        ScaleNotePick pick;
+        pick.position   = pos;
+        pick.noteName   = CHROMATIC[pc];
+        pick.pitchClass = pc;
+
+        for (const auto& cname : types)
+        {
+            const ChordDefinition& def = ChordRegistry::instance().get (cname);
+            ChordNote cn;
+            cn.chordName = def.name;
+            cn.symbol    = CHROMATIC[pc] + def.symbol;
+            cn.noteNames = ChordRegistry::noteNames (pc, def);
+            pick.chords.push_back (std::move (cn));
+        }
+
+        picks.push_back (std::move (pick));
+    }
+
+    return picks;
+}
+
+void GuitarFretboard::printScaleNotePicks (const std::vector<ScaleNotePick>& picks)
+{
+    static const std::array<std::string, NUM_STRINGS> STRING_NAMES = {
+        "E2", "A2", "D3", "G3", "B3", "E4"
+    };
+
+    constexpr int NAME_W   = 10;
+    constexpr int SYMBOL_W = 8;
+
+    for (std::size_t i = 0; i < picks.size(); ++i)
+    {
+        const auto& pick = picks[i];
+
+        std::cout << "\n";
+        std::cout << "  ┌─ Pick #" << (i + 1) << " ─────────────────────────────────\n";
+        std::cout << "  │  Note  : " << pick.noteName << "\n";
+        std::cout << "  │  String: " << STRING_NAMES[pick.position.string]
+                  << "   Fret: "     << pick.position.fret
+                  << (pick.position.fret == 0 ? " (open)" : "") << "\n";
+        std::cout << "  ├─────────────────────────────────────────────\n";
+        std::cout << "  │  " << std::left
+                  << std::setw (NAME_W)   << "Type"
+                  << std::setw (SYMBOL_W) << "Symbol"
+                  << "Notes\n";
+        std::cout << "  ├─────────────────────────────────────────────\n";
+
+        for (const auto& cn : pick.chords)
+        {
+            std::string notesStr;
+            for (std::size_t j = 0; j < cn.noteNames.size(); ++j)
+            {
+                if (j) notesStr += " - ";
+                notesStr += cn.noteNames[j];
+            }
+
+            std::cout << "  │  " << std::left
+                      << std::setw (NAME_W)   << cn.chordName
+                      << std::setw (SYMBOL_W) << cn.symbol
+                      << notesStr << "\n";
+        }
+
+        std::cout << "  └─────────────────────────────────────────────\n";
+    }
+
+    std::cout << "\n";
+}
+
+// =============================================================================
+// Available scales / chords
 // =============================================================================
 
 std::vector<std::string> GuitarFretboard::availableScales()
 {
     return ScaleRegistry::instance().allNames();
+}
+
+std::vector<std::string> GuitarFretboard::availableChords()
+{
+    return ChordRegistry::instance().allNames();
 }
 
 // =============================================================================
