@@ -144,6 +144,26 @@ public:
     static void printScaleNotePicks (const std::vector<ScaleNotePick>& picks);
 
     // -------------------------------------------------------------------------
+    // Chord voicing
+    // -------------------------------------------------------------------------
+
+    // A voiced chord: one fretboard Position per chord tone, chosen to be the
+    // closest fret to rootPos (tight voicing).  The first entry is always the
+    // root itself.
+    struct VoicedChord
+    {
+        std::string            chordName;  // e.g. "Major"
+        std::string            symbol;     // e.g. "Gmaj7"
+        std::vector<Position>  positions;  // one per tone, index 0 = root
+    };
+
+    // Build a tight voicing: for each chord tone (pitch class), pick the single
+    // fretboard position (fret 0-12) whose fret is closest to rootPos.fret.
+    // Ties broken by lowest string index.
+    VoicedChord buildTightVoicing (const Position&    rootPos,
+                                   const std::string& chordName) const;
+
+    // -------------------------------------------------------------------------
     // Convenience: list available scale / chord names
     // -------------------------------------------------------------------------
     static std::vector<std::string> availableScales();

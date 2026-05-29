@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
+#include <climits>
 #include <stdexcept>
 #include <optional>
 #include <random>
@@ -447,6 +448,64 @@ void GuitarFretboard::printScaleNotePicks (const std::vector<ScaleNotePick>& pic
 // =============================================================================
 // Available scales / chords
 // =============================================================================
+
+// =============================================================================
+// Chord voicing
+// =============================================================================
+
+GuitarFretboard::VoicedChord
+GuitarFretboard::buildTightVoicing (const Position&    rootPos,
+                                    const std::string& chordName) const
+{
+    static const std::array<std::string, 12> CHROMATIC = {
+        "C","C#","D","D#","E","F","F#","G","G#","A","A#","B"
+    };
+
+    const ChordDefinition& def = ChordRegistry::instance().get (chordName);
+    const int rootPC = m_grid[rootPos.string][rootPos.fret].midiNote % 12;
+
+    // Build pitch-class set for each tone (root + intervals)
+    std::vector<int> tonePCs;
+    tonePCs.push_back (rootPC);
+    for (int iv : def.intervals)
+        tonePCs.push_back ((rootPC + iv) % 12);
+
+    VoicedChord vc;
+    vc.chordName = def.name;
+    vc.symbol    = CHROMATIC[rootPC] + def.symbol;
+
+    // Root position is always first
+    vc.positions.push_back (rootPos);
+
+    // For every non-root tone, find the fretboard position (frets 0-12)
+    // closest in fret distance to rootPos.fret
+    for (std::size_t t = 1; t < tonePCs.size(); ++t)
+    {
+        int  targetPC  = tonePCs[t];
+        int  bestDist  = INT_MAX;
+        Position best  = { 0, 0 };
+
+        for (int s = 0; s < NUM_STRINGS; ++s)
+        {
+            for (int f = 0; f <= 12; ++f)
+            {
+                if (m_grid[s][f].midiNote % 12 != targetPC) continue;
+
+                int dist = std::abs (f - rootPos.fret);
+                if (dist < bestDist ||
+                   (dist == bestDist && s < best.string))
+                {
+                    bestDist = dist;
+                    best     = { s, f };
+                }
+            }
+        }
+
+        vc.positions.push_back (best);
+    }
+
+    return vc;
+}
 
 std::vector<std::string> GuitarFretboard::availableScales()
 {
