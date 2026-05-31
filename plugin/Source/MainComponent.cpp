@@ -25,13 +25,16 @@ MainComponent::MainComponent()
     addAndMakeVisible (btnNewNote);
     addAndMakeVisible (btnNewChord);
     addAndMakeVisible (btnNewKey);
+    addAndMakeVisible (btnNewStrum);
 
     btnNewNote .onClick = [this] { pickNewNote();  };
     btnNewChord.onClick = [this] { pickNewChord(); };
     btnNewKey  .onClick = [this] { pickNewKey();   };
+    btnNewStrum.onClick = [this] { pickNewStrum(); };
 
     // Prime initial state
     pickNewNote();
+    pickNewStrum();
 }
 
 MainComponent::~MainComponent() {}
@@ -94,6 +97,13 @@ void MainComponent::pickNewKey()
     pickNewNote(); // also picks a new root in the new key
 }
 
+void MainComponent::pickNewStrum()
+{
+    std::uniform_int_distribution<unsigned int> seedDist;
+    currentStrum = StrumPattern::generateRandom (seedDist (rng));
+    repaint();
+}
+
 // =============================================================================
 // Layout
 // =============================================================================
@@ -106,9 +116,10 @@ void MainComponent::resized()
     int x = pad;
     int y = getHeight() - btnH - pad;
 
-    btnNewNote .setBounds (x,               y, btnW, btnH);
-    btnNewChord.setBounds (x + btnW + pad,  y, btnW, btnH);
-    btnNewKey  .setBounds (x + (btnW+pad)*2,y, btnW, btnH);
+    btnNewNote .setBounds (x,                y, btnW, btnH);
+    btnNewChord.setBounds (x +   (btnW+pad), y, btnW, btnH);
+    btnNewKey  .setBounds (x + 2*(btnW+pad), y, btnW, btnH);
+    btnNewStrum.setBounds (x + 3*(btnW+pad), y, btnW, btnH);
 }
 
 // =============================================================================
@@ -122,17 +133,20 @@ void MainComponent::paint (juce::Graphics& g)
     const int headerH  = 48;
     const int btnArea  = 56;   // buttons + padding at bottom
     const int legendH  = 20;
+    const int strumH   = 52;   // strum pattern display
     const int pad      = 10;
 
     auto area      = getLocalBounds().reduced (pad);
     auto headerR   = area.removeFromTop (headerH);
     auto legendR   = area.removeFromBottom (legendH);
     area.removeFromBottom (btnArea - pad); // leave room for buttons
+    auto strumR    = area.removeFromBottom (strumH);
     // remaining area = fretboard
 
     drawHeader    (g, headerR);
     drawFretboard (g, area);
     drawLegend    (g, legendR);
+    drawStrumPanel(g, strumR);
 }
 
 // =============================================================================
@@ -262,7 +276,6 @@ void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bound
             std::pair<int,int> key = { s, f };
             bool isRoot   = (key == rootKey);
             bool isChord  = chordPositions.count (key) > 0;
-            bool isScale  = !isRoot && !isChord;
 
             juce::Colour fill;
             if      (isRoot)  fill = juce::Colours::yellow;
@@ -289,8 +302,66 @@ void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bound
 }
 
 // =============================================================================
-// Legend
+// Strum Panel
 // =============================================================================
+
+void MainComponent::drawStrumPanel (juce::Graphics& g, juce::Rectangle<int> bounds) const
+{
+    const auto& s = currentStrum;
+    if (s.pattern.empty()) return;
+
+    const int pad = 4;
+    auto r = bounds.reduced (pad, 0);
+
+    // ── background strip ──
+    g.setColour (juce::Colours::black.withAlpha (0.25f));
+    g.fillRoundedRectangle (r.toFloat(), 4.f);
+
+    // ── label ──
+    g.setFont (juce::FontOptions (11.0f));
+    g.setColour (juce::Colours::lightgrey);
+    juce::String info = juce::String (s.bpm) + " BPM  |  "
+                      + juce::String (s.steps) + " steps  |  "
+                      + "E(" + juce::String (s.strumHits) + "," + juce::String (s.steps) + ")"
+                      + "  mask E(" + juce::String (s.restHits) + "," + juce::String (s.steps) + ")";
+    g.drawText (info, r.getX(), r.getY(), r.getWidth(), 18,
+                juce::Justification::centredLeft, false);
+
+    // ── ruler + pattern ──
+    const int cellW = std::max (1, (r.getWidth() - 60) / s.steps);
+    const int startX = r.getX() + 56;
+    const int rulerY = r.getY() + 18;
+    const int patY   = r.getY() + 30;
+
+    g.setFont (juce::FontOptions (10.0f));
+    for (int i = 0; i < s.steps; ++i)
+    {
+        int cx = startX + i * cellW;
+
+        // ruler char
+        g.setColour (juce::Colours::grey);
+        g.drawText (juce::String::charToString ((juce::juce_wchar) s.ruler[(size_t)i]),
+                    cx, rulerY, cellW, 12, juce::Justification::centred, false);
+
+        // pattern char — colour by type
+        char c = s.pattern[(size_t)i];
+        juce::Colour col;
+        if      (c == 'D') col = juce::Colours::orange;
+        else if (c == 'U') col = juce::Colours::cyan;
+        else               col = juce::Colours::darkgrey;
+
+        g.setColour (col);
+        g.setFont (juce::Font (juce::FontOptions (12.0f)).boldened());
+        g.drawText (juce::String::charToString ((juce::juce_wchar) c),
+                    cx, patY, cellW, 14, juce::Justification::centred, false);
+    }
+
+    // ── legend labels ──
+    g.setFont (juce::FontOptions (10.0f));
+    g.setColour (juce::Colours::grey);
+    g.drawText ("beat",    r.getX(), rulerY, 54, 12, juce::Justification::centredRight, false);
+    g.drawText ("strum",   r.getX(), patY,   54, 14, juce::Justification::centredRight, false);
+}
 
 void MainComponent::drawLegend (juce::Graphics& g, juce::Rectangle<int> r) const
 {

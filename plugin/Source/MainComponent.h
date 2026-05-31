@@ -2,6 +2,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 #include "Fretboard.h"
+#include "StrumPattern.h"
 
 class MainComponent : public juce::Component
 {
@@ -17,11 +18,13 @@ private:
     void pickNewNote();
     void pickNewChord();
     void pickNewKey();
+    void pickNewStrum();
 
     // ---- drawing ----
-    void drawHeader    (juce::Graphics& g, juce::Rectangle<int> r) const;
-    void drawFretboard (juce::Graphics& g, juce::Rectangle<int> bounds) const;
-    void drawLegend    (juce::Graphics& g, juce::Rectangle<int> bounds) const;
+    void drawHeader     (juce::Graphics& g, juce::Rectangle<int> r) const;
+    void drawFretboard  (juce::Graphics& g, juce::Rectangle<int> bounds) const;
+    void drawLegend     (juce::Graphics& g, juce::Rectangle<int> bounds) const;
+    void drawStrumPanel (juce::Graphics& g, juce::Rectangle<int> bounds) const;
 
     // ---- fretboard state ----
     GuitarFretboard fb;
@@ -39,10 +42,14 @@ private:
 
     std::mt19937 rng { std::random_device{}() };
 
+    // ---- strum pattern ----
+    StrumPattern::Result currentStrum;
+
     // ---- buttons ----
     juce::TextButton btnNewNote  { "New Note"  };
     juce::TextButton btnNewChord { "New Chord" };
     juce::TextButton btnNewKey   { "New Key"   };
+    juce::TextButton btnNewStrum { "New Strum" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
