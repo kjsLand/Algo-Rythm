@@ -30,6 +30,13 @@
     { "name": "Open Amaj7",  "chord": "Maj7",  "rootString": 5, "frets": ["x", 0, 2, 1, 2, 0],     "fingers": [0, 0, 2, 1, 3, 0], "barre": false, "open": true, "difficulty": "Beginner" },
     { "name": "Open Dmaj7",  "chord": "Maj7",  "rootString": 4, "frets": ["x", "x", 0, 2, 2, 2],   "fingers": [0, 0, 0, 1, 1, 1], "barre": true,  "open": true, "difficulty": "Beginner" },
 
+    { "name": "Small Major Root 6", "chord": "Major", "rootString": 6, "frets": [0, 2, 2, 1, "x", "x"],   "fingers": [1, 3, 4, 2, 0, 0], "barre": false, "difficulty": "Beginner" },
+    { "name": "Small Minor Root 6", "chord": "Minor", "rootString": 6, "frets": [0, 2, 2, 0, "x", "x"],   "fingers": [1, 3, 4, 1, 0, 0], "barre": true,  "difficulty": "Beginner" },
+    { "name": "Small Major Root 5", "chord": "Major", "rootString": 5, "frets": ["x", 0, 2, 2, 2, "x"],   "fingers": [0, 1, 2, 3, 4, 0], "barre": false, "difficulty": "Beginner" },
+    { "name": "Small Minor Root 5", "chord": "Minor", "rootString": 5, "frets": ["x", 0, 2, 2, 1, "x"],   "fingers": [0, 1, 3, 4, 2, 0], "barre": false, "difficulty": "Beginner" },
+    { "name": "Small Major Root 4", "chord": "Major", "rootString": 4, "frets": ["x", "x", 0, -1, -2, -2], "fingers": [0, 0, 3, 2, 1, 1], "barre": true,  "difficulty": "Beginner" },
+    { "name": "Small Minor Root 4", "chord": "Minor", "rootString": 4, "frets": ["x", "x", 0, -2, -2, -2], "fingers": [0, 0, 3, 1, 1, 1], "barre": true,  "difficulty": "Beginner" },
+
     { "name": "E-Shape Major", "chord": "Major", "rootString": 6, "frets": [0, 2, 2, 1, 0, 0],     "fingers": [1, 3, 4, 2, 1, 1], "barre": true, "difficulty": "Intermediate" },
     { "name": "E-Shape Minor", "chord": "Minor", "rootString": 6, "frets": [0, 2, 2, 0, 0, 0],     "fingers": [1, 3, 4, 1, 1, 1], "barre": true, "difficulty": "Intermediate" },
     { "name": "E-Shape Dom7",  "chord": "Dom7",  "rootString": 6, "frets": [0, 2, 0, 1, 0, 0],     "fingers": [1, 3, 1, 2, 1, 1], "barre": true, "difficulty": "Intermediate" },
@@ -47,6 +54,7 @@
 
     { "name": "Power Root 6",  "chord": "Power", "rootString": 6, "frets": [0, 2, 2, "x", "x", "x"], "fingers": [1, 3, 4, 0, 0, 0], "barre": false, "difficulty": "Intermediate" },
     { "name": "Power Root 5",  "chord": "Power", "rootString": 5, "frets": ["x", 0, 2, 2, "x", "x"], "fingers": [0, 1, 3, 4, 0, 0], "barre": false, "difficulty": "Intermediate" },
+    { "name": "Power Root 6 Octave", "chord": "Power", "rootString": 6, "frets": [0, 2, 2, 4, "x", "x"], "fingers": [1, 2, 3, 4, 0, 0], "barre": false, "difficulty": "Intermediate" },
 
     { "name": "Major Triad Strings 3-5", "chord": "Major", "rootString": 5, "frets": ["x", 0, -1, -3, "x", "x"], "fingers": [0, 4, 3, 1, 0, 0], "barre": false, "difficulty": "Intermediate" },
     { "name": "Minor Triad Strings 3-5", "chord": "Minor", "rootString": 5, "frets": ["x", 0, -2, -3, "x", "x"], "fingers": [0, 4, 2, 1, 0, 0], "barre": false, "difficulty": "Intermediate" },
@@ -61,10 +69,10 @@
     { "name": "A-Shape Aug",    "chord": "Aug",    "rootString": 5, "frets": ["x", 0, 3, 2, 2, "x"],     "fingers": [0, 1, 4, 2, 3, 0], "barre": false, "difficulty": "Advanced" },
     { "name": "A-Shape Maj6",   "chord": "Maj6",   "rootString": 5, "frets": ["x", 0, 2, -1, 2, "x"],    "fingers": [0, 2, 3, 1, 4, 0], "barre": false, "difficulty": "Advanced" },
     { "name": "A-Shape M6",     "chord": "M6",     "rootString": 5, "frets": ["x", 0, 2, -1, 1, "x"],    "fingers": [0, 2, 4, 1, 3, 0], "barre": false, "difficulty": "Advanced" },
-    { "name": "A-Shape Dom9",   "chord": "Dom9",   "rootString": 5, "frets": ["x", 0, -1, 0, 0, 0],      "fingers": [0, 2, 1, 3, 3, 3], "barre": true,  "difficulty": "Advanced" },
-    { "name": "A-Shape M9",     "chord": "M9",     "rootString": 5, "frets": ["x", 0, -2, 0, 0, 0],      "fingers": [0, 2, 1, 3, 3, 3], "barre": true,  "difficulty": "Advanced" },
+    { "name": "A-Shape Dom9",   "chord": "Dom9",   "rootString": 5, "frets": ["x", 0, -1, 0, 0, "x"],    "fingers": [0, 2, 1, 3, 4, 0], "barre": false, "difficulty": "Advanced" },
+    { "name": "A-Shape M9",     "chord": "M9",     "rootString": 5, "frets": ["x", 0, -2, 0, 0, "x"],    "fingers": [0, 2, 1, 3, 4, 0], "barre": false, "difficulty": "Advanced" },
     { "name": "A-Shape Add9",   "chord": "Add9",   "rootString": 5, "frets": ["x", 0, -1, -3, 0, -3],    "fingers": [0, 3, 2, 1, 4, 1], "barre": true,  "difficulty": "Advanced" },
-    { "name": "A-Shape Add11",  "chord": "Add11",  "rootString": 5, "frets": ["x", 0, -1, -3, -2, -2],   "fingers": [0, 4, 3, 1, 2, 2], "barre": true,  "difficulty": "Advanced" },
+    { "name": "E-Shape Add11",  "chord": "Add11",  "rootString": 6, "frets": [0, 0, 2, 1, 0, 0],         "fingers": [1, 1, 3, 2, 1, 1], "barre": true,  "difficulty": "Advanced" },
     { "name": "A-Shape 7Sus4",  "chord": "7Sus4",  "rootString": 5, "frets": ["x", 0, 2, 0, 3, 0],       "fingers": [0, 1, 3, 1, 4, 1], "barre": true,  "difficulty": "Advanced" },
     { "name": "A-Shape mMaj7",  "chord": "mMaj7",  "rootString": 5, "frets": ["x", 0, 2, 1, 1, 0],       "fingers": [0, 1, 4, 2, 3, 1], "barre": true,  "difficulty": "Advanced" },
     { "name": "A-Shape Maj7#5", "chord": "Maj7#5", "rootString": 5, "frets": ["x", 0, 3, 1, 2, "x"],     "fingers": [0, 1, 4, 2, 3, 0], "barre": false, "difficulty": "Advanced" }

@@ -41,7 +41,7 @@ Out of scope:
 
 ### T07-01: Write the candidates from chord shapes
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-10, T04-05
 - **Files:** `core/include/algo/Voicing.h`, `core/src/voicing_shapes.cpp`, `tests/voicing_shapes_test.cpp`
 
@@ -56,12 +56,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] G Major gives the open G shape and the E-shape barre at fret 3.
-- [ ] Each candidate gives the correct pitch-class set.
+- [x] G Major gives the open G shape and the E-shape barre at fret 3.
+- [x] Each candidate gives the correct pitch-class set.
 
 ### T07-02: Write the candidates from the fret search
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-05
 - **Files:** `core/src/voicing_search.cpp`, `tests/voicing_search_test.cpp`
 
@@ -76,14 +76,14 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The search for C Major includes the open C voicing x32010.
-- [ ] The search for one chord takes 5 ms or less in a Release build.
+- [x] The search for C Major includes the open C voicing x32010.
+- [x] The search for one chord takes 5 ms or less in a Release build.
 
 ### T07-03: Write the hard constraint filter
 
 - **Status:** [ ] Open
 - **Prerequisites:** T07-01, T07-02
-- **Files:** `core/src/voicing_constraints.cpp`, `tests/voicing_constraints_test.cpp`
+- **Files:** `core/src/voicing_constraints.cpp`, `core/data/shapes.json`, `tests/voicing_constraints_test.cpp`
 
 **Procedure:**
 
@@ -97,7 +97,7 @@ Out of scope:
 **Acceptance:**
 
 - [ ] Each of the 55 bad voicings from the defect test in Coding Spec Section 2 fails the filter.
-- [ ] All shapes in `shapes.json` pass the filter at their own difficulty.
+- [x] All shapes in `shapes.json` pass the filter at their own difficulty.
 
 ### T07-04: Write the cost function
 
@@ -115,14 +115,14 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] At Beginner, the open C voicing costs less than the C barre at fret 3.
-- [ ] Two voicings with 3 common tones have a lower transition cost than two voicings with 0 common tones.
+- [x] At Beginner, the open C voicing costs less than the C barre at fret 3.
+- [x] Two voicings with 3 common tones have a lower transition cost than two voicings with 0 common tones.
 
 ### T07-05: Write the sequence selection
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T07-04
-- **Files:** `core/src/voicing_sequence.cpp`, `tests/voicing_sequence_test.cpp`
+- **Files:** `core/src/voicing_sequence.cpp`, `core/include/algo/GenerationError.h`, `tests/voicing_sequence_test.cpp`
 
 **Procedure:**
 
@@ -135,13 +135,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] For G, D, Em, C at Beginner, the best sequence uses only open shapes.
-- [ ] The function returns 5 sequences when 5 or more paths exist.
-- [ ] A brute-force test on 4 chords gives the same best sequence.
+- [x] For G, D, Em, C at Beginner, the best sequence uses only open shapes.
+- [x] The function returns 5 sequences when 5 or more paths exist.
+- [x] A brute-force test on 4 chords gives the same best sequence.
 
 ### T07-06: Write the finger assignment
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T07-03
 - **Files:** `core/src/fingering.cpp`, `tests/fingering_test.cpp`
 
@@ -155,14 +155,14 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The open C voicing x32010 gets the fingers x32010 (finger 3 on string 5, finger 2 on string 4, finger 1 on string 2).
-- [ ] The F barre 133211 gets the fingers 134211.
+- [x] The open C voicing x32010 gets the fingers x32010 (finger 3 on string 5, finger 2 on string 4, finger 1 on string 2).
+- [x] The F barre 133211 gets the fingers 134211.
 
 ### T07-07: Write the voicing stage function and cache
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T07-05, T07-06, T06-08
-- **Files:** `core/src/voicing_stage.cpp`, `core/include/algo/VoicingCache.h`
+- **Files:** `core/src/voicing_stage.cpp`, `core/include/algo/VoicingCache.h`, `tests/voicing_stage_test.cpp`
 
 **Procedure:**
 
@@ -176,8 +176,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A reroll count of 0 to 4 gives 5 different sequences, if 5 exist.
-- [ ] A second call with the same chords does not run the search again.
+- [x] A reroll count of 0 to 4 gives 5 different sequences, if 5 exist.
+- [x] A second call with the same chords does not run the search again.
 
 ### T07-08: Remove the old voicing function
 
@@ -213,7 +213,7 @@ Out of scope:
 **Acceptance:**
 
 - [ ] The property test passes for 10,000 seeds in CI.
-- [ ] The speed test meets REQ-07-8.
+- [x] The speed test meets REQ-07-8.
 
 ## 5. Done criteria
 

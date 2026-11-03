@@ -26,6 +26,15 @@ add_executable(algo_tests
     plan_test.cpp
     chords_test.cpp
     colour_test.cpp
+    voicing_shapes_test.cpp
+    voicing_search_test.cpp
+    voicing_constraints_test.cpp
+    voicing_cost_test.cpp
+    voicing_sequence_test.cpp
+    fingering_test.cpp
+    voicing_stage_test.cpp
+    voicing_property_test.cpp
+    voicing_bench_test.cpp
 )
 
 target_include_directories(algo_tests

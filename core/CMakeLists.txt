@@ -18,6 +18,13 @@ add_library(algo_core STATIC
     src/transitions.cpp
     src/plan.cpp
     src/chords.cpp
+    src/fingering.cpp
+    src/voicing_shapes.cpp
+    src/voicing_search.cpp
+    src/voicing_constraints.cpp
+    src/voicing_cost.cpp
+    src/voicing_sequence.cpp
+    src/voicing_stage.cpp
 )
 add_library(algo::core ALIAS algo_core)
 
