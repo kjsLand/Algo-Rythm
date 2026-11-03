@@ -1,1 +1,8 @@
-/.venv
+.venv/
+__pycache__/
+*.pyc
+build/
+out/
+*.mid
+!tests/golden/*.mid
+.DS_Store

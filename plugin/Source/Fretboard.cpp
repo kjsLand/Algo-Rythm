@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <optional>
 #include <random>
+#include <regex>
 
 // =============================================================================
 // Construction
@@ -76,24 +77,32 @@ std::vector<GuitarFretboard::Position> GuitarFretboard::findNote (int midiNote) 
 
 std::vector<GuitarFretboard::Position> GuitarFretboard::findNoteByName (const std::string& name) const
 {
-    auto toLower = [] (std::string s) {
-        std::transform (s.begin(), s.end(), s.begin(),
-                        [] (unsigned char c) { return std::tolower (c); });
-        return s;
-    };
+    // Letter, accidentals, optional octave: "C", "Db", "F#3", "C-1"
+    static const std::regex NOTE_NAME ("([A-Ga-g])([#b]*)(-?[0-9]{1,2})?");
 
-    std::string needle = toLower (name);
+    std::smatch match;
+    if (! std::regex_match (name, match, NOTE_NAME))
+        return {};
+
+    if (match[3].matched)
+    {
+        // Count accidentals from the letter rather than wrapping the pitch
+        // class, so that "B#3" is MIDI 60 and "Cb4" is MIDI 59.
+        int midiNote = (std::stoi (match[3].str()) + 1) * 12 + nameToPC (match[1].str());
+
+        for (char acc : match[2].str())
+            midiNote += (acc == '#') ? 1 : -1;
+
+        return findNote (midiNote);
+    }
+
+    const int pc = nameToPC (name);
     std::vector<Position> results;
 
     for (int s = 0; s < NUM_STRINGS; ++s)
-    {
         for (int f = 0; f < NUM_FRETS; ++f)
-        {
-            std::string hay = toLower (m_grid[s][f].name);
-            if (hay.find (needle) != std::string::npos)
+            if (m_grid[s][f].midiNote % 12 == pc)
                 results.push_back ({ s, f });
-        }
-    }
 
     return results;
 }

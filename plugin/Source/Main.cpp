@@ -1,12 +1,12 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include "MainComponent.h"
 
-class JUCEProjectApplication : public juce::JUCEApplication
+class AlgoRythmApplication : public juce::JUCEApplication
 {
 public:
-    JUCEProjectApplication() {}
+    AlgoRythmApplication() {}
 
-    const juce::String getApplicationName() override    { return "JUCEProject"; }
+    const juce::String getApplicationName() override    { return "Algo-Rythm"; }
     const juce::String getApplicationVersion() override { return "1.0.0"; }
     bool moreThanOneInstanceAllowed() override          { return true; }
 
@@ -48,4 +48,4 @@ private:
     std::unique_ptr<MainWindow> mainWindow;
 };
 
-START_JUCE_APPLICATION (JUCEProjectApplication)
+START_JUCE_APPLICATION (AlgoRythmApplication)

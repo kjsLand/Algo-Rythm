@@ -1,0 +1,4 @@
+matplotlib==3.11.2
+numpy==2.5.4
+pretty_midi==0.2.11.post0
+sympy==1.14.0

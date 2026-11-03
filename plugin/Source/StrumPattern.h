@@ -2,6 +2,7 @@
 
 #include "Bjorklund.h"
 
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <random>
@@ -77,6 +78,15 @@ public:
             r.restHits = dist (rng);
         }
         r.restBits = bjorklund (r.restHits, r.steps);
+
+        // ── Keep beat 1 audible ─────────────────────────────────────────────
+        // A Bjorklund pattern always starts with a 1, so the rest mask would
+        // silence slot 0.  Rotation keeps the number of rests and their spacing.
+        // restHits <= steps / 4, so the mask always contains a 0 and this ends.
+        while (r.restBits[0] == 1)
+            std::rotate (r.restBits.begin(), r.restBits.end() - 1, r.restBits.end());
+
+        r.strumBits[0] = 1;
 
         // ── Combine layers ───────────────────────────────────────────────────
         // Direction ticks on every slot; rest mask or strum=0 → '-'

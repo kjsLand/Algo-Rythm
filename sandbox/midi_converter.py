@@ -1,4 +1,3 @@
-import tkinter as tk
 import math
 from rand_period import Melody
 import sympy as sp
@@ -56,8 +55,6 @@ def rasterize(m: Melody, available_notes, BPM=120):
     Returns a list of (time, note_index) tuples.
     """
 
-    # Create symbolic function
-    m = Melody(0.1, 3)
     # Lambdify using NUMPY backend (symbolic -> numeric)
     m_func = sp.lambdify(m.x, m.f, modules='numpy')
 
@@ -66,16 +63,24 @@ def rasterize(m: Melody, available_notes, BPM=120):
     width = 128   # The time axis
     height = len(available_notes) # Number of notes
 
+    # normalized time [0, 1), evaluate numeric function
+    curve = [float(m_func(float(x) / width)) for x in range(width)]
+
+    # Normalize the curve to [-1, 1]. A constant curve maps to the middle note.
+    low, high = min(curve), max(curve)
+
     notes = []
-    for x in range(width):
-        t = float(x) / width  # normalized time [0, 1)
-        y = float(m_func(t))       # evaluate numeric function
+    for x, value in enumerate(curve):
+        y = 2 * (value - low) / (high - low) - 1 if high > low else 0.0
         # Map y in [-1, 1] to note index [0, height-1]
         note_idx = int((y + 1) / 2 * (height - 1))
         notes.append((x, note_idx))
     return notes
 
 def visualize_rest(m: Melody, available):
+    # Imported here because some Linux Python installs do not include tkinter
+    import tkinter as tk
+
     notes = rasterize(m, available)
 
     root = tk.Tk()
@@ -144,7 +149,7 @@ def build_midi(m: Melody):
 
     # Write to file
     midi.write('piano_melody.mid')
-    print("🎵 Saved piano_melody.mid")
+    print("Saved piano_melody.mid")
 
 
 

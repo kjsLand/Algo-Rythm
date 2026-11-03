@@ -1,51 +1,81 @@
-# JUCEProject
+# Algo-Rythm App
 
-A default JUCE GUI application project.
+The JUCE GUI application for Algo-Rythm.
 
 ## Project Structure
 
 ```
-JUCEProject/
-├── CMakeLists.txt          # CMake build system (recommended)
-├── JUCEProject.jucer       # Projucer project file (alternative)
+plugin/
+├── CMakeLists.txt          # CMake build system
 ├── README.md
+├── run.bat                 # Build script for Windows
+├── run.sh                  # Build script for macOS and Linux
 └── Source/
     ├── Main.cpp            # Application entry point
     ├── MainComponent.h     # Main window component header
-    └── MainComponent.cpp   # Main window component implementation
+    ├── MainComponent.cpp   # Main window component implementation
+    ├── Fretboard.h         # Guitar fretboard model
+    ├── Fretboard.cpp
+    ├── ScaleRegistry.h     # Scale definitions
+    ├── ChordRegistry.h     # Chord definitions
+    ├── StrumPattern.h      # Strum pattern generator
+    └── Bjorklund.h         # Euclidean rhythm algorithm
 ```
 
-## Building with CMake (Recommended)
+## Building
+
+CMake is the only build path. Run all commands from this `plugin/` folder.
 
 ### Prerequisites
-- CMake 3.22+
-- A C++17 compiler (MSVC, GCC, Clang)
-- JUCE (clone it into the project root)
 
-### Steps
+- CMake 3.22+
+- Git
+- A C++17 compiler (see your operating system below)
+
+### macOS
+
+Install the Xcode Command Line Tools with `xcode-select --install`.
 
 ```bash
-# 1. Clone JUCE into the project directory
-git clone https://github.com/juce-framework/JUCE.git
-
-# 2. Configure
+git clone --depth 1 --branch 8.0.13 https://github.com/juce-framework/JUCE.git
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
-
-# 3. Build
 cmake --build build --config Debug
-
-# 4. Run
-# macOS/Linux: ./build/JUCEProject_artefacts/Debug/JUCEProject
-# Windows:     build\JUCEProject_artefacts\Debug\JUCEProject.exe
+./build/AlgoRythm_artefacts/Debug/Algo-Rythm.app/Contents/MacOS/Algo-Rythm
 ```
 
-## Building with Projucer (Alternative)
+### Windows
 
-1. Download JUCE from https://juce.com/get-juce/
-2. Open `JUCEProject.jucer` in Projucer
-3. Set the JUCE path to your JUCE installation
-4. Export to your IDE (Xcode, Visual Studio, Linux Makefile)
-5. Build from your IDE
+Install Visual Studio 2022 with the "Desktop development with C++" workload.
+Run these commands in Command Prompt.
+
+```bat
+git clone --depth 1 --branch 8.0.13 https://github.com/juce-framework/JUCE.git
+cmake -B build
+cmake --build build --config Debug
+build\AlgoRythm_artefacts\Debug\Algo-Rythm.exe
+```
+
+After you clone JUCE, `run.bat` does the configure and build steps.
+
+If the JUCE clone fails with "Filename too long", move the repository to a shorter path.
+
+### Ubuntu
+
+Install the compiler and the JUCE system packages:
+
+```bash
+sudo apt update
+sudo apt install g++ cmake git pkg-config libasound2-dev libfreetype-dev libfontconfig1-dev libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev libglu1-mesa-dev mesa-common-dev
+```
+
+Build and run the app:
+
+```bash
+git clone --depth 1 --branch 8.0.13 https://github.com/juce-framework/JUCE.git
+cmake -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --config Debug
+./build/AlgoRythm_artefacts/Debug/Algo-Rythm
+```
 
 ## Modules Used
 
@@ -57,9 +87,3 @@ cmake --build build --config Debug
 | juce_graphics        | 2D graphics, fonts, images       |
 | juce_gui_basics      | Components, windows, layout      |
 | juce_gui_extra       | Extra widgets (WebView, etc.)    |
-
-## Next Steps
-
-- Add UI components in `MainComponent`
-- Add audio processing by including `juce_audio_basics`, `juce_audio_devices`, `juce_audio_processors`
-- Add DSP by including `juce_dsp`

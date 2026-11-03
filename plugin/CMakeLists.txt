@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(JUCEProject VERSION 1.0.0)
+project(AlgoRythm VERSION 1.0.0)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -14,31 +14,35 @@ add_subdirectory(JUCE)
 # find_package(JUCE CONFIG REQUIRED)
 
 #==============================================================================
-juce_add_gui_app(JUCEProject
-    PRODUCT_NAME "JUCE Project"
+juce_add_gui_app(AlgoRythm
+    PRODUCT_NAME "Algo-Rythm"
     VERSION "1.0.0"
-    COMPANY_NAME "MyCompany"
-    BUNDLE_ID "com.mycompany.juceproject"
+    COMPANY_NAME "kjsLand"
+    BUNDLE_ID "com.kjsland.algorythm"
 )
 
 # Add source files
-target_sources(JUCEProject
+target_sources(AlgoRythm
     PRIVATE
         Source/Main.cpp
         Source/MainComponent.cpp
         Source/MainComponent.h
         Source/Fretboard.cpp
         Source/Fretboard.h
+        Source/Bjorklund.h
+        Source/ChordRegistry.h
+        Source/ScaleRegistry.h
+        Source/StrumPattern.h
 )
 
 # Set include directories
-target_include_directories(JUCEProject
+target_include_directories(AlgoRythm
     PRIVATE
         Source
 )
 
 # Link JUCE modules
-target_link_libraries(JUCEProject
+target_link_libraries(AlgoRythm
     PRIVATE
         juce::juce_core
         juce::juce_data_structures
@@ -53,10 +57,10 @@ target_link_libraries(JUCEProject
 )
 
 # Compile definitions
-target_compile_definitions(JUCEProject
+target_compile_definitions(AlgoRythm
     PRIVATE
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
-        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:JUCEProject,JUCE_PRODUCT_NAME>"
-        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:JUCEProject,JUCE_VERSION>"
+        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:AlgoRythm,JUCE_PRODUCT_NAME>"
+        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:AlgoRythm,JUCE_VERSION>"
 )
