@@ -20,8 +20,8 @@
 
 struct ScaleDefinition
 {
-    std::string              name;      // Display name, e.g. "Major"
-    std::vector<int>         intervals; // Semitone steps between degrees
+    std::string      name;      // Display name, e.g. "Major"
+    std::vector<int> intervals; // Semitone steps between degrees
 };
 
 // =============================================================================
@@ -34,7 +34,7 @@ struct ScaleDefinition
 class ScaleRegistry
 {
 public:
-    static ScaleRegistry& instance()
+    static ScaleRegistry& instance ()
     {
         static ScaleRegistry inst;
         return inst;
@@ -50,7 +50,7 @@ public:
     const ScaleDefinition& get (const std::string& name) const
     {
         auto it = m_scales.find (normalise (name));
-        if (it == m_scales.end())
+        if (it == m_scales.end ())
             throw std::out_of_range ("Unknown scale: " + name);
         return it->second;
     }
@@ -60,10 +60,10 @@ public:
         return m_scales.count (normalise (name)) > 0;
     }
 
-    std::vector<std::string> allNames() const
+    std::vector<std::string> allNames () const
     {
         std::vector<std::string> names;
-        names.reserve (m_scales.size());
+        names.reserve (m_scales.size ());
         for (auto& [k, v] : m_scales)
             names.push_back (v.name);
         return names;
@@ -71,11 +71,11 @@ public:
 
     // Build a set of pitch classes (0-11) for a given root + scale
     // rootPitchClass: 0=C, 1=C#, 2=D, …, 11=B
-    static std::set<int> pitchClasses (int rootPitchClass,
+    static std::set<int> pitchClasses (int                    rootPitchClass,
                                        const ScaleDefinition& def)
     {
         std::set<int> pcs;
-        int current = rootPitchClass % 12;
+        int           current = rootPitchClass % 12;
         pcs.insert (current);
         for (int step : def.intervals)
         {
@@ -86,9 +86,12 @@ public:
     }
 
 private:
-    ScaleRegistry() { loadDefaults(); }
+    ScaleRegistry ()
+    {
+        loadDefaults ();
+    }
 
-    void loadDefaults()
+    void loadDefaults ()
     {
         // ---- Heptatonic (7-note) scales ----
         registerScale ({ "Major",

@@ -7,23 +7,23 @@
 class MainComponent : public juce::Component
 {
 public:
-    MainComponent();
-    ~MainComponent() override;
+    MainComponent ();
+    ~MainComponent () override;
 
-    void paint   (juce::Graphics& g) override;
-    void resized ()                  override;
+    void paint (juce::Graphics& g) override;
+    void resized () override;
 
 private:
     // ---- actions ----
-    void pickNewNote();
-    void pickNewChord();
-    void pickNewKey();
-    void pickNewStrum();
+    void pickNewNote ();
+    void pickNewChord ();
+    void pickNewKey ();
+    void pickNewStrum ();
 
     // ---- drawing ----
-    void drawHeader     (juce::Graphics& g, juce::Rectangle<int> r) const;
-    void drawFretboard  (juce::Graphics& g, juce::Rectangle<int> bounds) const;
-    void drawLegend     (juce::Graphics& g, juce::Rectangle<int> bounds) const;
+    void drawHeader (juce::Graphics& g, juce::Rectangle<int> r) const;
+    void drawFretboard (juce::Graphics& g, juce::Rectangle<int> bounds) const;
+    void drawLegend (juce::Graphics& g, juce::Rectangle<int> bounds) const;
     void drawStrumPanel (juce::Graphics& g, juce::Rectangle<int> bounds) const;
 
     // ---- fretboard state ----
@@ -32,23 +32,23 @@ private:
     // All available keys (chromatic)
     static const std::vector<std::string> ALL_KEYS;
 
-    std::string currentKey      { "G" };
-    std::string currentScale    { "Major" };
-    std::string currentChordName{ "Major" };
+    std::string currentKey { "G" };
+    std::string currentScale { "Major" };
+    std::string currentChordName { "Major" };
 
-    GuitarFretboard::Position             rootPos   { 1, 5 }; // A2 fret 5 = D... prime on load
-    GuitarFretboard::VoicedChord          voicing;
-    std::set<int>                         scalePCs;
+    GuitarFretboard::Position    rootPos { 1, 5 }; // A2 fret 5 = D... prime on load
+    GuitarFretboard::VoicedChord voicing;
+    std::set<int>                scalePCs;
 
-    std::mt19937 rng { std::random_device{}() };
+    std::mt19937 rng { std::random_device {}() };
 
     // ---- strum pattern ----
     StrumPattern::Result currentStrum;
 
     // ---- buttons ----
-    juce::TextButton btnNewNote  { "New Note"  };
+    juce::TextButton btnNewNote { "New Note" };
     juce::TextButton btnNewChord { "New Chord" };
-    juce::TextButton btnNewKey   { "New Key"   };
+    juce::TextButton btnNewKey { "New Key" };
     juce::TextButton btnNewStrum { "New Strum" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

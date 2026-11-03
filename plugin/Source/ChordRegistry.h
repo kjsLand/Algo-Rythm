@@ -22,9 +22,9 @@
 
 struct ChordDefinition
 {
-    std::string      name;       // Display name,  e.g. "Major"
-    std::string      symbol;     // Short symbol,  e.g. "", "m", "maj7"
-    std::vector<int> intervals;  // Semitones above root (root=0 implied)
+    std::string      name;      // Display name,  e.g. "Major"
+    std::string      symbol;    // Short symbol,  e.g. "", "m", "maj7"
+    std::vector<int> intervals; // Semitones above root (root=0 implied)
 };
 
 // =============================================================================
@@ -34,7 +34,7 @@ struct ChordDefinition
 class ChordRegistry
 {
 public:
-    static ChordRegistry& instance()
+    static ChordRegistry& instance ()
     {
         static ChordRegistry inst;
         return inst;
@@ -48,7 +48,7 @@ public:
     const ChordDefinition& get (const std::string& name) const
     {
         auto it = m_chords.find (normalise (name));
-        if (it == m_chords.end())
+        if (it == m_chords.end ())
             throw std::out_of_range ("Unknown chord: " + name);
         return it->second;
     }
@@ -58,10 +58,10 @@ public:
         return m_chords.count (normalise (name)) > 0;
     }
 
-    std::vector<std::string> allNames() const
+    std::vector<std::string> allNames () const
     {
         std::vector<std::string> names;
-        names.reserve (m_chords.size());
+        names.reserve (m_chords.size ());
         for (auto& [k, v] : m_chords)
             names.push_back (v.name);
         return names;
@@ -82,40 +82,43 @@ public:
     static std::vector<std::string> noteNames (int rootPC, const ChordDefinition& def)
     {
         static const std::array<std::string, 12> CHROMATIC = {
-            "C","C#","D","D#","E","F","F#","G","G#","A","A#","B"
+            "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
         };
 
         std::vector<std::string> names;
-        names.push_back (CHROMATIC[rootPC % 12]);           // root
+        names.push_back (CHROMATIC[rootPC % 12]); // root
         for (int iv : def.intervals)
             names.push_back (CHROMATIC[(rootPC + iv) % 12]);
         return names;
     }
 
 private:
-    ChordRegistry() { loadDefaults(); }
+    ChordRegistry ()
+    {
+        loadDefaults ();
+    }
 
-    void loadDefaults()
+    void loadDefaults ()
     {
         // ---- Triads ----
-        registerChord ({ "Major",   "",     { 4, 7 } });
-        registerChord ({ "Minor",   "m",    { 3, 7 } });
-        registerChord ({ "Aug",     "aug",  { 4, 8 } });
-        registerChord ({ "Dim",     "dim",  { 3, 6 } });
+        registerChord ({ "Major", "", { 4, 7 } });
+        registerChord ({ "Minor", "m", { 3, 7 } });
+        registerChord ({ "Aug", "aug", { 4, 8 } });
+        registerChord ({ "Dim", "dim", { 3, 6 } });
 
         // ---- Seventh chords ----
-        registerChord ({ "Maj7",    "maj7", { 4, 7, 11 } });
-        registerChord ({ "M7",      "m7",   { 3, 7, 10 } });
-        registerChord ({ "Dom7",    "7",    { 4, 7, 10 } });
-        registerChord ({ "Dim7",    "dim7", { 3, 6, 9  } });
-        registerChord ({ "M7b5",    "m7b5", { 3, 6, 10 } });  // half-diminished
+        registerChord ({ "Maj7", "maj7", { 4, 7, 11 } });
+        registerChord ({ "M7", "m7", { 3, 7, 10 } });
+        registerChord ({ "Dom7", "7", { 4, 7, 10 } });
+        registerChord ({ "Dim7", "dim7", { 3, 6, 9 } });
+        registerChord ({ "M7b5", "m7b5", { 3, 6, 10 } }); // half-diminished
 
         // ---- Suspended ----
-        registerChord ({ "Sus2",    "sus2", { 2, 7 } });
-        registerChord ({ "Sus4",    "sus4", { 5, 7 } });
+        registerChord ({ "Sus2", "sus2", { 2, 7 } });
+        registerChord ({ "Sus4", "sus4", { 5, 7 } });
 
         // ---- Added-tone ----
-        registerChord ({ "Add9",    "add9", { 4, 7, 14 } });  // 14 = major 9th
+        registerChord ({ "Add9", "add9", { 4, 7, 14 } }); // 14 = major 9th
     }
 
     static std::string normalise (std::string s)

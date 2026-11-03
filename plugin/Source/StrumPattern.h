@@ -32,16 +32,16 @@ public:
     //==========================================================================
     struct Result
     {
-        int              bpm       { 120 };
-        int              steps     { 16  };   ///< subdivisions per bar
-        int              strumHits { 0   };
-        int              restHits  { 0   };
+        int              bpm { 120 };
+        int              steps { 16 }; ///< subdivisions per bar
+        int              strumHits { 0 };
+        int              restHits { 0 };
         std::vector<int> strumBits;
         std::vector<int> restBits;
-        std::string      pattern;             ///< final D/U/- string
+        std::string      pattern; ///< final D/U/- string
 
         /** Beat-grid ruler string aligned to pattern, e.g. "1.+.2.+.3.+.4.+." */
-        std::string      ruler;
+        std::string ruler;
     };
 
     //==========================================================================
@@ -54,7 +54,7 @@ public:
         if (seed == 0)
         {
             std::random_device rd;
-            seed = rd();
+            seed = rd ();
         }
 
         std::mt19937 rng (seed);
@@ -65,8 +65,8 @@ public:
 
         // ── Layer 1: strum hits (half to three-quarters of steps) ───────────
         {
-            const int minH = r.steps / 2;
-            const int maxH = (r.steps * 3) / 4;
+            const int                          minH = r.steps / 2;
+            const int                          maxH = (r.steps * 3) / 4;
             std::uniform_int_distribution<int> dist (minH, maxH);
             r.strumHits = dist (rng);
         }
@@ -84,7 +84,7 @@ public:
         // silence slot 0.  Rotation keeps the number of rests and their spacing.
         // restHits <= steps / 4, so the mask always contains a 0 and this ends.
         while (r.restBits[0] == 1)
-            std::rotate (r.restBits.begin(), r.restBits.end() - 1, r.restBits.end());
+            std::rotate (r.restBits.begin (), r.restBits.end () - 1, r.restBits.end ());
 
         r.strumBits[0] = 1;
 
@@ -116,9 +116,9 @@ public:
         if (seed == 0)
         {
             std::random_device rd;
-            seed = rd();
+            seed = rd ();
         }
-        std::mt19937 rng (seed);
+        std::mt19937                       rng (seed);
         std::uniform_int_distribution<int> bpmDist (60, 180);
         return generate (bpmDist (rng), seed);
     }
@@ -131,15 +131,18 @@ private:
 
     static std::string buildRuler (int steps)
     {
-        const int div = steps / 4;
+        const int   div = steps / 4;
         std::string ruler;
         ruler.reserve ((size_t) steps);
 
         for (int i = 0; i < steps; ++i)
         {
-            if      (i % div == 0)           ruler += (char) ('1' + i / div);
-            else if (div >= 4 && i % 2 == 0) ruler += '+';
-            else                             ruler += '.';
+            if (i % div == 0)
+                ruler += (char) ('1' + i / div);
+            else if (div >= 4 && i % 2 == 0)
+                ruler += '+';
+            else
+                ruler += '.';
         }
         return ruler;
     }

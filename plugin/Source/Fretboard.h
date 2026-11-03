@@ -18,7 +18,7 @@
 struct FretNote
 {
     int         midiNote = 0;
-    std::string name;       // e.g. "A3", "C#4"
+    std::string name; // e.g. "A3", "C#4"
     bool        isOpen = false;
 };
 
@@ -36,27 +36,31 @@ public:
     // MIDI note numbers for open strings (low E to high E)
     static constexpr std::array<int, NUM_STRINGS> OPEN_MIDI = { 40, 45, 50, 55, 59, 64 };
 
-    struct Position { int string; int fret; };
+    struct Position
+    {
+        int string;
+        int fret;
+    };
 
-    GuitarFretboard();
+    GuitarFretboard ();
 
     // -------------------------------------------------------------------------
     // Basic access
     // -------------------------------------------------------------------------
-    const FretNote& getNote      (int string, int fret) const;
-    int             getMidiNote  (int string, int fret) const;
-    std::string     getNoteName  (int string, int fret) const;
+    const FretNote& getNote (int string, int fret) const;
+    int             getMidiNote (int string, int fret) const;
+    std::string     getNoteName (int string, int fret) const;
 
     // -------------------------------------------------------------------------
     // Search
     // -------------------------------------------------------------------------
-    std::vector<Position> findNote       (int midiNote)              const;
-    std::vector<Position> findNoteByName (const std::string& name)   const;
+    std::vector<Position> findNote (int midiNote) const;
+    std::vector<Position> findNoteByName (const std::string& name) const;
 
     // -------------------------------------------------------------------------
     // Iteration
     // -------------------------------------------------------------------------
-    void forEach (std::function<void(int, int, const FretNote&)> fn) const;
+    void forEach (std::function<void (int, int, const FretNote&)> fn) const;
 
     // -------------------------------------------------------------------------
     // Scale utilities
@@ -83,10 +87,10 @@ public:
     // All other cells show a dash.
     void printScale (const std::string& key,
                      const std::string& scaleName,
-                     int maxFret = 12) const;
+                     int                maxFret = 12) const;
 
     // Prints the full chromatic grid (original behaviour).
-    void printGrid() const;
+    void printGrid () const;
 
     // -------------------------------------------------------------------------
     // Chord utilities
@@ -94,13 +98,13 @@ public:
 
     // Given a root pitch class and a chord name, return the note name strings
     // for every chord tone, e.g. { "A", "C", "E" } for A minor.
-    static std::vector<std::string> getChordNotes (int rootPC,
+    static std::vector<std::string> getChordNotes (int                rootPC,
                                                    const std::string& chordName);
 
     // Print all requested chord types built on a given root pitch class.
     // chordNames: list of chord names from ChordRegistry
     //             (pass an empty vector to print all registered chords)
-    static void printChords (int rootPC,
+    static void printChords (int                             rootPC,
                              const std::vector<std::string>& chordNames = {});
 
     // -------------------------------------------------------------------------
@@ -111,17 +115,17 @@ public:
     // every chord type built on that note.
     struct ChordNote
     {
-        std::string              chordName;   // e.g. "Major"
-        std::string              symbol;      // e.g. "m7"
-        std::vector<std::string> noteNames;   // e.g. { "A", "C", "E", "G" }
+        std::string              chordName; // e.g. "Major"
+        std::string              symbol;    // e.g. "m7"
+        std::vector<std::string> noteNames; // e.g. { "A", "C", "E", "G" }
     };
 
     struct ScaleNotePick
     {
-        Position                  position;   // where on the neck
-        std::string               noteName;   // e.g. "A"
-        int                       pitchClass; // 0-11
-        std::vector<ChordNote>    chords;     // one entry per requested chord type
+        Position               position;   // where on the neck
+        std::string            noteName;   // e.g. "A"
+        int                    pitchClass; // 0-11
+        std::vector<ChordNote> chords;     // one entry per requested chord type
     };
 
     // Pick `count` random positions from the scale and return chord suggestions.
@@ -134,11 +138,11 @@ public:
     //  count      - how many notes to pick (default 1)
     //  seed       - RNG seed; use std::nullopt for a random seed
     std::vector<ScaleNotePick> pickRandomScaleNotes (
-        const std::string&        key,
-        const std::string&        scaleName,
+        const std::string&              key,
+        const std::string&              scaleName,
         const std::vector<std::string>& chordNames = {},
-        int                       count  = 1,
-        std::optional<uint32_t>   seed   = std::nullopt) const;
+        int                             count      = 1,
+        std::optional<uint32_t>         seed       = std::nullopt) const;
 
     // Pretty-print the result of pickRandomScaleNotes().
     static void printScaleNotePicks (const std::vector<ScaleNotePick>& picks);
@@ -152,9 +156,9 @@ public:
     // root itself.
     struct VoicedChord
     {
-        std::string            chordName;  // e.g. "Major"
-        std::string            symbol;     // e.g. "Gmaj7"
-        std::vector<Position>  positions;  // one per tone, index 0 = root
+        std::string           chordName; // e.g. "Major"
+        std::string           symbol;    // e.g. "Gmaj7"
+        std::vector<Position> positions; // one per tone, index 0 = root
     };
 
     // Build a tight voicing: for each chord tone (pitch class), pick the single
@@ -166,13 +170,13 @@ public:
     // -------------------------------------------------------------------------
     // Convenience: list available scale / chord names
     // -------------------------------------------------------------------------
-    static std::vector<std::string> availableScales();
-    static std::vector<std::string> availableChords();
+    static std::vector<std::string> availableScales ();
+    static std::vector<std::string> availableChords ();
 
 private:
     std::array<std::array<FretNote, NUM_FRETS>, NUM_STRINGS> m_grid;
 
-    void        buildGrid();
-    static std::string midiToName  (int midiNote);
-    static int         nameToPC    (const std::string& noteName); // pitch class 0-11
+    void               buildGrid ();
+    static std::string midiToName (int midiNote);
+    static int         nameToPC (const std::string& noteName); // pitch class 0-11
 };

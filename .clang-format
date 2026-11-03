@@ -1,0 +1,41 @@
+BasedOnStyle: LLVM
+Language: Cpp
+Standard: c++17
+LineEnding: DeriveLF
+
+# Required by SPEC-02.
+IndentWidth: 4
+BreakBeforeBraces: Allman
+SpaceBeforeParens: Always
+
+# Keep the line breaks and the include order of the current code.
+ColumnLimit: 0
+ReflowComments: false
+SortIncludes: Never
+MaxEmptyLinesToKeep: 2
+
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+IndentCaseLabels: true
+NamespaceIndentation: All
+FixNamespaceComments: false
+PointerAlignment: Left
+
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignTrailingComments: true
+AlignAfterOpenBracket: Align
+
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortLambdasOnASingleLine: None
+LambdaBodyIndentation: OuterScope
+AllowShortCaseLabelsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: Yes
+
+Cpp11BracedListStyle: false
+SpaceBeforeCpp11BracedList: true
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: false

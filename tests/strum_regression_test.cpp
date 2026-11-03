@@ -39,8 +39,8 @@ TEST_CASE ("The rest mask keeps its number of rests")
             CAPTURE (bpm);
             const auto r = StrumPattern::generate (bpm, seed);
 
-            REQUIRE ((int) r.restBits.size() == r.steps);
-            REQUIRE (std::accumulate (r.restBits.begin(), r.restBits.end(), 0) == r.restHits);
+            REQUIRE ((int) r.restBits.size () == r.steps);
+            REQUIRE (std::accumulate (r.restBits.begin (), r.restBits.end (), 0) == r.restHits);
         }
     }
 }

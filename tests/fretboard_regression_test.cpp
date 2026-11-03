@@ -35,7 +35,7 @@ TEST_CASE ("A name without an octave matches only its pitch class")
 
     const auto results = search (fb, "C");
 
-    REQUIRE_FALSE (results.empty());
+    REQUIRE_FALSE (results.empty ());
     for (const auto& [s, f] : results)
         REQUIRE (fb.getMidiNote (s, f) % 12 == 0);
 
@@ -48,7 +48,7 @@ TEST_CASE ("A name with an octave matches only that MIDI note")
 
     const auto results = search (fb, "C4");
 
-    REQUIRE_FALSE (results.empty());
+    REQUIRE_FALSE (results.empty ());
     for (const auto& [s, f] : results)
         REQUIRE (fb.getMidiNote (s, f) == 60);
 }
@@ -57,10 +57,10 @@ TEST_CASE ("Enharmonic names return the same positions")
 {
     GuitarFretboard fb;
 
-    REQUIRE (search (fb, "Db")  == search (fb, "C#"));
+    REQUIRE (search (fb, "Db") == search (fb, "C#"));
     REQUIRE (search (fb, "Db4") == search (fb, "C#4"));
-    REQUIRE (search (fb, "Bb")  == search (fb, "A#"));
-    REQUIRE_FALSE (search (fb, "Db").empty());
+    REQUIRE (search (fb, "Bb") == search (fb, "A#"));
+    REQUIRE_FALSE (search (fb, "Db").empty ());
 }
 
 TEST_CASE ("Accidentals that cross an octave keep the written pitch")
@@ -69,14 +69,14 @@ TEST_CASE ("Accidentals that cross an octave keep the written pitch")
 
     REQUIRE (search (fb, "B#3") == search (fb, "C4")); // MIDI 60
     REQUIRE (search (fb, "Cb4") == search (fb, "B3")); // MIDI 59
-    REQUIRE_FALSE (search (fb, "B3").empty());
+    REQUIRE_FALSE (search (fb, "B3").empty ());
 }
 
 TEST_CASE ("Note names are not case sensitive")
 {
     GuitarFretboard fb;
 
-    REQUIRE (search (fb, "c")  == search (fb, "C"));
+    REQUIRE (search (fb, "c") == search (fb, "C"));
     REQUIRE (search (fb, "c4") == search (fb, "C4"));
     REQUIRE (search (fb, "bb") == search (fb, "Bb"));
 }
@@ -88,6 +88,6 @@ TEST_CASE ("A malformed name matches nothing")
     for (const char* name : { "", "H", "Cx", "C4x", "4", "#", "C-" })
     {
         CAPTURE (name);
-        REQUIRE (search (fb, name).empty());
+        REQUIRE (search (fb, name).empty ());
     }
 }
