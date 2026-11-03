@@ -61,6 +61,9 @@ jobs:
           ! grep -rnE 'std::c(out|err)' core/
           ! grep -rnE '#[[:space:]]*include[[:space:]]*<iostream>' core/
 
+      - name: The core must not use banned random functions
+        run: python3 tools/check_banned.py
+
   format:
     name: Check the code format
     runs-on: ubuntu-latest

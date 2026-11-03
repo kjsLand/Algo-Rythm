@@ -19,6 +19,9 @@ add_executable(algo_tests
     nashville_test.cpp
     fretboard_test.cpp
     euclid_test.cpp
+    rng_test.cpp
+    seeds_test.cpp
+    settings_test.cpp
 )
 
 target_include_directories(algo_tests

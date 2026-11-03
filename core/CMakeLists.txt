@@ -12,6 +12,9 @@ add_library(algo_core STATIC
     src/nashville.cpp
     src/fretboard.cpp
     src/euclid.cpp
+    src/rng.cpp
+    src/seeds.cpp
+    src/settings.cpp
 )
 add_library(algo::core ALIAS algo_core)
 

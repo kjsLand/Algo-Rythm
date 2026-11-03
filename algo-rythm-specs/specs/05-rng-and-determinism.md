@@ -54,7 +54,7 @@ Out of scope:
 **Acceptance:**
 
 - [ ] For seed 42, the first 10 values of `uniformInt(0, 99)` match a stored list on all three CI systems.
-- [ ] Over 100,000 calls, each value of `uniformInt(0, 9)` occurs 9,500 to 10,500 times.
+- [x] Over 100,000 calls, each value of `uniformInt(0, 9)` occurs 9,500 to 10,500 times.
 
 ### T05-02: Write the seed derivation function
 
@@ -71,12 +71,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Different values for any one of the 4 inputs give different seeds in a test of 10,000 combinations.
+- [x] Different values for any one of the 4 inputs give different seeds in a test of 10,000 combinations.
 - [ ] `deriveSeed` gives the same value on all three CI systems.
 
 ### T05-03: Define the generation settings
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-03
 - **Files:** `core/include/algo/Settings.h`, `core/src/settings.cpp`, `tests/settings_test.cpp`
 
@@ -92,12 +92,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `validate` returns an error for BPM 30 to 50.
-- [ ] Default settings return no errors.
+- [x] `validate` returns an error for BPM 30 to 50.
+- [x] Default settings return no errors.
 
 ### T05-04: Add a CI check for banned random functions
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T05-01, T02-03
 - **Files:** `tools/check_banned.py`, `.github/workflows/ci.yml`
 
@@ -110,8 +110,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The check fails when you add `std::random_device` to a core file.
-- [ ] The check passes on `main`.
+- [x] The check fails when you add `std::random_device` to a core file.
+- [x] The check passes on `main`.
 
 ### T05-05: Add the cross-platform determinism test
 
