@@ -6,7 +6,7 @@ The JUCE GUI application for Algo-Rythm.
 
 ```
 plugin/
-├── CMakeLists.txt          # CMake build system
+├── CMakeLists.txt          # The app target. The root CMakeLists.txt adds this folder.
 ├── README.md
 ├── run.bat                 # Build script for Windows
 ├── run.sh                  # Build script for macOS and Linux
@@ -24,7 +24,7 @@ plugin/
 
 ## Building
 
-CMake is the only build path. Run all commands from this `plugin/` folder.
+CMake is the only build path. Run all commands from the repository root. CMake downloads JUCE at the version pinned in [cmake/Dependencies.cmake](../cmake/Dependencies.cmake).
 
 ### Prerequisites
 
@@ -37,10 +37,9 @@ CMake is the only build path. Run all commands from this `plugin/` folder.
 Install the Xcode Command Line Tools with `xcode-select --install`.
 
 ```bash
-git clone --depth 1 --branch 8.0.13 https://github.com/juce-framework/JUCE.git
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build --config Debug
-./build/AlgoRythm_artefacts/Debug/Algo-Rythm.app/Contents/MacOS/Algo-Rythm
+./build/plugin/AlgoRythm_artefacts/Debug/Algo-Rythm.app/Contents/MacOS/Algo-Rythm
 ```
 
 ### Windows
@@ -49,15 +48,14 @@ Install Visual Studio 2022 with the "Desktop development with C++" workload.
 Run these commands in Command Prompt.
 
 ```bat
-git clone --depth 1 --branch 8.0.13 https://github.com/juce-framework/JUCE.git
 cmake -B build
 cmake --build build --config Debug
-build\AlgoRythm_artefacts\Debug\Algo-Rythm.exe
+build\plugin\AlgoRythm_artefacts\Debug\Algo-Rythm.exe
 ```
 
-After you clone JUCE, `run.bat` does the configure and build steps.
+`plugin\run.bat` does the configure and build steps.
 
-If the JUCE clone fails with "Filename too long", move the repository to a shorter path.
+If the JUCE download fails with "Filename too long", move the repository to a shorter path.
 
 ### Ubuntu
 
@@ -71,10 +69,9 @@ sudo apt install g++ cmake git pkg-config libasound2-dev libfreetype-dev libfont
 Build and run the app:
 
 ```bash
-git clone --depth 1 --branch 8.0.13 https://github.com/juce-framework/JUCE.git
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build --config Debug
-./build/AlgoRythm_artefacts/Debug/Algo-Rythm
+./build/plugin/AlgoRythm_artefacts/Debug/Algo-Rythm
 ```
 
 ## Modules Used

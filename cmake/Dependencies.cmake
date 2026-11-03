@@ -11,3 +11,12 @@ if (ALGO_BUILD_TESTS)
     # Makes include(Catch) available for catch_discover_tests()
     list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 endif()
+
+if (ALGO_BUILD_APP OR ALGO_BUILD_PLUGIN)
+    FetchContent_Declare(JUCE
+        GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
+        GIT_TAG        8.0.13
+        GIT_SHALLOW    TRUE
+    )
+    FetchContent_MakeAvailable(JUCE)
+endif()

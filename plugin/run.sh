@@ -1,5 +1,7 @@
+cd "$(dirname "$0")/.." || exit 1
+
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build --config Debug
 
-# macOS: ./build/AlgoRythm_artefacts/Debug/Algo-Rythm.app/Contents/MacOS/Algo-Rythm
-# Linux: ./build/AlgoRythm_artefacts/Debug/Algo-Rythm
+# macOS: ./build/plugin/AlgoRythm_artefacts/Debug/Algo-Rythm.app/Contents/MacOS/Algo-Rythm
+# Linux: ./build/plugin/AlgoRythm_artefacts/Debug/Algo-Rythm

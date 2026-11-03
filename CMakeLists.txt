@@ -12,6 +12,11 @@ option(ALGO_BUILD_TESTS  "Build the unit tests"      ON)
 option(ALGO_BUILD_PLUGIN "Build the audio plugin"    OFF)
 
 include(cmake/Dependencies.cmake)
+include(cmake/Warnings.cmake)
+
+if (ALGO_BUILD_APP)
+    add_subdirectory(plugin)
+endif()
 
 if (ALGO_BUILD_TESTS)
     enable_testing()

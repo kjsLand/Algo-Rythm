@@ -1,19 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
-
-project(AlgoRythm VERSION 1.0.0)
-
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Add JUCE - assumes JUCE is cloned as a subdirectory or found via find_package
-# Option A: JUCE as a subdirectory (recommended for beginners)
-add_subdirectory(JUCE)
-
-# Option B: If JUCE is installed system-wide or via package manager, use:
-# find_package(JUCE CONFIG REQUIRED)
-
-#==============================================================================
+# The root CMakeLists.txt adds this folder and gets JUCE (cmake/Dependencies.cmake).
 juce_add_gui_app(AlgoRythm
     PRODUCT_NAME "Algo-Rythm"
     VERSION "1.0.0"
