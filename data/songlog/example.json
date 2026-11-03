@@ -1,0 +1,15 @@
+{
+  "title": "Oh! Susanna",
+  "artist": "Stephen Foster (traditional, public domain)",
+  "key": "G",
+  "mode": "major",
+  "bpm": 104,
+  "timeSignature": "4/4",
+  "form": "Verse-Chorus",
+  "learned": "2026-10-12",
+  "notes": "Week 3 of the guitar plan. Open G, C and D shapes.",
+  "sections": [
+    { "name": "Verse", "bars": 8, "numerals": ["1", "1", "5", "5", "1", "1", "5", "1"], "strum": "D-D-DUDU" },
+    { "name": "Chorus", "bars": 8, "numerals": ["4", "4", "1", "5", "1", "1", "5", "1"], "strum": "D-DUD-DU" }
+  ]
+}

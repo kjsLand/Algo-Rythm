@@ -79,6 +79,7 @@ if (ALGO_BUILD_TESTS)
             ${PROJECT_SOURCE_DIR}/tests/app/sequencer_timing_test.cpp
             ${PROJECT_SOURCE_DIR}/tests/app/pluck_voice_test.cpp
             ${PROJECT_SOURCE_DIR}/tests/app/app_misc_test.cpp
+            ${PROJECT_SOURCE_DIR}/tests/app/host_sync_test.cpp
             ${PROJECT_SOURCE_DIR}/tests/app/allocation_counter.cpp
     )
     target_link_libraries(algo_app_tests

@@ -53,6 +53,7 @@ public:
     void pitchWheelMoved (int) override {}
     void controllerMoved (int, int) override {}
     void renderNextBlock (juce::AudioBuffer<float>& output, int startSample, int numSamples) override;
+    using juce::SynthesiserVoice::renderNextBlock;
 
 private:
     std::vector<float> m_line;
@@ -80,6 +81,7 @@ public:
     void pitchWheelMoved (int) override {}
     void controllerMoved (int, int) override {}
     void renderNextBlock (juce::AudioBuffer<float>& output, int startSample, int numSamples) override;
+    using juce::SynthesiserVoice::renderNextBlock;
 
 private:
     std::vector<float> m_noise;

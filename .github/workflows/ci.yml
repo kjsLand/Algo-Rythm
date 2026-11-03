@@ -46,6 +46,81 @@ jobs:
           ALGO_PROP_SEEDS: 10000
         run: ctest --test-dir build -C Release --output-on-failure
 
+  tools:
+    name: Python tools and the MIDI check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Install the Python packages
+        run: python3 -m pip install -r tools/requirements.txt
+
+      - name: Test the Python tools
+        run: python3 -m unittest discover -s tests/tools -v
+
+      - name: Check the song log
+        run: python3 tools/analyze_corpus.py --check data/songlog
+
+      - name: Build the CLI
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DALGO_BUILD_APP=OFF -DALGO_BUILD_TESTS=OFF -DALGO_BUILD_TOOLS=OFF
+          cmake --build build --parallel --target algo-cli
+
+      # T09-04: an independent MIDI reader opens each exported file.
+      - name: Read the exported MIDI files with mido
+        run: |
+          ./build/cli/algo-cli batch --count 20 --hook --difficulty advanced --formats mid,json --out out/batch
+          ./build/cli/algo-cli generate --seed 81723 --formats mid --out out/one
+          python3 -c "import glob, mido; files = glob.glob('out/**/*.mid', recursive=True); [mido.MidiFile(f) for f in files]; print(len(files), 'MIDI files read')"
+
+      - name: Export Guitar Pro files
+        run: |
+          for f in out/batch/*.json; do python3 tools/export_gp.py "$f"; done
+          python3 -c "import glob, guitarpro; [guitarpro.parse(f) for f in glob.glob('out/batch/*.gp5')]; print('GP5 files read')"
+
+  plugin:
+    name: Plugin and pluginval (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            pluginval: pluginval_macOS.zip
+            binary: pluginval.app/Contents/MacOS/pluginval
+          - os: windows-latest
+            pluginval: pluginval_Windows.zip
+            binary: pluginval.exe
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Cache the FetchContent download folder
+        uses: actions/cache@v6.1.0
+        with:
+          path: |
+            build/_deps
+            !build/_deps/*-build
+          key: fetchcontent-plugin-${{ runner.os }}-${{ hashFiles('cmake/Dependencies.cmake') }}
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DALGO_BUILD_PLUGIN=ON -DALGO_BUILD_APP=OFF -DALGO_BUILD_CLI=OFF -DALGO_BUILD_TESTS=OFF -DALGO_BUILD_TOOLS=OFF
+
+      - name: Build the VST3
+        run: cmake --build build --config Release --parallel --target AlgoRythmPlugin_VST3
+
+      # T16-03: pluginval at strictness level 5, with a pinned version.
+      - name: Download pluginval 1.0.4
+        shell: bash
+        run: |
+          curl -sSL -o pluginval.zip "https://github.com/Tracktion/pluginval/releases/download/v1.0.4/${{ matrix.pluginval }}"
+          unzip -q pluginval.zip
+
+      - name: Run pluginval
+        shell: bash
+        run: |
+          ./${{ matrix.binary }} --strictness-level 5 --validate-in-process --output-dir pluginval-logs \
+            --validate "build/plugin/AlgoRythmPlugin_artefacts/Release/VST3/Algo-Rythm.vst3"
+
   core-rules:
     name: Check the core rules
     runs-on: ubuntu-latest
@@ -63,6 +138,10 @@ jobs:
 
       - name: The core must not use banned random functions
         run: python3 tools/check_banned.py
+
+      - name: The CLI must not link to JUCE
+        run: |
+          ! grep -rnE 'juce|JUCE' cli/CMakeLists.txt cli/*.cpp cli/*.h
 
   format:
     name: Check the code format

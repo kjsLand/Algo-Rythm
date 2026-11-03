@@ -46,6 +46,7 @@ namespace algo::cli
         std::string tuning { "Standard" };
         std::string tables { "rules" };
         bool        hook { false };
+        bool        fingerpicking { false };
         std::string out { "." };
         std::string formats { "json,mid,tab" };
 

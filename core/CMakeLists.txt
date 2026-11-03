@@ -54,3 +54,6 @@ target_link_libraries(algo_core
 
 algo_set_warnings(algo_core)
 algo_embed_data(algo_core ${CMAKE_CURRENT_SOURCE_DIR}/data)
+
+# The VST3 plugin is a shared library, so the core must be position-independent code.
+set_target_properties(algo_core PROPERTIES POSITION_INDEPENDENT_CODE ON)

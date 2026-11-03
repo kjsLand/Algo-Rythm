@@ -45,6 +45,7 @@ namespace algo::cli
         command.add_option ("--tuning", tuning, "Standard, \"Drop D\", DADGAD, \"Open G\", \"Open D\" or \"Half-step down\"")->capture_default_str ();
         command.add_option ("--tables", tables, "rules or learned (SPEC-15)")->capture_default_str ();
         command.add_flag ("--hook", hook, "Add a melody hook of 2 to 4 bars");
+        command.add_flag ("--fingerpicking", fingerpicking, "Use the fingerpicking patterns (p-i-m-a and Travis) in place of strums");
         command.add_option ("--out", out, "The output folder")->capture_default_str ();
         command.add_option ("--formats", formats, "A comma-separated list of json, mid, tab and musicxml")->capture_default_str ();
     }
@@ -141,14 +142,15 @@ namespace algo::cli
             throw UsageError ("Unknown difficulty: " + difficulty + ". Use beginner, intermediate or advanced.");
         settings.difficulty = *parsedDifficulty;
 
-        const auto [lo, hi] = parseBpmRange (bpm);
-        settings.bpmMin     = lo;
-        settings.bpmMax     = hi;
-        settings.form       = parseFormCode (form, data);
-        settings.capo       = capo;
-        settings.hook       = hook;
-        settings.tables     = lower (tables);
-        settings.tuning     = tuning;
+        const auto [lo, hi]    = parseBpmRange (bpm);
+        settings.bpmMin        = lo;
+        settings.bpmMax        = hi;
+        settings.form          = parseFormCode (form, data);
+        settings.capo          = capo;
+        settings.hook          = hook;
+        settings.fingerpicking = fingerpicking;
+        settings.tables        = lower (tables);
+        settings.tuning        = tuning;
 
         if (time == "4/4")
             settings.timeSig = { 4, 4 };

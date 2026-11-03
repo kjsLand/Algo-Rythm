@@ -91,7 +91,16 @@ namespace algo
                         continue;
 
                     const std::size_t chordIndex = std::min (bar.voicings.size () - 1, static_cast<std::size_t> (slot) * bar.voicings.size () / static_cast<std::size_t> (steps));
-                    const auto        strings    = soundingStrings (bar.voicings[chordIndex], strum.strings, stroke == Stroke::Up);
+                    auto              strings    = soundingStrings (bar.voicings[chordIndex], strum.strings, stroke == Stroke::Up);
+
+                    // A Pluck sounds one string (T16-06).
+                    if (stroke == Stroke::Pluck)
+                    {
+                        strings.clear ();
+                        const int string = pluckStringIndex (bar.voicings[chordIndex], pluckAt (strum, static_cast<std::size_t> (slot)));
+                        if (string >= 0)
+                            strings.push_back (string);
+                    }
 
                     Tick offset = 0;
                     for (std::size_t k = 0; k < strings.size (); ++k)

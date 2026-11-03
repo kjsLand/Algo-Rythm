@@ -22,6 +22,7 @@ namespace
         kTablesLearned,
         kAbTest,
         kLeftHanded,
+        kFingerpicking,
         kShortcuts
     };
 
@@ -287,6 +288,7 @@ juce::PopupMenu MainComponent::getMenuForIndex (int index, const juce::String&)
         menu.addSubMenu ("Tables", tables);
         menu.addItem (kAbTest, "A/B Test Mode", true, m_state.abTestMode ());
         menu.addSeparator ();
+        menu.addItem (kFingerpicking, "Fingerpicking Patterns", true, m_state.settings ().fingerpicking);
         menu.addItem (kLeftHanded, "Left-handed", true, m_state.leftHanded ());
     }
     else
@@ -318,6 +320,10 @@ void MainComponent::menuItemSelected (int itemId, int)
         case kTablesLearned: m_state.setTables ("learned"); break;
         case kAbTest: m_state.setAbTestMode (!m_state.abTestMode ()); break;
         case kLeftHanded: m_state.setLeftHanded (!m_state.leftHanded ()); break;
+        case kFingerpicking:
+            m_state.settings ().fingerpicking = !m_state.settings ().fingerpicking;
+            m_state.settingsChanged ();
+            break;
         case kShortcuts:
             juce::AlertWindow::showMessageBoxAsync (juce::MessageBoxIconType::InfoIcon, "Keyboard Shortcuts", kShortcutText);
             break;

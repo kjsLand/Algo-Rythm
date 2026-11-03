@@ -20,6 +20,7 @@ namespace algo
         Difficulty               difficulty { Difficulty::Beginner };
         std::string              form { "Verse-Chorus" };
         std::vector<FormSection> sections;
+        bool                     fingerpicking { false }; // The strum stage uses the fingerpicking patterns
     };
 
     // Returns the name of the scale for the mood.

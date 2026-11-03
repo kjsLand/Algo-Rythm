@@ -1,6 +1,8 @@
 #include "algo/MusicXml.h"
 
 #include "algo/Fretboard.h"
+#include "algo/Json.h"
+#include "algo/Strum.h"
 #include "algo/Pitch.h"
 #include "algo/Render.h"
 #include "algo/Version.h"
@@ -276,12 +278,13 @@ namespace algo
                     const auto  index   = std::min (bar.voicings.size () - 1, static_cast<std::size_t> (slot) * bar.voicings.size () / static_cast<std::size_t> (steps));
                     const auto& voicing = bar.voicings[index];
                     const int   first   = kNumStrings - std::clamp (strum.strings, 1, kNumStrings);
+                    const int   plucked = stroke == Stroke::Pluck ? pluckStringIndex (voicing, pluckAt (strum, static_cast<std::size_t> (slot))) : -1;
 
                     bool any = false;
                     for (int s = first; s < kNumStrings; ++s)
                     {
                         const int fret = voicing.frets[static_cast<std::size_t> (s)];
-                        if (fret == kMutedString)
+                        if (fret == kMutedString || (stroke == Stroke::Pluck && s != plucked))
                             continue;
                         writeNote (m_fretboard.midiNoteAt (s, fret), slotDivs, voice, staff, any, stroke == Stroke::Mute, kNumStrings - s, fret);
                         any = true;

@@ -44,6 +44,38 @@ std::size_t EventSchedule::firstAtOrAfter (double tick) const
     return static_cast<std::size_t> (it - events.begin ());
 }
 
+void collectSongEvents (const EventSchedule& schedule, double startTick, double endTick, double samplesPerTick, int numSamples, juce::MidiBuffer& midi, SoundingNotes& sounding, bool includeClick)
+{
+    const double length = static_cast<double> (schedule.length);
+    if (length <= 0.0 || endTick <= startTick || numSamples <= 0)
+        return;
+
+    // Walk each pass of the song that the block covers.
+    for (double passStart = std::floor (startTick / length) * length; passStart < endTick; passStart += length)
+    {
+        const double from = std::max (startTick, passStart) - passStart;
+        const double to   = std::min (endTick, passStart + length) - passStart;
+        for (auto i = schedule.firstAtOrAfter (from); i < schedule.events.size () && static_cast<double> (schedule.events[i].tick) < to; ++i)
+        {
+            const auto& e = schedule.events[i];
+            if (e.click && !includeClick)
+                continue;
+            const int offset = juce::jlimit (0, numSamples - 1, static_cast<int> (std::llround ((passStart + static_cast<double> (e.tick) - startTick) * samplesPerTick)));
+            auto&     flag   = sounding[static_cast<std::size_t> (e.channel - 1)][e.note];
+            if (e.on)
+            {
+                midi.addEvent (juce::MidiMessage::noteOn (e.channel, e.note, e.velocity), offset);
+                flag = true;
+            }
+            else if (flag)
+            {
+                midi.addEvent (juce::MidiMessage::noteOff (e.channel, e.note), offset);
+                flag = false;
+            }
+        }
+    }
+}
+
 ScheduleSlot::ScheduleSlot () = default;
 
 ScheduleSlot::~ScheduleSlot ()

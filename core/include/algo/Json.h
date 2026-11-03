@@ -15,9 +15,23 @@ namespace algo
     std::string               difficultyName (Difficulty difficulty);
     std::optional<Difficulty> parseDifficulty (const std::string& name);
 
-    // 'D', 'U', '-', 'x' or 'c'.
+    // 'D', 'U', '-', 'x' or 'c'. A Pluck has the character of its string: refer to slotChar.
     char                  strokeChar (Stroke stroke);
     std::optional<Stroke> parseStroke (char c);
+
+    // The character of one slot: a stroke character, or for a Pluck '1' to '6' (a guitar string),
+    // 'b' (the bass string) or 'a' (the alternate bass string).
+    char slotChar (const StrumPattern& pattern, std::size_t slot);
+
+    // Reads a slot character. Returns false if the character is not valid.
+    bool parseSlotChar (char c, Stroke& stroke, int& pluck);
+
+    // Sets the slots (and the pluck strings) of a pattern from text such as "D-DU" or "b3a2".
+    // Returns the first character that is not valid, or 0.
+    char setSlots (StrumPattern& pattern, const std::string& text);
+
+    // The pluck string of a slot, or kPluckNone.
+    int pluckAt (const StrumPattern& pattern, std::size_t slot);
 
     void to_json (Json& j, Difficulty v);
     void from_json (const Json& j, Difficulty& v);

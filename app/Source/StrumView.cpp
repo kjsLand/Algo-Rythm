@@ -2,6 +2,7 @@
 
 #include "Theme.h"
 
+#include "algo/Json.h"
 #include "algo/Strum.h"
 
 StrumView::StrumView (AppState& state)
@@ -85,6 +86,12 @@ void StrumView::paint (juce::Graphics& g)
             case algo::Stroke::Chuck: // A filled square
                 g.setColour (Theme::warning);
                 g.fillRect (juce::Rectangle<float> (size * 0.6f, size * 0.6f).withCentre (centre));
+                break;
+            case algo::Stroke::Pluck: // A circle with the string: 1 to 6, b (bass) or a (alternate bass)
+                g.setColour (Theme::accent);
+                g.drawEllipse (juce::Rectangle<float> (size * 0.8f, size * 0.8f).withCentre (centre), 2.0f);
+                g.setFont (juce::FontOptions (size * 0.45f, juce::Font::bold));
+                g.drawText (juce::String::charToString (algo::slotChar (strum, static_cast<std::size_t> (i))), juce::Rectangle<float> (size, size).withCentre (centre), juce::Justification::centred);
                 break;
             case algo::Stroke::Rest: // A small dash
                 g.setColour (Theme::textDim);

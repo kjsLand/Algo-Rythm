@@ -185,7 +185,7 @@ TEST_CASE ("settings JSON has the expected text")
 {
     const Json j = GenerationSettings {};
 
-    REQUIRE (j.dump () == R"({"key":"any","scale":null,"mood":"Bright","bpmMin":90,"bpmMax":120,"form":"Verse-Chorus","difficulty":"Beginner","capo":0,"timeSig":{"numerator":4,"denominator":4},"masterSeed":0,"locks":{"key":false,"scale":false,"tempo":false,"form":false,"sections":[]},"hook":false,"tables":"rules","tuning":"Standard","rerolls":{"chords":[],"voicings":[],"strums":[],"hook":0}})");
+    REQUIRE (j.dump () == R"({"key":"any","scale":null,"mood":"Bright","bpmMin":90,"bpmMax":120,"form":"Verse-Chorus","difficulty":"Beginner","capo":0,"timeSig":{"numerator":4,"denominator":4},"masterSeed":0,"locks":{"key":false,"scale":false,"tempo":false,"form":false,"sections":[]},"hook":false,"fingerpicking":false,"tables":"rules","tuning":"Standard","rerolls":{"chords":[],"voicings":[],"strums":[],"hook":0}})");
 }
 
 TEST_CASE ("settings JSON writes the key root and the scale")

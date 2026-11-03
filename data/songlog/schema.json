@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kjsLand/Algo-Rythm/data/songlog/schema.json",
+  "title": "Algo-Rythm song log entry",
+  "description": "One song that you learned. Progressions are Nashville numbers, not chord names (REQ-15-1).",
+  "type": "object",
+  "required": ["title", "artist", "key", "mode", "bpm", "timeSignature", "form", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string", "minLength": 1 },
+    "artist": { "type": "string", "minLength": 1 },
+    "key": { "type": "string", "pattern": "^[A-G](#|b)?$", "description": "The root of the key, for example G or F#" },
+    "mode": { "enum": ["major", "minor"] },
+    "bpm": { "type": "integer", "minimum": 30, "maximum": 300 },
+    "timeSignature": { "type": "string", "pattern": "^[0-9]+/(2|4|8|16)$" },
+    "form": { "type": "string", "minLength": 1, "description": "For example Verse-Chorus" },
+    "learned": { "type": "string", "format": "date", "description": "The date that you learned the song" },
+    "notes": { "type": "string" },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "bars", "numerals"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "bars": { "type": "integer", "minimum": 1 },
+          "numerals": {
+            "type": "array",
+            "minItems": 1,
+            "description": "One loop of the section, as Nashville numbers such as 1, 6m, b7 or 5/7",
+            "items": { "type": "string", "pattern": "^(b|#)?[1-7][A-Za-z0-9#]*(/(b|#)?[1-7])?$" }
+          },
+          "strum": {
+            "type": "string",
+            "pattern": "^[DUxc-]+$",
+            "description": "The strum pattern of one bar: D, U, - (rest), x (mute) or c (chuck)"
+          }
+        }
+      }
+    }
+  }
+}

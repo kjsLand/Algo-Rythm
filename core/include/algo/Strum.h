@@ -37,6 +37,9 @@ namespace algo
     // A 6/8 time signature has 12 steps (T16-06).
     int gridSteps (Difficulty difficulty, int bpm, const TimeSig& timeSig = TimeSig {});
 
+    // A fingerpicking pattern has 8 steps in 4/4 and 12 steps in 6/8 (eighth notes).
+    int fingerpickingSteps (const TimeSig& timeSig = TimeSig {});
+
     // The slots that start a beat. 4/4 has 4 beats and 6/8 has 2 beats (slots 0 and 6).
     std::vector<int> beatSlots (int steps, const TimeSig& timeSig = TimeSig {});
 
@@ -75,7 +78,12 @@ namespace algo
     // The base hit count of the song. It uses the stream of kSongStrumSection.
     int songBaseHits (const SongPlan& plan, const RngFactory& rngFactory);
 
-    // Text such as "D - D U - U D U".
+    // The string index (0 = low E) that a Pluck sounds on a voicing, or -1 if the voicing has no note.
+    // A guitar string that the voicing mutes moves to the nearest string that sounds. The bass is the lowest
+    // string that sounds. The alternate bass is 1 string higher (2 strings from the low E string), as in Travis picking.
+    int pluckStringIndex (const Voicing& voicing, int pluck);
+
+    // Text such as "D - D U - U D U". A Pluck shows its string, as in "b 3 2 1".
     std::string strumText (const StrumPattern& pattern);
 
     // A beat ruler such as "1 + 2 + 3 + 4 +" for 8 steps, with one character for each slot and a space between.

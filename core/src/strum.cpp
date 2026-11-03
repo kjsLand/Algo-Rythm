@@ -106,6 +106,11 @@ namespace algo
         }
     }
 
+    int fingerpickingSteps (const TimeSig& timeSig)
+    {
+        return isSixEight (timeSig) ? 12 : 8;
+    }
+
     int gridSteps (Difficulty difficulty, int bpm, const TimeSig& timeSig)
     {
         if (isSixEight (timeSig))
@@ -222,6 +227,18 @@ namespace algo
 
     StrumPattern makeSectionStrum (const SongPlan& plan, const std::string& role, int baseHits, Rng& rng, const StrumLibrary& library, const StrumRules& rules)
     {
+        if (plan.fingerpicking)
+        {
+            // A fingerpicking pattern picks one string on each slot, in eighth notes (T16-06).
+            if (auto def = library.pickFingerpicking (plan.difficulty, fingerpickingSteps (plan.timeSig), rng))
+            {
+                auto pattern    = def->pattern;
+                pattern.strings = kNumStrings;
+                setAccents (pattern, plan.timeSig);
+                return pattern;
+            }
+        }
+
         const int steps = gridSteps (plan.difficulty, plan.bpm, plan.timeSig);
 
         int target = baseHits;
@@ -230,7 +247,7 @@ namespace algo
 
         StrumPattern pattern;
         bool         fromLibrary = false;
-        if (rng.chance (rules.libraryChance) && !isSixEight (plan.timeSig))
+        if (rng.chance (rules.libraryChance))
         {
             if (const auto def = library.pickLibraryPattern (plan.difficulty, steps, target, rng))
             {
@@ -279,6 +296,47 @@ namespace algo
         return makeStrums (plan, rngFactory, StrumLibrary::fromData (data));
     }
 
+    int pluckStringIndex (const Voicing& voicing, int pluck)
+    {
+        const auto sounds = [&voicing] (int s)
+        {
+            return s >= 0 && s < kNumStrings && voicing.frets[at (s)] != kMutedString;
+        };
+
+        int lowest = -1;
+        for (int s = 0; s < kNumStrings && lowest < 0; ++s)
+            if (sounds (s))
+                lowest = s;
+        if (lowest < 0)
+            return -1;
+
+        if (pluck == kPluckBass)
+            return lowest;
+
+        if (pluck == kPluckAltBass)
+        {
+            const int alternate = lowest + (lowest >= 1 ? 1 : 2);
+            for (int s = alternate; s < kNumStrings; ++s)
+                if (sounds (s))
+                    return s;
+            return lowest;
+        }
+
+        if (pluck < 1 || pluck > kNumStrings)
+            return -1;
+
+        // The nearest string that sounds. At the same distance, the higher string.
+        const int wanted = kNumStrings - pluck;
+        for (int d = 0; d < kNumStrings; ++d)
+        {
+            if (sounds (wanted + d))
+                return wanted + d;
+            if (sounds (wanted - d))
+                return wanted - d;
+        }
+        return -1;
+    }
+
     std::string strumText (const StrumPattern& pattern)
     {
         std::string text;
@@ -286,7 +344,7 @@ namespace algo
         {
             if (i > 0)
                 text += ' ';
-            text += strokeChar (pattern.slots[i]);
+            text += slotChar (pattern, i);
         }
         return text;
     }
@@ -350,9 +408,27 @@ namespace algo
     {
         std::vector<StrumDefinition> result;
         for (const auto& def : m_definitions)
-            if (def.difficulty <= difficulty && def.pattern.steps == steps && hitCount (def.pattern) == targetHits)
+            if (def.pattern.pluck.empty () && def.difficulty <= difficulty && def.pattern.steps == steps && hitCount (def.pattern) == targetHits)
                 result.push_back (def);
         return result;
+    }
+
+    std::optional<StrumDefinition> StrumLibrary::pickFingerpicking (Difficulty difficulty, int steps, Rng& rng) const
+    {
+        for (const bool strict : { true, false })
+        {
+            std::vector<const StrumDefinition*> candidates;
+            std::vector<double>                 weights;
+            for (const auto& def : m_definitions)
+                if (!def.pattern.pluck.empty () && def.pattern.steps == steps && (!strict || def.difficulty <= difficulty))
+                {
+                    candidates.push_back (&def);
+                    weights.push_back (weight (def.name));
+                }
+            if (!candidates.empty ())
+                return *candidates[rng.weightedIndex (weights)];
+        }
+        return std::nullopt;
     }
 
     std::optional<StrumDefinition> StrumLibrary::pickLibraryPattern (Difficulty difficulty, int steps, int targetHits, Rng& rng) const

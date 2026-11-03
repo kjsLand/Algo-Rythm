@@ -193,7 +193,10 @@ namespace algo
         plan.difficulty = starter.difficulty;
         plan.form       = starter.form;
         for (const auto& section : starter.sections)
+        {
             plan.sections.push_back ({ section.name, section.role.empty () ? "verse" : section.role, static_cast<int> (section.bars.size ()) });
+            plan.fingerpicking = plan.fingerpicking || !section.strum.pluck.empty ();
+        }
         return plan;
     }
 

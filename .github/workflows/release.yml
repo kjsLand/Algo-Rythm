@@ -1,0 +1,80 @@
+name: Release
+
+# T14-07: an installable build for macOS and Windows from each version tag (REQ-14-5).
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Make the GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Make the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prerelease=""
+          if [[ "${GITHUB_REF_NAME}" == *-* ]]; then prerelease="--prerelease"; fi
+          gh release create "${GITHUB_REF_NAME}" --title "Algo-Rythm ${GITHUB_REF_NAME}" --notes-file docs/RELEASE_NOTES.md ${prerelease}
+
+  macos:
+    name: macOS universal app
+    needs: release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Configure a universal binary
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DALGO_BUILD_TESTS=OFF -DALGO_BUILD_TOOLS=OFF
+
+      - name: Build
+        run: cmake --build build --config Release --parallel --target AlgoRythm algo-cli
+
+      - name: Check the architectures
+        run: lipo -archs "build/app/AlgoRythm_artefacts/Release/Algo-Rythm.app/Contents/MacOS/Algo-Rythm"
+
+      - name: Package the app as a .dmg file
+        run: |
+          mkdir -p dist/Algo-Rythm
+          cp -R "build/app/AlgoRythm_artefacts/Release/Algo-Rythm.app" dist/Algo-Rythm/
+          cp build/cli/algo-cli dist/Algo-Rythm/
+          ln -s /Applications dist/Algo-Rythm/Applications
+          hdiutil create -volname "Algo-Rythm" -srcfolder dist/Algo-Rythm -ov -format UDZO "Algo-Rythm-${GITHUB_REF_NAME}-macOS.dmg"
+
+      - name: Attach the .dmg file to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${GITHUB_REF_NAME}" "Algo-Rythm-${GITHUB_REF_NAME}-macOS.dmg" --clobber
+
+  windows:
+    name: Windows app
+    needs: release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Configure
+        run: cmake -B build -DALGO_BUILD_TESTS=OFF -DALGO_BUILD_TOOLS=OFF
+
+      - name: Build
+        run: cmake --build build --config Release --parallel --target AlgoRythm algo-cli
+
+      - name: Package the app as a .zip file
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist/Algo-Rythm | Out-Null
+          Copy-Item build/app/AlgoRythm_artefacts/Release/Algo-Rythm.exe dist/Algo-Rythm/
+          Copy-Item build/cli/Release/algo-cli.exe dist/Algo-Rythm/
+          Compress-Archive -Path dist/Algo-Rythm -DestinationPath "Algo-Rythm-$env:GITHUB_REF_NAME-Windows.zip"
+
+      - name: Attach the .zip file to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: gh release upload "${GITHUB_REF_NAME}" "Algo-Rythm-${GITHUB_REF_NAME}-Windows.zip" --clobber

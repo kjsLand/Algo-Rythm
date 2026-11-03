@@ -61,16 +61,13 @@ namespace algo
             if (static_cast<int> (def.pattern.accent.size ()) != def.pattern.steps)
                 entry.fail ("'accents' has " + std::to_string (def.pattern.accent.size ()) + " values, but 'steps' is " + std::to_string (def.pattern.steps));
 
-            def.pattern.slots.clear ();
-            for (char c : slots)
-            {
-                const auto stroke = parseStroke (c);
-                if (!stroke)
-                    entry.fail ("'slots' has the unknown stroke '" + std::string (1, c) + "'");
-                def.pattern.slots.push_back (*stroke);
-            }
-            if (def.pattern.slots.empty () || def.pattern.slots[0] != Stroke::Down)
-                entry.fail ("slot 0 must be 'D'");
+            if (const char bad = setSlots (def.pattern, slots))
+                entry.fail ("'slots' has the unknown stroke '" + std::string (1, bad) + "'");
+
+            // A fingerpicking pattern starts with the bass string. A strum starts with a Down stroke.
+            const bool picking = !def.pattern.pluck.empty ();
+            if (def.pattern.slots.empty () || (picking ? def.pattern.slots[0] != Stroke::Pluck : def.pattern.slots[0] != Stroke::Down))
+                entry.fail (picking ? "slot 0 of a fingerpicking pattern must be a Pluck" : "slot 0 must be 'D'");
 
             for (double accent : def.pattern.accent)
                 if (accent < 0.0 || accent > 1.0)

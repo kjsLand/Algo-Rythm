@@ -1,4 +1,5 @@
 #include "algo/Euclid.h"
+#include "algo/Json.h"
 #include "algo/Strum.h"
 #include "algo/Validate.h"
 
@@ -266,4 +267,67 @@ TEST_CASE ("A 6/8 pattern has 12 steps and the strong beats on slots 0 and 6")
     pattern.steps = 12;
     pattern.slots.assign (12, Stroke::Rest);
     REQUIRE (strumRuler (pattern, TimeSig { 6, 8 }) == "1 + 2 + 3 + 4 + 5 + 6 +");
+}
+
+TEST_CASE ("Fingerpicking patterns use Pluck strokes and the library strum filter ignores them (T16-06)")
+{
+    const auto library = StrumLibrary::fromData ();
+    for (const auto& def : library.all ())
+    {
+        if (def.pattern.pluck.empty ())
+            continue;
+        CAPTURE (def.name);
+        REQUIRE (def.pattern.slots[0] == Stroke::Pluck);
+        REQUIRE (def.pattern.pluck.size () == def.pattern.slots.size ());
+        for (int hits = 0; hits <= def.pattern.steps; ++hits)
+            for (const auto& other : library.filter (Difficulty::Advanced, def.pattern.steps, hits))
+                REQUIRE (other.name != def.name);
+    }
+
+    auto plan          = planWith (Difficulty::Intermediate, 100);
+    plan.fingerpicking = true;
+    for (std::uint64_t seed = 1; seed <= 200; ++seed)
+        for (const auto& pattern : makeStrums (plan, factoryFor (seed)))
+        {
+            REQUIRE (pattern.steps == 8);
+            REQUIRE_FALSE (pattern.pluck.empty ());
+            REQUIRE (strumViolations (pattern, Difficulty::Intermediate, 100).empty ());
+        }
+}
+
+TEST_CASE ("A Pluck finds its string on the voicing")
+{
+    Voicing g; // 320003
+    g.frets = { 3, 2, 0, 0, 0, 3 };
+    REQUIRE (pluckStringIndex (g, kPluckBass) == 0);
+    REQUIRE (pluckStringIndex (g, kPluckAltBass) == 2);
+    REQUIRE (pluckStringIndex (g, 1) == 5);
+    REQUIRE (pluckStringIndex (g, 3) == 3);
+
+    Voicing c; // x32010
+    c.frets = { kMutedString, 3, 2, 0, 1, 0 };
+    REQUIRE (pluckStringIndex (c, kPluckBass) == 1);
+    REQUIRE (pluckStringIndex (c, kPluckAltBass) == 2);
+    REQUIRE (pluckStringIndex (c, 6) == 1); // The muted low E string moves up
+
+    Voicing none;
+    REQUIRE (pluckStringIndex (none, kPluckBass) == -1);
+}
+
+TEST_CASE ("Pluck slots write and read as their string characters")
+{
+    StrumPattern pattern;
+    REQUIRE (setSlots (pattern, "b3a2-1x") == 0);
+    REQUIRE (pattern.slots[0] == Stroke::Pluck);
+    REQUIRE (pluckAt (pattern, 0) == kPluckBass);
+    REQUIRE (pluckAt (pattern, 2) == kPluckAltBass);
+    REQUIRE (pluckAt (pattern, 3) == 2);
+    REQUIRE (pattern.slots[4] == Stroke::Rest);
+    REQUIRE (pattern.slots[6] == Stroke::Mute);
+    REQUIRE (strumText (pattern) == "b 3 a 2 - 1 x");
+    REQUIRE (setSlots (pattern, "D?") == '?');
+
+    StrumPattern plain;
+    REQUIRE (setSlots (plain, "D-DU") == 0);
+    REQUIRE (plain.pluck.empty ());
 }

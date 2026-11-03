@@ -96,12 +96,13 @@ namespace algo
             throw std::invalid_argument (errors.front ());
 
         SongPlan plan;
-        plan.key        = chooseKey (settings, rng, data);
-        plan.bpm        = chooseBpm (settings, rng);
-        plan.timeSig    = settings.timeSig;
-        plan.capo       = settings.capo;
-        plan.difficulty = settings.difficulty;
-        plan.form       = settings.form;
+        plan.key           = chooseKey (settings, rng, data);
+        plan.bpm           = chooseBpm (settings, rng);
+        plan.timeSig       = settings.timeSig;
+        plan.capo          = settings.capo;
+        plan.difficulty    = settings.difficulty;
+        plan.form          = settings.form;
+        plan.fingerpicking = settings.fingerpicking;
 
         // A capo from the settings stays.
         if (plan.capo == 0 && plan.difficulty == Difficulty::Beginner)

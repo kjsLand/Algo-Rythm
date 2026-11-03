@@ -13,6 +13,13 @@
     { "name": "Syncopated Sixteenths", "steps": 16, "slots": "D--UD-DU--DUD-DU", "accents": [0.6, 0.0, 0.0, 0.6, 1.0, 0.0, 0.6, 0.6, 0.0, 0.0, 0.6, 0.6, 1.0, 0.0, 0.6, 0.6], "difficulty": "Intermediate", "tags": ["pop", "sixteenth", "syncopated"] },
     { "name": "Chuck Backbeat", "steps": 8, "slots": "D-cUD-cU", "accents": [0.6, 0.0, 1.0, 0.6, 0.6, 0.0, 1.0, 0.6], "difficulty": "Advanced", "tags": ["funk", "percussive"] },
     { "name": "Muted Drive", "steps": 8, "slots": "DxDUDxDU", "accents": [0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 1.0, 0.6], "difficulty": "Advanced", "tags": ["rock", "percussive"] },
-    { "name": "Funk Sixteenths", "steps": 16, "slots": "DxDUcxDUDxDUcUDU", "accents": [0.6, 0.6, 0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 1.0, 0.6, 0.6, 0.6], "difficulty": "Advanced", "tags": ["funk", "sixteenth", "percussive"] }
+    { "name": "Funk Sixteenths", "steps": 16, "slots": "DxDUcxDUDxDUcUDU", "accents": [0.6, 0.6, 0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 1.0, 0.6, 0.6, 0.6], "difficulty": "Advanced", "tags": ["funk", "sixteenth", "percussive"] },
+    { "name": "6/8 Eighths", "steps": 12, "slots": "D-D-D-D-D-D-", "accents": [0.6, 0.0, 0.6, 0.0, 0.6, 0.0, 1.0, 0.0, 0.6, 0.0, 0.6, 0.0], "difficulty": "Beginner", "tags": ["six-eight", "ballad"] },
+    { "name": "6/8 Ballad", "steps": 12, "slots": "D---DUD---DU", "accents": [0.6, 0.0, 0.0, 0.0, 0.6, 0.6, 1.0, 0.0, 0.0, 0.0, 0.6, 0.6], "difficulty": "Beginner", "tags": ["six-eight", "ballad"] },
+    { "name": "6/8 Roll", "steps": 12, "slots": "D-DUD-D-DUD-", "accents": [0.6, 0.0, 0.6, 0.6, 0.6, 0.0, 1.0, 0.0, 0.6, 0.6, 0.6, 0.0], "difficulty": "Intermediate", "tags": ["six-eight", "folk"] },
+    { "name": "PIMA Arpeggio", "steps": 8, "slots": "b321a321", "accents": [0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 1.0, 0.6], "difficulty": "Beginner", "tags": ["fingerpicking", "pima"] },
+    { "name": "Travis Picking", "steps": 8, "slots": "b2a3b2a3", "accents": [0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 1.0, 0.6], "difficulty": "Intermediate", "tags": ["fingerpicking", "travis"] },
+    { "name": "Travis Pinch Roll", "steps": 8, "slots": "b1a2b3a2", "accents": [0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 1.0, 0.6], "difficulty": "Advanced", "tags": ["fingerpicking", "travis"] },
+    { "name": "6/8 Fingerpicking", "steps": 12, "slots": "b-3-2-a-3-2-", "accents": [0.6, 0.0, 0.6, 0.0, 0.6, 0.0, 1.0, 0.0, 0.6, 0.0, 0.6, 0.0], "difficulty": "Beginner", "tags": ["fingerpicking", "six-eight"] }
   ]
 }

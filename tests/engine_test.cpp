@@ -1,4 +1,5 @@
 #include "algo/Engine.h"
+#include "algo/Render.h"
 #include "algo/Strum.h"
 #include "algo/Validate.h"
 #include "algo/VoicingCache.h"
@@ -163,3 +164,53 @@ TEST_CASE ("A 64-bar Advanced song starter takes 200 ms or less")
     REQUIRE (best <= 200.0);
 }
 #endif
+
+TEST_CASE ("A Travis pattern alternates the bass note between two strings on each beat (T16-06)")
+{
+    for (std::uint64_t seed = 1; seed <= 40; ++seed)
+    {
+        auto settings          = algo::test::settingsFor (seed, Difficulty::Intermediate);
+        settings.fingerpicking = true;
+        settings.bpmMin        = 100; // One chord in each bar
+        settings.bpmMax        = 120;
+        auto starter           = generate (settings);
+        REQUIRE (validateStarter (starter).empty ());
+
+        // Use the Travis pattern in each section.
+        for (const auto& def : bundledData ().strums)
+            if (def.name == "Travis Picking")
+                for (auto& section : starter.sections)
+                    section.strum = def.pattern;
+
+        const auto  events = render (starter, RenderOptions { false, false, -1 });
+        const Tick  bar    = barTicks (starter.timeSig);
+        const auto& first  = starter.sections[0].bars[0].voicings[0];
+        const int   bass   = pluckStringIndex (first, kPluckBass);
+        const int   alt    = pluckStringIndex (first, kPluckAltBass);
+        REQUIRE (bass != alt);
+
+        // The notes on beats 1 to 4 of bar 1: bass, alternate bass, bass, alternate bass.
+        std::vector<int> beats;
+        for (const auto& note : events.notes)
+            if (note.track == kGuitarTrack && note.start < bar && note.start % (kPpq) == 0)
+                beats.push_back (note.pitch);
+        REQUIRE (beats.size () == 4);
+        REQUIRE (beats[0] == beats[2]);
+        REQUIRE (beats[1] == beats[3]);
+        REQUIRE (beats[0] != beats[1]);
+    }
+}
+
+TEST_CASE ("A 6/8 song starter exports MIDI with the time signature 6/8")
+{
+    auto settings     = algo::test::settingsFor (3, Difficulty::Beginner);
+    settings.timeSig  = { 6, 8 };
+    const auto events = render (generate (settings));
+    const auto it     = std::find_if (events.metas.begin (), events.metas.end (), [] (const MetaEvent& e)
+        {
+        return e.type == MetaType::TimeSignature;
+    });
+    REQUIRE (it != events.metas.end ());
+    REQUIRE (it->data[0] == 6);
+    REQUIRE (it->data[1] == 3); // 2^3 = 8
+}

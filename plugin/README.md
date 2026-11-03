@@ -1,83 +1,31 @@
-# Algo-Rythm App
+# Algo-Rythm Plugin
 
-The JUCE GUI application for Algo-Rythm.
+The VST3, AU and Standalone plugin (SPEC-16). It uses the core library and the UI library `algo_ui` from `app/` (REQ-16-1).
 
-## Project Structure
-
-```
-plugin/
-├── CMakeLists.txt          # The app target. The root CMakeLists.txt adds this folder.
-├── README.md
-├── run.bat                 # Build script for Windows
-├── run.sh                  # Build script for macOS and Linux
-└── Source/
-    ├── Main.cpp            # Application entry point
-    ├── MainComponent.h     # Main window component header
-    ├── MainComponent.cpp   # Main window component implementation
-    ├── Fretboard.h         # Tight chord voicing (the model is in core/)
-    ├── Fretboard.cpp
-    └── StrumPattern.h      # Strum pattern generator
-```
-
-## Building
-
-CMake is the only build path. Run all commands from the repository root. CMake downloads JUCE at the version pinned in [cmake/Dependencies.cmake](../cmake/Dependencies.cmake).
-
-### Prerequisites
-
-- CMake 3.22+
-- Git
-- A C++17 compiler (see your operating system below)
-
-### macOS
-
-Install the Xcode Command Line Tools with `xcode-select --install`.
+## Build
 
 ```bash
-cmake -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --config Debug
-./build/plugin/AlgoRythm_artefacts/Debug/Algo-Rythm.app/Contents/MacOS/Algo-Rythm
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DALGO_BUILD_PLUGIN=ON
+cmake --build build --config Release --target AlgoRythmPlugin_All
 ```
 
-### Windows
+The files are in `build/plugin/AlgoRythmPlugin_artefacts/Release/`: `VST3/Algo-Rythm.vst3`, `AU/Algo-Rythm.component` (macOS only) and `Standalone/`.
+Copy the VST3 to your plugin folder, for example `~/Library/Audio/Plug-Ins/VST3/` on macOS or `C:\Program Files\Common Files\VST3\` on Windows.
 
-Install Visual Studio 2022 with the "Desktop development with C++" workload.
-Run these commands in Command Prompt.
+## Use
 
-```bat
-cmake -B build
-cmake --build build --config Debug
-build\plugin\AlgoRythm_artefacts\Debug\Algo-Rythm.exe
-```
+1. Put the plugin on an instrument track.
+2. Press Play in the host. The plugin follows the host tempo and position (REQ-16-2). The song starter repeats.
+3. To record the MIDI, route the MIDI output of the plugin to another instrument track.
+4. Turn "Preview Sound" off if you only want the MIDI output.
 
-`plugin\run.bat` does the configure and build steps.
+When the host stops, the plugin sends a note-off for each note that sounds. The DAW project saves the song starter and the settings, so a reopened project restores them.
+The click track of the app is not in the MIDI output. Use the metronome of the host.
 
-If the JUCE download fails with "Filename too long", move the repository to a shorter path.
+## Check the plugin
 
-### Ubuntu
-
-Install the compiler and the JUCE system packages:
+CI runs `pluginval` 1.0.4 at strictness level 5 on the VST3 on macOS and Windows (T16-03). To run it on your computer:
 
 ```bash
-sudo apt update
-sudo apt install g++ cmake git pkg-config libasound2-dev libfreetype-dev libfontconfig1-dev libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev libglu1-mesa-dev mesa-common-dev
+pluginval --strictness-level 5 --validate-in-process --validate build/plugin/AlgoRythmPlugin_artefacts/Release/VST3/Algo-Rythm.vst3
 ```
-
-Build and run the app:
-
-```bash
-cmake -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --config Debug
-./build/plugin/AlgoRythm_artefacts/Debug/Algo-Rythm
-```
-
-## Modules Used
-
-| Module               | Purpose                          |
-|----------------------|----------------------------------|
-| juce_core            | Core utilities, strings, files   |
-| juce_data_structures | ValueTree, UndoManager           |
-| juce_events          | Message loop, timers, threads    |
-| juce_graphics        | 2D graphics, fonts, images       |
-| juce_gui_basics      | Components, windows, layout      |
-| juce_gui_extra       | Extra widgets (WebView, etc.)    |

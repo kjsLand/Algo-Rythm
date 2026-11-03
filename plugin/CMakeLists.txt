@@ -1,49 +1,51 @@
-# The root CMakeLists.txt adds this folder and gets JUCE (cmake/Dependencies.cmake).
-juce_add_gui_app(AlgoRythm
+# The VST3, AU and Standalone plugin (SPEC-16). It uses the core library and the UI library of the app (REQ-16-1).
+# Build it with -DALGO_BUILD_PLUGIN=ON.
+
+if (APPLE)
+    set(algo_plugin_formats VST3 AU Standalone)
+else()
+    set(algo_plugin_formats VST3 Standalone)
+endif()
+
+juce_add_plugin(AlgoRythmPlugin
     PRODUCT_NAME "Algo-Rythm"
-    VERSION "1.0.0"
+    VERSION "${PROJECT_VERSION}"
     COMPANY_NAME "kjsLand"
-    BUNDLE_ID "com.kjsland.algorythm"
+    BUNDLE_ID "com.kjsland.algorythm.plugin"
+    PLUGIN_MANUFACTURER_CODE Kjsl
+    PLUGIN_CODE Algr
+    FORMATS ${algo_plugin_formats}
+    IS_SYNTH TRUE
+    NEEDS_MIDI_INPUT FALSE
+    NEEDS_MIDI_OUTPUT TRUE
+    IS_MIDI_EFFECT FALSE
+    EDITOR_WANTS_KEYBOARD_FOCUS TRUE
+    COPY_PLUGIN_AFTER_BUILD FALSE
+    VST3_CATEGORIES Instrument Generator
+    AU_MAIN_TYPE kAudioUnitType_MusicDevice
 )
 
-# Add source files
-target_sources(AlgoRythm
+target_sources(AlgoRythmPlugin
     PRIVATE
-        Source/Main.cpp
-        Source/MainComponent.cpp
-        Source/MainComponent.h
-        Source/Fretboard.cpp
-        Source/Fretboard.h
-        Source/StrumPattern.h
+        Source/PluginProcessor.cpp
+        Source/PluginEditor.cpp
 )
 
-# Set include directories
-target_include_directories(AlgoRythm
-    PRIVATE
-        Source
-)
+target_include_directories(AlgoRythmPlugin PRIVATE Source)
 
-# Link JUCE modules
-target_link_libraries(AlgoRythm
+target_link_libraries(AlgoRythmPlugin
     PRIVATE
-        algo::core
-        juce::juce_core
-        juce::juce_data_structures
-        juce::juce_events
-        juce::juce_graphics
-        juce::juce_gui_basics
-        juce::juce_gui_extra
+        algo_ui
+        juce::juce_audio_processors
+        juce::juce_audio_utils
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags
 )
 
-# Compile definitions
-target_compile_definitions(AlgoRythm
-    PRIVATE
-        JUCE_WEB_BROWSER=0
-        JUCE_USE_CURL=0
-        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:AlgoRythm,JUCE_PRODUCT_NAME>"
-        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:AlgoRythm,JUCE_VERSION>"
+target_compile_definitions(AlgoRythmPlugin
+    PUBLIC
+        JUCE_VST3_CAN_REPLACE_VST2=0 # The plugin has no VST2 version
+        JUCE_DISPLAY_SPLASH_SCREEN=0
 )

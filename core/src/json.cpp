@@ -46,6 +46,7 @@ namespace algo
             case Stroke::Rest: return '-';
             case Stroke::Mute: return 'x';
             case Stroke::Chuck: return 'c';
+            case Stroke::Pluck: throw std::invalid_argument ("A Pluck has the character of its string. Use slotChar.");
         }
         throw std::invalid_argument ("Unknown stroke value");
     }
@@ -56,6 +57,68 @@ namespace algo
             if (strokeChar (stroke) == c)
                 return stroke;
         return std::nullopt;
+    }
+
+    int pluckAt (const StrumPattern& pattern, std::size_t slot)
+    {
+        return slot < pattern.pluck.size () ? pattern.pluck[slot] : kPluckNone;
+    }
+
+    char slotChar (const StrumPattern& pattern, std::size_t slot)
+    {
+        const auto stroke = pattern.slots.at (slot);
+        if (stroke != Stroke::Pluck)
+            return strokeChar (stroke);
+
+        const int string = pluckAt (pattern, slot);
+        if (string == kPluckBass)
+            return 'b';
+        if (string == kPluckAltBass)
+            return 'a';
+        if (string >= 1 && string <= kNumStrings)
+            return static_cast<char> ('0' + string);
+        throw std::invalid_argument ("A Pluck slot has no string");
+    }
+
+    bool parseSlotChar (char c, Stroke& stroke, int& pluck)
+    {
+        pluck = kPluckNone;
+        if (const auto parsed = parseStroke (c))
+        {
+            stroke = *parsed;
+            return true;
+        }
+        stroke = Stroke::Pluck;
+        if (c == 'b')
+            pluck = kPluckBass;
+        else if (c == 'a')
+            pluck = kPluckAltBass;
+        else if (c >= '1' && c <= '0' + kNumStrings)
+            pluck = c - '0';
+        else
+            return false;
+        return true;
+    }
+
+    char setSlots (StrumPattern& pattern, const std::string& text)
+    {
+        pattern.slots.clear ();
+        pattern.pluck.clear ();
+        bool             anyPluck = false;
+        std::vector<int> plucks;
+        for (char c : text)
+        {
+            Stroke stroke = Stroke::Rest;
+            int    pluck  = kPluckNone;
+            if (!parseSlotChar (c, stroke, pluck))
+                return c;
+            pattern.slots.push_back (stroke);
+            plucks.push_back (pluck);
+            anyPluck = anyPluck || stroke == Stroke::Pluck;
+        }
+        if (anyPluck)
+            pattern.pluck = plucks;
+        return 0;
     }
 
     void to_json (Json& j, Difficulty v)
@@ -153,8 +216,8 @@ namespace algo
     void to_json (Json& j, const StrumPattern& v)
     {
         std::string slots;
-        for (auto stroke : v.slots)
-            slots += strokeChar (stroke);
+        for (std::size_t i = 0; i < v.slots.size (); ++i)
+            slots += slotChar (v, i);
 
         j = Json { { "steps", v.steps }, { "slots", slots }, { "accent", v.accent }, { "strings", v.strings } };
         if (!v.name.empty ())
@@ -168,14 +231,8 @@ namespace algo
         j.at ("strings").get_to (v.strings);
         v.name = j.value ("name", std::string {});
 
-        v.slots.clear ();
-        for (char c : j.at ("slots").get<std::string> ())
-        {
-            const auto stroke = parseStroke (c);
-            if (!stroke)
-                throw std::invalid_argument ("Unknown stroke: " + std::string (1, c));
-            v.slots.push_back (*stroke);
-        }
+        if (const char bad = setSlots (v, j.at ("slots").get<std::string> ()))
+            throw std::invalid_argument ("Unknown stroke: " + std::string (1, bad));
 
         if (static_cast<int> (v.slots.size ()) != v.steps || static_cast<int> (v.accent.size ()) != v.steps)
             throw std::invalid_argument ("slots and accent must each have " + std::to_string (v.steps) + " values");

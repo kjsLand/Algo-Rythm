@@ -32,11 +32,16 @@ namespace algo
 
         double weight (const std::string& name) const;
 
-        // Returns the patterns that have the difficulty or a lower difficulty, the step count and the hit count.
+        // Returns the strum patterns that have the difficulty or a lower difficulty, the step count and the hit count.
+        // A fingerpicking pattern is not a strum pattern.
         std::vector<StrumDefinition> filter (Difficulty difficulty, int steps, int targetHits) const;
 
         // Chooses one pattern from filter with weightedIndex. Returns no value if no pattern passes the filter.
         std::optional<StrumDefinition> pickLibraryPattern (Difficulty difficulty, int steps, int targetHits, Rng& rng) const;
+
+        // Chooses one fingerpicking pattern with the step count, and the difficulty or a lower difficulty.
+        // If no pattern has a low enough difficulty, uses any fingerpicking pattern with the step count.
+        std::optional<StrumDefinition> pickFingerpicking (Difficulty difficulty, int steps, Rng& rng) const;
 
     private:
         std::vector<StrumDefinition>  m_definitions;

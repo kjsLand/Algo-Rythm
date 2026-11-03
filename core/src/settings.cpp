@@ -156,6 +156,7 @@ namespace algo
                    { "masterSeed", v.masterSeed },
                    { "locks", v.locks },
                    { "hook", v.hook },
+                   { "fingerpicking", v.fingerpicking },
                    { "tables", v.tables },
                    { "tuning", v.tuning },
                    { "rerolls", v.rerolls } };
@@ -182,9 +183,10 @@ namespace algo
         j.at ("locks").get_to (v.locks);
 
         // These fields are newer, so a file can omit them.
-        v.hook    = j.value ("hook", false);
-        v.tables  = j.value ("tables", std::string ("rules"));
-        v.tuning  = j.value ("tuning", std::string ("Standard"));
-        v.rerolls = j.contains ("rerolls") ? j.at ("rerolls").get<RerollCounts> () : RerollCounts {};
+        v.hook          = j.value ("hook", false);
+        v.fingerpicking = j.value ("fingerpicking", false);
+        v.tables        = j.value ("tables", std::string ("rules"));
+        v.tuning        = j.value ("tuning", std::string ("Standard"));
+        v.rerolls       = j.contains ("rerolls") ? j.at ("rerolls").get<RerollCounts> () : RerollCounts {};
     }
 }

@@ -24,15 +24,21 @@ namespace algo
         Advanced
     };
 
-    // One slot in a strum pattern.
+    // One slot in a strum pattern. A Pluck sounds one string (T16-06).
     enum class Stroke
     {
         Down,
         Up,
         Rest,
         Mute,
-        Chuck
+        Chuck,
+        Pluck
     };
+
+    // The string of a Pluck: 1 to 6 is a guitar string number (1 = high E). The bass strings follow the voicing.
+    constexpr int kPluckNone    = 0;
+    constexpr int kPluckBass    = 7; // The lowest string of the voicing
+    constexpr int kPluckAltBass = 8; // The alternate bass string of a Travis pattern
 
     struct Key
     {
@@ -78,6 +84,7 @@ namespace algo
         std::vector<double> accent = std::vector<double> (8, 0.0); // 0-1 for each slot
         int                 strings { 6 };                         // The top strings that sound
         std::string         name;                                  // The library pattern name, or empty for a generated pattern
+        std::vector<int>    pluck;                                 // The string of each Pluck slot. Empty if the pattern has no Pluck.
     };
 
     struct MelodyNote
@@ -167,7 +174,7 @@ namespace algo
 
     inline bool operator== (const StrumPattern& a, const StrumPattern& b)
     {
-        return a.steps == b.steps && a.slots == b.slots && a.accent == b.accent && a.strings == b.strings && a.name == b.name;
+        return a.steps == b.steps && a.slots == b.slots && a.accent == b.accent && a.strings == b.strings && a.name == b.name && a.pluck == b.pluck;
     }
 
     inline bool operator== (const MelodyNote& a, const MelodyNote& b)

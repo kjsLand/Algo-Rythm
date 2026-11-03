@@ -2,6 +2,7 @@
 
 #include "algo/Fretboard.h"
 #include "algo/Hook.h"
+#include "algo/Json.h"
 #include "algo/Nashville.h"
 #include "algo/Pitch.h"
 #include "algo/Render.h"
@@ -61,7 +62,9 @@ namespace algo
         std::vector<std::string> rules;
         const int                steps = static_cast<int> (pattern.slots.size ());
 
-        if (pattern.slots.empty () || pattern.slots[0] != Stroke::Down)
+        // A fingerpicking pattern starts with a Pluck of the bass string. A strum starts with a Down stroke.
+        const bool picking = !pattern.pluck.empty ();
+        if (pattern.slots.empty () || pattern.slots[0] != (picking ? Stroke::Pluck : Stroke::Down))
             rules.push_back (kRuleStrumDownbeat);
 
         for (int i = 0; i < steps; ++i)
@@ -74,8 +77,15 @@ namespace algo
             }
         }
 
-        if (pattern.steps != steps || pattern.steps != gridSteps (difficulty, bpm, timeSig))
+        const int grid = picking ? fingerpickingSteps (timeSig) : gridSteps (difficulty, bpm, timeSig);
+        if (pattern.steps != steps || pattern.steps != grid)
             rules.push_back (kRuleStrumGrid);
+
+        if (std::any_of (pattern.slots.begin (), pattern.slots.end (), [] (Stroke s)
+        {
+            return s == Stroke::Pluck;
+        }) != picking)
+            rules.push_back (kRuleStrumDirection);
 
         if (difficulty == Difficulty::Beginner && steps > 0 && pattern.slots[static_cast<std::size_t> (steps / 2)] == Stroke::Rest)
             rules.push_back (kRuleStrumBeat3);
@@ -100,6 +110,10 @@ namespace algo
 
     bool chorusDensityOk (const StrumPattern& verse, const StrumPattern& chorus)
     {
+        // A fingerpicking pattern picks each slot, so its density does not change.
+        if (!verse.pluck.empty () || !chorus.pluck.empty ())
+            return true;
+
         const int extra = hitCount (chorus) - hitCount (verse);
         if (extra == 1 || extra == 2)
             return true;

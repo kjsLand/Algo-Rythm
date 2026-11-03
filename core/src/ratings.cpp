@@ -42,7 +42,6 @@ namespace algo
         if (!starter.rating || *starter.rating < kMinRating || *starter.rating > kMaxRating)
             throw std::invalid_argument ("A rating must be an integer from 1 to 5");
 
-        return csvField (date) + "," + std::to_string (starter.seed) + "," + csvField (pitchClassName (starter.key.root, starter.key)) + "," + csvField (starter.key.scale) + ","
-               + difficultyName (starter.difficulty) + "," + std::to_string (*starter.rating) + "," + csvField (progressionText (starter)) + "," + csvField (tables);
+        return csvField (date) + "," + std::to_string (starter.seed) + "," + csvField (pitchClassName (starter.key.root, starter.key)) + "," + csvField (starter.key.scale) + "," + difficultyName (starter.difficulty) + "," + std::to_string (*starter.rating) + "," + csvField (progressionText (starter)) + "," + csvField (tables);
     }
 }

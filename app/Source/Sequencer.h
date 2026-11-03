@@ -38,6 +38,14 @@ struct EventSchedule
     std::size_t firstAtOrAfter (double tick) const;
 };
 
+// The notes that sound, for each MIDI channel (index 0 = channel 1) and note.
+using SoundingNotes = std::array<std::array<bool, 128>, 16>;
+
+// Adds the events from startTick to endTick to the MIDI buffer, at their sample offsets in a block of
+// numSamples. The song repeats every schedule.length ticks, so a host can play it for any time. A note-off
+// is sent only for a note that sounds. With includeClick false, the click track is not in the buffer. The plugin uses this with the host position (REQ-16-2). It does not allocate.
+void collectSongEvents (const EventSchedule& schedule, double startTick, double endTick, double samplesPerTick, int numSamples, juce::MidiBuffer& midi, SoundingNotes& sounding, bool includeClick = true);
+
 // Gives a new schedule from the message thread to the audio thread, and gives the old schedule back for deletion.
 // The audio thread does not allocate, free or lock (REQ-12-1).
 class ScheduleSlot
