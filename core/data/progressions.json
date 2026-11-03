@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "progressions": [
+    { "name": "Axis",               "numerals": ["1", "5", "6m", "4"],            "mode": "Major",         "tags": ["pop"],                 "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Minor Axis",         "numerals": ["6m", "4", "1", "5"],            "mode": "Major",         "tags": ["pop"],                 "roles": ["verse", "chorus", "bridge", "loop"], "difficulty": "Beginner" },
+    { "name": "Fifties",            "numerals": ["1", "6m", "4", "5"],            "mode": "Major",         "tags": ["pop", "doo-wop"],      "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Three Chord Rock",   "numerals": ["1", "4", "1", "5"],             "mode": "Major",         "tags": ["rock", "folk"],        "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Rock Anthem",        "numerals": ["1", "4", "5", "4"],             "mode": "Major",         "tags": ["rock"],                "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Pop Climb",          "numerals": ["1", "4", "6m", "5"],            "mode": "Major",         "tags": ["pop"],                 "roles": ["verse", "chorus", "bridge", "loop"], "difficulty": "Beginner" },
+    { "name": "Folk Swing",         "numerals": ["1", "5", "4", "5"],             "mode": "Major",         "tags": ["folk", "country"],     "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Relative Drop",      "numerals": ["6m", "5", "4", "5"],            "mode": "Major",         "tags": ["rock", "pop"],         "roles": ["verse", "bridge", "loop"],           "difficulty": "Beginner" },
+    { "name": "Soft Turnaround",    "numerals": ["1", "6m", "2m", "5"],           "mode": "Major",         "tags": ["pop", "turnaround"],   "roles": ["verse", "loop"],                     "difficulty": "Beginner" },
+    { "name": "Ballad Rise",        "numerals": ["1", "3m", "4", "5"],            "mode": "Major",         "tags": ["ballad"],              "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Four Two Turn",      "numerals": ["1", "4", "2m", "5"],            "mode": "Major",         "tags": ["pop", "turnaround"],   "roles": ["verse", "loop"],                     "difficulty": "Beginner" },
+    { "name": "Walking Bass",       "numerals": ["1", "5/7", "6m", "4"],          "mode": "Major",         "tags": ["pop", "slash"],        "roles": ["verse", "chorus", "loop"],           "difficulty": "Intermediate" },
+    { "name": "Flat Seven Rock",    "numerals": ["1", "b7", "4", "b7"],           "mode": "Major",         "tags": ["rock", "borrowed"],    "roles": ["verse", "chorus", "loop"],           "difficulty": "Intermediate" },
+    { "name": "Borrowed Four",      "numerals": ["1", "6m", "4m", "5"],           "mode": "Major",         "tags": ["ballad", "borrowed"],  "roles": ["verse", "chorus", "loop"],           "difficulty": "Intermediate" },
+    { "name": "Sus Colour",         "numerals": ["1sus2", "5", "6m", "4add9"],    "mode": "Major",         "tags": ["pop", "colour"],       "roles": ["verse", "loop"],                     "difficulty": "Intermediate" },
+    { "name": "Jazz Turnaround",    "numerals": ["1maj7", "6m7", "2m7", "57"],    "mode": "Major",         "tags": ["jazz", "seventh"],     "roles": ["verse", "chorus", "loop"],           "difficulty": "Advanced" },
+    { "name": "Secondary Lift",     "numerals": ["1", "37", "6m", "4"],           "mode": "Major",         "tags": ["pop", "secondary"],    "roles": ["verse", "chorus", "loop"],           "difficulty": "Advanced" },
+    { "name": "Neo Soul",           "numerals": ["6m7", "4maj7", "1maj7", "57"],  "mode": "Major",         "tags": ["soul", "seventh"],     "roles": ["chorus", "bridge", "loop"],          "difficulty": "Advanced" },
+    { "name": "Aeolian Loop",       "numerals": ["1m", "6", "3", "7"],            "mode": "Natural Minor", "tags": ["pop"],                 "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Minor Descent",      "numerals": ["1m", "7", "6", "5m"],           "mode": "Natural Minor", "tags": ["rock", "folk"],        "roles": ["verse", "chorus", "bridge", "loop"], "difficulty": "Beginner" },
+    { "name": "Minor Rock",         "numerals": ["1m", "4m", "5m", "4m"],         "mode": "Natural Minor", "tags": ["rock"],                "roles": ["verse", "loop"],                     "difficulty": "Beginner" },
+    { "name": "Relative Climb",     "numerals": ["6", "7", "1m", "5m"],           "mode": "Natural Minor", "tags": ["pop"],                 "roles": ["verse", "chorus", "bridge", "loop"], "difficulty": "Beginner" },
+    { "name": "Epic Minor",         "numerals": ["1m", "6", "7", "4m"],           "mode": "Natural Minor", "tags": ["rock", "ballad"],      "roles": ["chorus", "loop"],                    "difficulty": "Beginner" },
+    { "name": "Minor Ballad",       "numerals": ["1m", "3", "7", "4m"],           "mode": "Natural Minor", "tags": ["ballad"],              "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Dorian Vamp",        "numerals": ["1m", "4", "1m", "4"],           "mode": "Dorian",        "tags": ["funk", "folk"],        "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Dorian Walk",        "numerals": ["1m", "3", "4", "5m"],           "mode": "Dorian",        "tags": ["folk"],                "roles": ["verse", "bridge", "loop"],           "difficulty": "Beginner" },
+    { "name": "Mixolydian Vamp",    "numerals": ["1", "7", "4", "7"],             "mode": "Mixolydian",    "tags": ["rock", "blues"],       "roles": ["verse", "chorus", "loop"],           "difficulty": "Beginner" },
+    { "name": "Mixolydian Turn",    "numerals": ["1", "4", "7", "5m"],            "mode": "Mixolydian",    "tags": ["rock", "blues"],       "roles": ["verse", "bridge", "loop"],           "difficulty": "Beginner" }
+  ]
+}

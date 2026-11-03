@@ -3,6 +3,16 @@ add_executable(algo_tests
     property_helper_test.cpp
     strum_regression_test.cpp
     fretboard_regression_test.cpp
+    version_test.cpp
+    types_test.cpp
+    json_test.cpp
+    scale_registry_test.cpp
+    chord_registry_test.cpp
+    data_validation_test.cpp
+    data_test.cpp
+    progression_library_test.cpp
+    strum_data_test.cpp
+    shape_data_test.cpp
     ${PROJECT_SOURCE_DIR}/plugin/Source/Fretboard.cpp
 )
 
@@ -20,6 +30,7 @@ target_compile_definitions(algo_tests
 target_link_libraries(algo_tests
     PRIVATE
         Catch2::Catch2WithMain
+        algo::core
 )
 
 include(Catch)

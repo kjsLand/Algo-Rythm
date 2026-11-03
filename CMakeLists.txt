@@ -13,6 +13,9 @@ option(ALGO_BUILD_PLUGIN "Build the audio plugin"    OFF)
 
 include(cmake/Dependencies.cmake)
 include(cmake/Warnings.cmake)
+include(cmake/EmbedData.cmake)
+
+add_subdirectory(core)
 
 if (ALGO_BUILD_APP)
     add_subdirectory(plugin)

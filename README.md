@@ -3,7 +3,7 @@ Auto generate MIDI files to give music producers a jumping off point during the 
 
 ## Build and test
 
-You need CMake 3.22+, Git and a C++17 compiler. CMake downloads JUCE and Catch2 at the versions pinned in [cmake/Dependencies.cmake](cmake/Dependencies.cmake).
+You need CMake 3.22+, Git and a C++17 compiler. CMake downloads JUCE, Catch2 and nlohmann/json at the versions pinned in [cmake/Dependencies.cmake](cmake/Dependencies.cmake).
 
 - **Windows:** Install Visual Studio 2022 with the "Desktop development with C++" workload. Use Command Prompt.
 - **macOS:** Install the Xcode Command Line Tools with `xcode-select --install`.

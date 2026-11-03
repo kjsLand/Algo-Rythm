@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "scales": [
+    { "name": "Major",            "steps": [2, 2, 1, 2, 2, 2, 1],    "tags": ["heptatonic", "major"] },
+    { "name": "Natural Minor",    "steps": [2, 1, 2, 2, 1, 2, 2],    "tags": ["heptatonic", "minor"] },
+    { "name": "Harmonic Minor",   "steps": [2, 1, 2, 2, 1, 3, 1],    "tags": ["heptatonic", "minor"] },
+    { "name": "Melodic Minor",    "steps": [2, 1, 2, 2, 2, 2, 1],    "tags": ["heptatonic", "minor"] },
+    { "name": "Dorian",           "steps": [2, 1, 2, 2, 2, 1, 2],    "tags": ["heptatonic", "minor", "mode"] },
+    { "name": "Phrygian",         "steps": [1, 2, 2, 2, 1, 2, 2],    "tags": ["heptatonic", "minor", "mode"] },
+    { "name": "Lydian",           "steps": [2, 2, 2, 1, 2, 2, 1],    "tags": ["heptatonic", "major", "mode"] },
+    { "name": "Mixolydian",       "steps": [2, 2, 1, 2, 2, 1, 2],    "tags": ["heptatonic", "major", "mode"] },
+    { "name": "Locrian",          "steps": [1, 2, 2, 1, 2, 2, 2],    "tags": ["heptatonic", "minor", "mode"] },
+    { "name": "Major Pentatonic", "steps": [2, 2, 3, 2, 3],          "tags": ["pentatonic", "major"] },
+    { "name": "Minor Pentatonic", "steps": [3, 2, 2, 3, 2],          "tags": ["pentatonic", "minor"] },
+    { "name": "Blues",            "steps": [3, 2, 1, 1, 3, 2],       "tags": ["hexatonic", "blues"] },
+    { "name": "Whole Tone",       "steps": [2, 2, 2, 2, 2, 2],       "tags": ["hexatonic", "symmetric"] },
+    { "name": "Diminished (HW)",  "steps": [1, 2, 1, 2, 1, 2, 1, 2], "tags": ["octatonic", "symmetric"] },
+    { "name": "Diminished (WH)",  "steps": [2, 1, 2, 1, 2, 1, 2, 1], "tags": ["octatonic", "symmetric"] }
+  ]
+}

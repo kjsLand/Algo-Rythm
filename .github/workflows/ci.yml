@@ -46,6 +46,20 @@ jobs:
           ALGO_PROP_SEEDS: 10000
         run: ctest --test-dir build -C Release --output-on-failure
 
+  core-rules:
+    name: Check the core rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: The core must not include JUCE
+        run: |
+          ! grep -rnE '#[[:space:]]*include[[:space:]]*[<"](juce|JuceHeader)' core/
+
+      - name: The core must not write to the console
+        run: |
+          ! grep -rnE 'std::c(out|err)' core/
+
   format:
     name: Check the code format
     runs-on: ubuntu-latest

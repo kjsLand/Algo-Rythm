@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "chords": [
+    { "name": "Major",  "symbol": "",       "intervals": [4, 7],         "optional": [7], "tags": ["triad"] },
+    { "name": "Minor",  "symbol": "m",      "intervals": [3, 7],         "optional": [7], "tags": ["triad"] },
+    { "name": "Aug",    "symbol": "aug",    "intervals": [4, 8],         "optional": [],  "tags": ["triad"] },
+    { "name": "Dim",    "symbol": "dim",    "intervals": [3, 6],         "optional": [],  "tags": ["triad"] },
+    { "name": "Maj7",   "symbol": "maj7",   "intervals": [4, 7, 11],     "optional": [7], "tags": ["seventh"] },
+    { "name": "M7",     "symbol": "m7",     "intervals": [3, 7, 10],     "optional": [7], "tags": ["seventh"] },
+    { "name": "Dom7",   "symbol": "7",      "intervals": [4, 7, 10],     "optional": [7], "tags": ["seventh"] },
+    { "name": "Dim7",   "symbol": "dim7",   "intervals": [3, 6, 9],      "optional": [],  "tags": ["seventh"] },
+    { "name": "M7b5",   "symbol": "m7b5",   "intervals": [3, 6, 10],     "optional": [],  "tags": ["seventh"] },
+    { "name": "Sus2",   "symbol": "sus2",   "intervals": [2, 7],         "optional": [7], "tags": ["suspended"] },
+    { "name": "Sus4",   "symbol": "sus4",   "intervals": [5, 7],         "optional": [7], "tags": ["suspended"] },
+    { "name": "Add9",   "symbol": "add9",   "intervals": [4, 7, 14],     "optional": [7], "tags": ["added"] },
+    { "name": "Maj6",   "symbol": "6",      "intervals": [4, 7, 9],      "optional": [7], "tags": ["added"] },
+    { "name": "M6",     "symbol": "m6",     "intervals": [3, 7, 9],      "optional": [7], "tags": ["added"] },
+    { "name": "Dom9",   "symbol": "9",      "intervals": [4, 7, 10, 14], "optional": [7], "tags": ["extended"] },
+    { "name": "M9",     "symbol": "m9",     "intervals": [3, 7, 10, 14], "optional": [7], "tags": ["extended"] },
+    { "name": "Add11",  "symbol": "add11",  "intervals": [4, 7, 17],     "optional": [7], "tags": ["added"] },
+    { "name": "Power",  "symbol": "5",      "intervals": [7],            "optional": [],  "tags": ["power"] },
+    { "name": "7Sus4",  "symbol": "7sus4",  "intervals": [5, 7, 10],     "optional": [7], "tags": ["seventh", "suspended"] },
+    { "name": "mMaj7",  "symbol": "mMaj7",  "intervals": [3, 7, 11],     "optional": [7], "tags": ["seventh"] },
+    { "name": "Maj7#5", "symbol": "maj7#5", "intervals": [4, 8, 11],     "optional": [],  "tags": ["seventh"] }
+  ]
+}

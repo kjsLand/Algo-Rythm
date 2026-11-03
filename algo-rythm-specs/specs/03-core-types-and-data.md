@@ -59,7 +59,7 @@ Out of scope:
 **Acceptance:**
 
 - [ ] `algo_core` compiles with no warnings on the three CI systems.
-- [ ] A CI check fails if any file in `core/` contains `#include <juce`.
+- [x] A CI check fails if any file in `core/` contains `#include <juce`.
 
 ### T03-02: Define the value types
 
@@ -78,8 +78,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A default `SongStarter` compiles and has `schemaVersion == 1`.
-- [ ] Two default objects of each type are equal.
+- [x] A default `SongStarter` compiles and has `schemaVersion == 1`.
+- [x] Two default objects of each type are equal.
 
 ### T03-03: Add JSON serialization for the value types
 
@@ -100,12 +100,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] For each type, JSON to object to JSON gives the same text.
+- [x] For each type, JSON to object to JSON gives the same text.
 - [ ] The example JSON in Coding Spec Section 5 parses with no error.
 
 ### T03-04: Move the scale registry to the core
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-03
 - **Files:** `core/include/algo/ScaleRegistry.h`, `core/src/scale_registry.cpp`, `core/data/scales.json`, `tests/scale_registry_test.cpp`
 
@@ -121,13 +121,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `allNames()` returns the 15 names in file order.
-- [ ] A scale with steps that do not add up to 12 causes a load error with the scale name.
-- [ ] Lookup is not case-sensitive.
+- [x] `allNames()` returns the 15 names in file order.
+- [x] A scale with steps that do not add up to 12 causes a load error with the scale name.
+- [x] Lookup is not case-sensitive.
 
 ### T03-05: Move the chord registry to the core and add chord types
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-03
 - **Files:** `core/include/algo/ChordRegistry.h`, `core/src/chord_registry.cpp`, `core/data/chords.json`, `tests/chord_registry_test.cpp`
 
@@ -144,13 +144,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The registry contains 21 chord types.
-- [ ] `Dom7` on root 7 (G) gives the pitch classes {7, 11, 2, 5}.
-- [ ] A chord with a duplicate name causes a load error.
+- [x] The registry contains 21 chord types.
+- [x] `Dom7` on root 7 (G) gives the pitch classes {7, 11, 2, 5}.
+- [x] A chord with a duplicate name causes a load error.
 
 ### T03-06: Validate the data files
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-04, T03-05
 - **Files:** `core/include/algo/DataError.h`, `core/src/data_validation.cpp`, `tests/data_validation_test.cpp`
 
@@ -165,12 +165,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Each error message gives the file name, the entry name and the problem.
-- [ ] All bundled data files pass validation.
+- [x] Each error message gives the file name, the entry name and the problem.
+- [x] All bundled data files pass validation.
 
 ### T03-07: Compile the data files into the binary
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-06
 - **Files:** `cmake/EmbedData.cmake`, `core/include/algo/Data.h`, `core/src/data.cpp`
 
@@ -184,8 +184,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A test calls `loadBundledData()` in a folder that has no `core/data/` subfolder. All registries load.
-- [ ] A change to `chords.json` appears in the next build with no manual step.
+- [x] A test calls `loadBundledData()` in a folder that has no `core/data/` subfolder. All registries load.
+- [x] A change to `chords.json` appears in the next build with no manual step.
 
 ### T03-08: Write the progression data file
 
@@ -205,8 +205,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The file contains 20 or more progressions.
-- [ ] A filter for "chorus" and "Beginner" in a major key returns 5 or more progressions.
+- [x] The file contains 20 or more progressions.
+- [x] A filter for "chorus" and "Beginner" in a major key returns 5 or more progressions.
 
 ### T03-09: Write the strum data file
 
@@ -224,12 +224,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The file contains 12 or more patterns.
-- [ ] Each Beginner pattern has 8 steps.
+- [x] The file contains 12 or more patterns.
+- [x] Each Beginner pattern has 8 steps.
 
 ### T03-10: Write the chord shape data file
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-06
 - **Files:** `core/data/shapes.json`
 
@@ -247,11 +247,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The file contains 40 or more shapes.
-- [ ] A test plays each shape at its root fret and gets the correct pitch-class set.
+- [x] The file contains 40 or more shapes.
+- [x] A test plays each shape at its root fret and gets the correct pitch-class set.
 
 ## 5. Done criteria
 
 - [ ] All tasks in this spec are Done.
-- [ ] The core compiles with no JUCE and no warnings.
+- [x] The core compiles with no JUCE and no warnings.
 - [ ] All data files load and pass validation in CI.

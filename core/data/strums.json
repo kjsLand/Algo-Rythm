@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "strums": [
+    { "name": "Quarter Downs", "steps": 8, "slots": "D-D-D-D-", "accents": [0.6, 0.0, 1.0, 0.0, 0.6, 0.0, 1.0, 0.0], "difficulty": "Beginner", "tags": ["straight", "rock"] },
+    { "name": "Half Notes", "steps": 8, "slots": "D---D---", "accents": [0.6, 0.0, 0.0, 0.0, 0.6, 0.0, 0.0, 0.0], "difficulty": "Beginner", "tags": ["straight", "ballad"] },
+    { "name": "Straight Eighths", "steps": 8, "slots": "DUDUDUDU", "accents": [0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 1.0, 0.6], "difficulty": "Beginner", "tags": ["straight", "pop"] },
+    { "name": "Boom Chick", "steps": 8, "slots": "D-DUD-DU", "accents": [0.6, 0.0, 1.0, 0.6, 0.6, 0.0, 1.0, 0.6], "difficulty": "Beginner", "tags": ["folk", "country"] },
+    { "name": "Last Beat Up", "steps": 8, "slots": "D-D-D-DU", "accents": [0.6, 0.0, 1.0, 0.0, 0.6, 0.0, 1.0, 0.6], "difficulty": "Beginner", "tags": ["pop", "rock"] },
+    { "name": "Folk Push", "steps": 8, "slots": "D-DUD-D-", "accents": [0.6, 0.0, 1.0, 0.6, 0.6, 0.0, 1.0, 0.0], "difficulty": "Beginner", "tags": ["folk"] },
+    { "name": "Old Faithful", "steps": 8, "slots": "D-DU-UDU", "accents": [0.6, 0.0, 1.0, 0.6, 0.0, 0.6, 1.0, 0.6], "difficulty": "Intermediate", "tags": ["pop", "folk", "syncopated"] },
+    { "name": "Calypso", "steps": 8, "slots": "D-DU-UD-", "accents": [0.6, 0.0, 1.0, 0.6, 0.0, 0.6, 1.0, 0.0], "difficulty": "Intermediate", "tags": ["island", "syncopated"] },
+    { "name": "Pop Sixteenths", "steps": 16, "slots": "D-D-D-DUD-DUD-DU", "accents": [0.6, 0.0, 0.6, 0.0, 1.0, 0.0, 0.6, 0.6, 0.6, 0.0, 0.6, 0.6, 1.0, 0.0, 0.6, 0.6], "difficulty": "Intermediate", "tags": ["pop", "sixteenth"] },
+    { "name": "Syncopated Sixteenths", "steps": 16, "slots": "D--UD-DU--DUD-DU", "accents": [0.6, 0.0, 0.0, 0.6, 1.0, 0.0, 0.6, 0.6, 0.0, 0.0, 0.6, 0.6, 1.0, 0.0, 0.6, 0.6], "difficulty": "Intermediate", "tags": ["pop", "sixteenth", "syncopated"] },
+    { "name": "Chuck Backbeat", "steps": 8, "slots": "D-cUD-cU", "accents": [0.6, 0.0, 1.0, 0.6, 0.6, 0.0, 1.0, 0.6], "difficulty": "Advanced", "tags": ["funk", "percussive"] },
+    { "name": "Muted Drive", "steps": 8, "slots": "DxDUDxDU", "accents": [0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 1.0, 0.6], "difficulty": "Advanced", "tags": ["rock", "percussive"] },
+    { "name": "Funk Sixteenths", "steps": 16, "slots": "DxDUcxDUDxDUcUDU", "accents": [0.6, 0.6, 0.6, 0.6, 1.0, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 1.0, 0.6, 0.6, 0.6], "difficulty": "Advanced", "tags": ["funk", "sixteenth", "percussive"] }
+  ]
+}
