@@ -77,8 +77,27 @@ namespace algo
             errors.push_back ("The capo must be " + rangeText (0, Fretboard::kMaxCapo) + ": " + std::to_string (settings.capo));
 
         // T16-06 adds 6/8.
-        if (!(settings.timeSig == TimeSig { 4, 4 }))
-            errors.push_back ("The time signature must be 4/4: " + std::to_string (settings.timeSig.numerator) + "/" + std::to_string (settings.timeSig.denominator));
+        if (!(settings.timeSig == TimeSig { 4, 4 }) && !(settings.timeSig == TimeSig { 6, 8 }))
+            errors.push_back ("The time signature must be 4/4 or 6/8: " + std::to_string (settings.timeSig.numerator) + "/" + std::to_string (settings.timeSig.denominator));
+
+        if (settings.tables != "rules" && settings.tables != "learned")
+            errors.push_back ("The tables must be rules or learned: " + settings.tables);
+
+        const auto isTuning = [&settings] (const Tuning& tuning)
+        {
+            return tuning.name == settings.tuning;
+        };
+        if (std::none_of (data.tunings.begin (), data.tunings.end (), isTuning))
+            errors.push_back ("Unknown tuning: " + settings.tuning);
+
+        for (const auto* counts : { &settings.rerolls.chords, &settings.rerolls.voicings, &settings.rerolls.strums })
+            if (std::any_of (counts->begin (), counts->end (), [] (int count)
+            {
+                return count < 0;
+            }))
+                errors.push_back ("A reroll count must not be negative");
+        if (settings.rerolls.hook < 0)
+            errors.push_back ("A reroll count must not be negative");
 
         return errors;
     }
@@ -135,7 +154,11 @@ namespace algo
                    { "capo", v.capo },
                    { "timeSig", v.timeSig },
                    { "masterSeed", v.masterSeed },
-                   { "locks", v.locks } };
+                   { "locks", v.locks },
+                   { "hook", v.hook },
+                   { "tables", v.tables },
+                   { "tuning", v.tuning },
+                   { "rerolls", v.rerolls } };
     }
 
     void from_json (const Json& j, GenerationSettings& v)
@@ -157,5 +180,11 @@ namespace algo
         j.at ("timeSig").get_to (v.timeSig);
         j.at ("masterSeed").get_to (v.masterSeed);
         j.at ("locks").get_to (v.locks);
+
+        // These fields are newer, so a file can omit them.
+        v.hook    = j.value ("hook", false);
+        v.tables  = j.value ("tables", std::string ("rules"));
+        v.tuning  = j.value ("tuning", std::string ("Standard"));
+        v.rerolls = j.contains ("rerolls") ? j.at ("rerolls").get<RerollCounts> () : RerollCounts {};
     }
 }

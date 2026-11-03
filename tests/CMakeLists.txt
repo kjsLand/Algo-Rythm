@@ -35,17 +35,33 @@ add_executable(algo_tests
     voicing_stage_test.cpp
     voicing_property_test.cpp
     voicing_bench_test.cpp
+    strum_test.cpp
+    strum_property_test.cpp
+    render_test.cpp
+    smf_test.cpp
+    smf_roundtrip_test.cpp
+    tab_test.cpp
+    engine_test.cpp
+    files_test.cpp
+    contour_test.cpp
+    hook_property_test.cpp
+    locks_test.cpp
+    reroll_test.cpp
+    validate_test.cpp
+    musicxml_test.cpp
+    tables_test.cpp
+    support/smf_reader.cpp
 )
 
 target_include_directories(algo_tests
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${PROJECT_SOURCE_DIR}/plugin/Source
 )
 
 target_compile_definitions(algo_tests
     PRIVATE
         $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS> # std::getenv
+        ALGO_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/golden"
 )
 
 target_link_libraries(algo_tests

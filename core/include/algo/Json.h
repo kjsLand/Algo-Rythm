@@ -41,6 +41,8 @@ namespace algo
     void from_json (const Json& j, Bar& v);
     void to_json (Json& j, const Section& v);
     void from_json (const Json& j, Section& v);
+    void to_json (Json& j, const RerollCounts& v);
+    void from_json (const Json& j, RerollCounts& v);
     void to_json (Json& j, const Tuning& v);
     void from_json (const Json& j, Tuning& v);
     void to_json (Json& j, const SongStarter& v);

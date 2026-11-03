@@ -1,6 +1,7 @@
 #include "algo/Data.h"
 
 #include "algo/DataError.h"
+#include "algo/Pitch.h"
 
 #include "data_reader.h"
 #include "embedded_data.h"
@@ -36,6 +37,7 @@ namespace algo
             data.shapes       = parseShapes (read ("shapes.json"), data.chords);
             data.forms        = parseForms (read ("forms.json"));
             data.transitions  = TransitionTable::fromJsonText (read ("transitions.json"));
+            data.tunings      = parseTunings (read ("tunings.json"));
             return data;
         }
     }
@@ -49,6 +51,7 @@ namespace algo
             def.name           = entry.name ();
             def.difficulty     = entry.getDifficulty ("difficulty");
             def.tags           = entry.getStringList ("tags");
+            def.pattern.name   = def.name;
             def.pattern.steps  = entry.getInt ("steps");
             def.pattern.accent = entry.getNumberList ("accents");
             const auto slots   = entry.getString ("slots");
@@ -156,6 +159,66 @@ namespace algo
             forms.push_back (std::move (form));
         }
         return forms;
+    }
+
+    std::vector<Tuning> parseTunings (const std::string& text, const std::string& file)
+    {
+        std::vector<Tuning> tunings;
+        for (const auto& entry : detail::readEntries (text, file, "tunings"))
+        {
+            Tuning tuning;
+            tuning.name        = entry.name ();
+            const auto strings = entry.getStringList ("strings");
+            if (strings.size () != kNumStrings)
+                entry.fail ("'strings' must have 6 values");
+
+            for (std::size_t i = 0; i < kNumStrings; ++i)
+            {
+                const auto note = tryParseNoteName (strings[i]);
+                if (!note || !note->midiNote)
+                    entry.fail ("'" + strings[i] + "' is not a note name with an octave number");
+                tuning.strings[i] = *note->midiNote;
+                if (i > 0 && tuning.strings[i] <= tuning.strings[i - 1])
+                    entry.fail ("each string must be higher than the string before it");
+            }
+            tunings.push_back (std::move (tuning));
+        }
+        if (tunings.empty () || tunings.front ().name != "Standard")
+            throw DataError (file, "", "the first tuning must be 'Standard'");
+        return tunings;
+    }
+
+    const Tuning& findTuning (const DataSet& data, const std::string& name)
+    {
+        for (const auto& tuning : data.tunings)
+            if (tuning.name == name)
+                return tuning;
+        throw DataError ("tunings.json", name, "the tuning is not in the data");
+    }
+
+    std::map<std::string, double> parseStrumWeights (const std::string& text, const std::string& file)
+    {
+        Json document;
+        try
+        {
+            document = Json::parse (text);
+        }
+        catch (const Json::parse_error& error)
+        {
+            throw DataError (file, "", std::string ("the file is not valid JSON: ") + error.what ());
+        }
+
+        if (!document.is_object () || !document.contains ("weights") || !document.at ("weights").is_object ())
+            throw DataError (file, "", "the field 'weights' must be an object");
+
+        std::map<std::string, double> weights;
+        for (const auto& item : document.at ("weights").items ())
+        {
+            if (!item.value ().is_number () || !(item.value ().get<double> () > 0.0))
+                throw DataError (file, item.key (), "the weight must be a positive number");
+            weights[item.key ()] = item.value ().get<double> ();
+        }
+        return weights;
     }
 
     DataSet loadBundledData ()

@@ -2,6 +2,7 @@
 
 #include <array>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -76,6 +77,7 @@ namespace algo
         std::vector<Stroke> slots  = std::vector<Stroke> (8, Stroke::Rest);
         std::vector<double> accent = std::vector<double> (8, 0.0); // 0-1 for each slot
         int                 strings { 6 };                         // The top strings that sound
+        std::string         name;                                  // The library pattern name, or empty for a generated pattern
     };
 
     struct MelodyNote
@@ -98,6 +100,7 @@ namespace algo
         std::string      name { "Verse" };
         std::vector<Bar> bars;
         StrumPattern     strum;
+        std::string      role; // "verse", "chorus", "bridge" or "loop". Empty in files from before the field.
     };
 
     // The open notes from the low E string to the high E string.
@@ -106,6 +109,18 @@ namespace algo
         std::string                       name { "Standard" };
         std::array<MidiNote, kNumStrings> strings { 40, 45, 50, 55, 59, 64 };
     };
+
+    // The number of rerolls of each stage. Index i is section i. A section with no value has the count 0.
+    struct RerollCounts
+    {
+        std::vector<int> chords;
+        std::vector<int> voicings;
+        std::vector<int> strums;
+        int              hook { 0 };
+    };
+
+    constexpr int kMinRating = 1;
+    constexpr int kMaxRating = 5;
 
     struct SongStarter
     {
@@ -120,6 +135,9 @@ namespace algo
         std::string             form { "Verse-Chorus" };
         std::vector<Section>    sections;
         std::vector<MelodyNote> hook; // Empty if the song starter has no hook
+        RerollCounts            rerolls;
+        std::string             tables { "rules" }; // "rules" or "learned" (SPEC-15)
+        std::optional<int>      rating;             // 1 to 5 (REQ-14-4)
     };
 
     inline bool operator== (const Key& a, const Key& b)
@@ -149,7 +167,7 @@ namespace algo
 
     inline bool operator== (const StrumPattern& a, const StrumPattern& b)
     {
-        return a.steps == b.steps && a.slots == b.slots && a.accent == b.accent && a.strings == b.strings;
+        return a.steps == b.steps && a.slots == b.slots && a.accent == b.accent && a.strings == b.strings && a.name == b.name;
     }
 
     inline bool operator== (const MelodyNote& a, const MelodyNote& b)
@@ -164,7 +182,12 @@ namespace algo
 
     inline bool operator== (const Section& a, const Section& b)
     {
-        return a.name == b.name && a.bars == b.bars && a.strum == b.strum;
+        return a.name == b.name && a.bars == b.bars && a.strum == b.strum && a.role == b.role;
+    }
+
+    inline bool operator== (const RerollCounts& a, const RerollCounts& b)
+    {
+        return a.chords == b.chords && a.voicings == b.voicings && a.strums == b.strums && a.hook == b.hook;
     }
 
     inline bool operator== (const Tuning& a, const Tuning& b)
@@ -174,6 +197,6 @@ namespace algo
 
     inline bool operator== (const SongStarter& a, const SongStarter& b)
     {
-        return a.schemaVersion == b.schemaVersion && a.seed == b.seed && a.key == b.key && a.bpm == b.bpm && a.timeSig == b.timeSig && a.capo == b.capo && a.tuning == b.tuning && a.difficulty == b.difficulty && a.form == b.form && a.sections == b.sections && a.hook == b.hook;
+        return a.schemaVersion == b.schemaVersion && a.seed == b.seed && a.key == b.key && a.bpm == b.bpm && a.timeSig == b.timeSig && a.capo == b.capo && a.tuning == b.tuning && a.difficulty == b.difficulty && a.form == b.form && a.sections == b.sections && a.hook == b.hook && a.rerolls == b.rerolls && a.tables == b.tables && a.rating == b.rating;
     }
 }

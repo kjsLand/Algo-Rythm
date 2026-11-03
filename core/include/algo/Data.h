@@ -8,6 +8,7 @@
 
 #include <array>
 #include <filesystem>
+#include <map>
 #include <optional>
 #include <string>
 #include <vector>
@@ -62,19 +63,28 @@ namespace algo
     // All data that the generator stages use.
     struct DataSet
     {
-        ScaleRegistry                scales;
-        ChordRegistry                chords;
-        ProgressionLibrary           progressions;
-        std::vector<StrumDefinition> strums;
-        std::vector<ChordShape>      shapes;
-        std::vector<FormDefinition>  forms;
-        TransitionTable              transitions;
+        ScaleRegistry                 scales;
+        ChordRegistry                 chords;
+        ProgressionLibrary            progressions;
+        std::vector<StrumDefinition>  strums;
+        std::vector<ChordShape>       shapes;
+        std::vector<FormDefinition>   forms;
+        TransitionTable               transitions;
+        std::map<std::string, double> strumWeights; // Empty = each strum has the weight 1.0 (SPEC-15)
+        std::vector<Tuning>           tunings;      // The first tuning is Standard
     };
 
     // Throw DataError if the text is not valid.
     std::vector<StrumDefinition> parseStrums (const std::string& text, const std::string& file = "strums.json");
     std::vector<ChordShape>      parseShapes (const std::string& text, const ChordRegistry& chords, const std::string& file = "shapes.json");
     std::vector<FormDefinition>  parseForms (const std::string& text, const std::string& file = "forms.json");
+    std::vector<Tuning>          parseTunings (const std::string& text, const std::string& file = "tunings.json");
+
+    // Returns the tuning with the name. Throws DataError if the data set has no such tuning.
+    const Tuning& findTuning (const DataSet& data, const std::string& name);
+
+    // Reads a learned strum weight file (SPEC-15): { "weights": { "<pattern name>": <weight> } }.
+    std::map<std::string, double> parseStrumWeights (const std::string& text, const std::string& file = "strums.learned.json");
 
     // Loads the data files that are compiled into the binary.
     DataSet loadBundledData ();

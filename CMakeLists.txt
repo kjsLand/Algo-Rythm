@@ -12,11 +12,20 @@ option(ALGO_BUILD_TESTS  "Build the unit tests"      ON)
 option(ALGO_BUILD_PLUGIN "Build the audio plugin"    OFF)
 option(ALGO_BUILD_TOOLS  "Build the developer tools" ON)
 
+# enable_testing comes first, so the CLI folder can add its smoke tests.
+if (ALGO_BUILD_TESTS)
+    enable_testing()
+endif()
+
 include(cmake/Dependencies.cmake)
 include(cmake/Warnings.cmake)
 include(cmake/EmbedData.cmake)
 
 add_subdirectory(core)
+
+if (ALGO_BUILD_CLI)
+    add_subdirectory(cli)
+endif()
 
 if (ALGO_BUILD_APP)
     add_subdirectory(plugin)
@@ -27,6 +36,5 @@ if (ALGO_BUILD_TOOLS)
 endif()
 
 if (ALGO_BUILD_TESTS)
-    enable_testing()
     add_subdirectory(tests)
 endif()

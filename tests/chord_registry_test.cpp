@@ -54,7 +54,8 @@ TEST_CASE ("Dom7 on root 7 gives the pitch classes of G7")
 
 TEST_CASE ("A voicing cannot omit the root, the 3rd or the 7th")
 {
-    for (const auto& chord : loadBundledData ().chords.all ())
+    const auto data = loadBundledData ();
+    for (const auto& chord : data.chords.all ())
     {
         CAPTURE (chord.name);
         for (int interval : { 3, 4, 10, 11 })

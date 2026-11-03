@@ -1,0 +1,4 @@
+# The golden files are compared byte for byte, so Git must not change their line ends.
+tests/golden/** -text
+cli/tests/data/** -text
+*.mid binary

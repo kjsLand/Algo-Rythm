@@ -157,6 +157,8 @@ namespace algo
             slots += strokeChar (stroke);
 
         j = Json { { "steps", v.steps }, { "slots", slots }, { "accent", v.accent }, { "strings", v.strings } };
+        if (!v.name.empty ())
+            j["name"] = v.name;
     }
 
     void from_json (const Json& j, StrumPattern& v)
@@ -164,6 +166,7 @@ namespace algo
         j.at ("steps").get_to (v.steps);
         j.at ("accent").get_to (v.accent);
         j.at ("strings").get_to (v.strings);
+        v.name = j.value ("name", std::string {});
 
         v.slots.clear ();
         for (char c : j.at ("slots").get<std::string> ())
@@ -204,14 +207,28 @@ namespace algo
 
     void to_json (Json& j, const Section& v)
     {
-        j = Json { { "name", v.name }, { "bars", v.bars }, { "strum", v.strum } };
+        j = Json { { "name", v.name }, { "role", v.role }, { "bars", v.bars }, { "strum", v.strum } };
     }
 
     void from_json (const Json& j, Section& v)
     {
         j.at ("name").get_to (v.name);
+        v.role = j.value ("role", std::string {});
         j.at ("bars").get_to (v.bars);
         j.at ("strum").get_to (v.strum);
+    }
+
+    void to_json (Json& j, const RerollCounts& v)
+    {
+        j = Json { { "chords", v.chords }, { "voicings", v.voicings }, { "strums", v.strums }, { "hook", v.hook } };
+    }
+
+    void from_json (const Json& j, RerollCounts& v)
+    {
+        v.chords   = j.value ("chords", std::vector<int> {});
+        v.voicings = j.value ("voicings", std::vector<int> {});
+        v.strums   = j.value ("strums", std::vector<int> {});
+        v.hook     = j.value ("hook", 0);
     }
 
     void to_json (Json& j, const Tuning& v)
@@ -237,7 +254,11 @@ namespace algo
                    { "difficulty", v.difficulty },
                    { "form", v.form },
                    { "sections", v.sections },
-                   { "hook", v.hook } };
+                   { "hook", v.hook },
+                   { "rerolls", v.rerolls },
+                   { "tables", v.tables } };
+        if (v.rating)
+            j["rating"] = *v.rating;
     }
 
     void from_json (const Json& j, SongStarter& v)
@@ -260,5 +281,17 @@ namespace algo
         j.at ("form").get_to (v.form);
         j.at ("sections").get_to (v.sections);
         j.at ("hook").get_to (v.hook);
+
+        // These fields are newer than schema version 1, so a file can omit them.
+        v.rerolls = j.contains ("rerolls") ? j.at ("rerolls").get<RerollCounts> () : RerollCounts {};
+        v.tables  = j.value ("tables", std::string ("rules"));
+        v.rating.reset ();
+        if (j.contains ("rating") && !j.at ("rating").is_null ())
+        {
+            const int rating = j.at ("rating").get<int> ();
+            if (rating < kMinRating || rating > kMaxRating)
+                throw std::invalid_argument ("The rating must be 1 to 5: " + std::to_string (rating));
+            v.rating = rating;
+        }
     }
 }

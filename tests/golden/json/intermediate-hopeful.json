@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "seed": 7,
+  "key": {
+    "root": 10,
+    "scale": "Dorian"
+  },
+  "bpm": 96,
+  "timeSig": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "capo": 0,
+  "tuning": {
+    "name": "Standard",
+    "strings": [
+      40,
+      45,
+      50,
+      55,
+      59,
+      64
+    ]
+  },
+  "difficulty": "Intermediate",
+  "form": "Verse-Chorus",
+  "sections": [
+    {
+      "name": "Verse",
+      "role": "verse",
+      "bars": [
+        {
+          "chords": [
+            {
+              "degree": 1,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                1,
+                3,
+                3,
+                2,
+                -1
+              ],
+              "fingers": [
+                0,
+                1,
+                3,
+                4,
+                2,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 6,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                5,
+                3,
+                2,
+                3
+              ],
+              "fingers": [
+                0,
+                0,
+                4,
+                2,
+                1,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                1,
+                0,
+                4,
+                3
+              ],
+              "fingers": [
+                0,
+                0,
+                1,
+                0,
+                3,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 5,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                3,
+                1,
+                1,
+                1
+              ],
+              "fingers": [
+                0,
+                0,
+                2,
+                1,
+                1,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 1,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                1,
+                3,
+                3,
+                2,
+                -1
+              ],
+              "fingers": [
+                0,
+                1,
+                3,
+                4,
+                2,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 6,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                5,
+                3,
+                2,
+                3
+              ],
+              "fingers": [
+                0,
+                0,
+                4,
+                2,
+                1,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                1,
+                0,
+                4,
+                3
+              ],
+              "fingers": [
+                0,
+                0,
+                1,
+                0,
+                3,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 5,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                3,
+                1,
+                1,
+                1
+              ],
+              "fingers": [
+                0,
+                0,
+                2,
+                1,
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "strum": {
+        "steps": 16,
+        "slots": "D-D-D-D---D-D---",
+        "accent": [
+          0.6,
+          0.0,
+          0.6,
+          0.0,
+          1.0,
+          0.0,
+          0.6,
+          0.0,
+          0.0,
+          0.0,
+          0.6,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "strings": 6
+      }
+    },
+    {
+      "name": "Chorus",
+      "role": "chorus",
+      "bars": [
+        {
+          "chords": [
+            {
+              "degree": 1,
+              "accidental": 0,
+              "quality": "m",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                6,
+                8,
+                8,
+                6,
+                -1,
+                -1
+              ],
+              "fingers": [
+                1,
+                2,
+                3,
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                6,
+                8,
+                0,
+                8,
+                -1
+              ],
+              "fingers": [
+                0,
+                1,
+                2,
+                0,
+                3,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 1,
+              "accidental": 0,
+              "quality": "m",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                6,
+                8,
+                8,
+                6,
+                -1,
+                -1
+              ],
+              "fingers": [
+                1,
+                2,
+                3,
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "add9",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                6,
+                8,
+                0,
+                6,
+                6
+              ],
+              "fingers": [
+                0,
+                2,
+                3,
+                0,
+                1,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 1,
+              "accidental": 0,
+              "quality": "m",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                6,
+                8,
+                8,
+                6,
+                -1,
+                -1
+              ],
+              "fingers": [
+                1,
+                2,
+                3,
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                6,
+                8,
+                0,
+                8,
+                -1
+              ],
+              "fingers": [
+                0,
+                1,
+                2,
+                0,
+                3,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 1,
+              "accidental": 0,
+              "quality": "m",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                6,
+                8,
+                8,
+                6,
+                -1,
+                -1
+              ],
+              "fingers": [
+                1,
+                2,
+                3,
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "add9",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                6,
+                8,
+                0,
+                6,
+                6
+              ],
+              "fingers": [
+                0,
+                2,
+                3,
+                0,
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "strum": {
+        "steps": 16,
+        "slots": "D-D-D-D-D-D-D-D-",
+        "accent": [
+          0.6,
+          0.0,
+          0.6,
+          0.0,
+          1.0,
+          0.0,
+          0.6,
+          0.0,
+          0.6,
+          0.0,
+          0.6,
+          0.0,
+          1.0,
+          0.0,
+          0.6,
+          0.0
+        ],
+        "strings": 4
+      }
+    }
+  ],
+  "hook": [],
+  "rerolls": {
+    "chords": [],
+    "voicings": [],
+    "strums": [],
+    "hook": 0
+  },
+  "tables": "rules"
+}

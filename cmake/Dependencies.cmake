@@ -7,6 +7,16 @@ FetchContent_Declare(nlohmann_json
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
+if (ALGO_BUILD_CLI)
+    FetchContent_Declare(CLI11
+        GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+        GIT_TAG        v2.5.0
+        GIT_SHALLOW    TRUE
+    )
+    set(CLI11_PRECOMPILED OFF CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(CLI11)
+endif()
+
 if (ALGO_BUILD_TESTS)
     FetchContent_Declare(Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git

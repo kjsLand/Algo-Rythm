@@ -22,7 +22,9 @@ TEST_CASE ("allNames returns the 15 scales in file order")
 
 TEST_CASE ("The steps of each bundled scale add up to 12 and each scale has tags")
 {
-    for (const auto& scale : loadBundledData ().scales.all ())
+    // Keep the data set alive. A range-for over a member of a temporary uses freed memory.
+    const auto data = loadBundledData ();
+    for (const auto& scale : data.scales.all ())
     {
         CAPTURE (scale.name);
         REQUIRE (std::accumulate (scale.steps.begin (), scale.steps.end (), 0) == 12);

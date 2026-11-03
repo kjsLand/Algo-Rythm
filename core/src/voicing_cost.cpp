@@ -129,10 +129,13 @@ namespace algo
                 point.notes[static_cast<std::size_t> (point.noteCount++)] = fretboard.midiNoteAt (s, fret);
         }
 
+        // An insertion sort. GCC 13 at -O3 warns about std::sort on a part of a small array (a false positive).
+        for (int i = 1; i < point.noteCount; ++i)
+            for (int j = i; j > 0 && point.notes[static_cast<std::size_t> (j - 1)] > point.notes[static_cast<std::size_t> (j)]; --j)
+                std::swap (point.notes[static_cast<std::size_t> (j - 1)], point.notes[static_cast<std::size_t> (j)]);
+
         const auto first = point.notes.begin ();
-        const auto last  = first + point.noteCount;
-        std::sort (first, last);
-        point.noteCount = static_cast<int> (std::unique (first, last) - first);
+        point.noteCount  = static_cast<int> (std::unique (first, first + point.noteCount) - first);
         return point;
     }
 

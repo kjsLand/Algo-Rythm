@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "seed": 99,
+  "key": {
+    "root": 6,
+    "scale": "Major"
+  },
+  "bpm": 158,
+  "timeSig": {
+    "numerator": 4,
+    "denominator": 4
+  },
+  "capo": 0,
+  "tuning": {
+    "name": "Standard",
+    "strings": [
+      40,
+      45,
+      50,
+      55,
+      59,
+      64
+    ]
+  },
+  "difficulty": "Advanced",
+  "form": "Loop",
+  "sections": [
+    {
+      "name": "Loop",
+      "role": "loop",
+      "bars": [
+        {
+          "chords": [
+            {
+              "degree": 6,
+              "accidental": 0,
+              "quality": "m",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            },
+            {
+              "degree": 5,
+              "accidental": 0,
+              "quality": "7",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                1,
+                3,
+                4,
+                2
+              ],
+              "fingers": [
+                0,
+                0,
+                1,
+                3,
+                4,
+                2
+              ]
+            },
+            {
+              "frets": [
+                -1,
+                4,
+                3,
+                1,
+                0,
+                1
+              ],
+              "fingers": [
+                0,
+                4,
+                3,
+                1,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            },
+            {
+              "degree": 5,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                2,
+                1,
+                4,
+                0,
+                -1
+              ],
+              "fingers": [
+                0,
+                2,
+                1,
+                3,
+                0,
+                0
+              ]
+            },
+            {
+              "frets": [
+                -1,
+                4,
+                -1,
+                1,
+                2,
+                1
+              ],
+              "fingers": [
+                0,
+                3,
+                0,
+                1,
+                2,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 6,
+              "accidental": 0,
+              "quality": "m",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            },
+            {
+              "degree": 5,
+              "accidental": 0,
+              "quality": "7",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                -1,
+                1,
+                3,
+                4,
+                2
+              ],
+              "fingers": [
+                0,
+                0,
+                1,
+                3,
+                4,
+                2
+              ]
+            },
+            {
+              "frets": [
+                -1,
+                4,
+                3,
+                1,
+                0,
+                1
+              ],
+              "fingers": [
+                0,
+                4,
+                3,
+                1,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "chords": [
+            {
+              "degree": 4,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            },
+            {
+              "degree": 5,
+              "accidental": 0,
+              "quality": "diatonic",
+              "bassDegree": 0,
+              "bassAccidental": 0,
+              "tags": []
+            }
+          ],
+          "voicings": [
+            {
+              "frets": [
+                -1,
+                2,
+                1,
+                4,
+                0,
+                -1
+              ],
+              "fingers": [
+                0,
+                2,
+                1,
+                3,
+                0,
+                0
+              ]
+            },
+            {
+              "frets": [
+                -1,
+                4,
+                -1,
+                1,
+                2,
+                1
+              ],
+              "fingers": [
+                0,
+                3,
+                0,
+                1,
+                2,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "strum": {
+        "steps": 8,
+        "slots": "D-cUD-cU",
+        "accent": [
+          0.6,
+          0.0,
+          1.0,
+          0.6,
+          0.6,
+          0.0,
+          1.0,
+          0.6
+        ],
+        "strings": 4,
+        "name": "Chuck Backbeat"
+      }
+    }
+  ],
+  "hook": [],
+  "rerolls": {
+    "chords": [],
+    "voicings": [],
+    "strums": [],
+    "hook": 0
+  },
+  "tables": "rules"
+}

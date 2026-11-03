@@ -151,12 +151,15 @@ TEST_CASE ("validate checks the form name")
     REQUIRE (hasError (validate (settings), "Unknown form: Fugue"));
 }
 
-TEST_CASE ("validate permits only 4/4 time")
+TEST_CASE ("validate permits only 4/4 and 6/8 time (T16-06)")
 {
     GenerationSettings settings;
 
     settings.timeSig = { 6, 8 };
-    REQUIRE (hasError (validate (settings), "4/4: 6/8"));
+    REQUIRE (validate (settings).empty ());
+
+    settings.timeSig = { 3, 4 };
+    REQUIRE (hasError (validate (settings), "4/4 or 6/8: 3/4"));
 }
 
 TEST_CASE ("validate gives one error for each problem")
@@ -182,7 +185,7 @@ TEST_CASE ("settings JSON has the expected text")
 {
     const Json j = GenerationSettings {};
 
-    REQUIRE (j.dump () == R"({"key":"any","scale":null,"mood":"Bright","bpmMin":90,"bpmMax":120,"form":"Verse-Chorus","difficulty":"Beginner","capo":0,"timeSig":{"numerator":4,"denominator":4},"masterSeed":0,"locks":{"key":false,"scale":false,"tempo":false,"form":false,"sections":[]}})");
+    REQUIRE (j.dump () == R"({"key":"any","scale":null,"mood":"Bright","bpmMin":90,"bpmMax":120,"form":"Verse-Chorus","difficulty":"Beginner","capo":0,"timeSig":{"numerator":4,"denominator":4},"masterSeed":0,"locks":{"key":false,"scale":false,"tempo":false,"form":false,"sections":[]},"hook":false,"tables":"rules","tuning":"Standard","rerolls":{"chords":[],"voicings":[],"strums":[],"hook":0}})");
 }
 
 TEST_CASE ("settings JSON writes the key root and the scale")

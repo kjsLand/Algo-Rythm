@@ -25,6 +25,17 @@ add_library(algo_core STATIC
     src/voicing_cost.cpp
     src/voicing_sequence.cpp
     src/voicing_stage.cpp
+    src/strum.cpp
+    src/events.cpp
+    src/render.cpp
+    src/smf_writer.cpp
+    src/tab.cpp
+    src/musicxml.cpp
+    src/contour.cpp
+    src/hook.cpp
+    src/engine.cpp
+    src/files.cpp
+    src/validate.cpp
 )
 add_library(algo::core ALIAS algo_core)
 
