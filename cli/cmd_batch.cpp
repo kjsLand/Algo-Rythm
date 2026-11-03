@@ -4,6 +4,7 @@
 #include "algo/Files.h"
 #include "algo/Nashville.h"
 #include "algo/Pitch.h"
+#include "algo/Ratings.h"
 #include "algo/VoicingCache.h"
 
 #include <filesystem>
@@ -16,16 +17,6 @@ namespace algo::cli
     namespace
     {
         constexpr int kProgressStep = 50;
-
-        std::string csvField (const std::string& text)
-        {
-            if (text.find_first_of (",\"") == std::string::npos)
-                return text;
-            std::string quoted = "\"";
-            for (char c : text)
-                quoted += c == '"' ? std::string ("\"\"") : std::string (1, c);
-            return quoted + "\"";
-        }
 
         // The numerals of the first section with the role "verse", or of the first section.
         std::string verseProgression (const SongStarter& starter)

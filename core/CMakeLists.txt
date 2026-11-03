@@ -36,6 +36,7 @@ add_library(algo_core STATIC
     src/engine.cpp
     src/files.cpp
     src/validate.cpp
+    src/ratings.cpp
 )
 add_library(algo::core ALIAS algo_core)
 

@@ -50,6 +50,7 @@ add_executable(algo_tests
     validate_test.cpp
     musicxml_test.cpp
     tables_test.cpp
+    ratings_test.cpp
     support/smf_reader.cpp
 )
 

@@ -27,7 +27,12 @@ if (ALGO_BUILD_CLI)
     add_subdirectory(cli)
 endif()
 
-if (ALGO_BUILD_APP)
+# The app folder also has the UI library that the plugin uses.
+if (ALGO_BUILD_APP OR ALGO_BUILD_PLUGIN)
+    add_subdirectory(app)
+endif()
+
+if (ALGO_BUILD_PLUGIN)
     add_subdirectory(plugin)
 endif()
 

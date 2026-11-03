@@ -27,6 +27,7 @@ if (ALGO_BUILD_TESTS)
 
     # Makes include(Catch) available for catch_discover_tests()
     list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+    include(Catch)
 endif()
 
 if (ALGO_BUILD_APP OR ALGO_BUILD_PLUGIN)
