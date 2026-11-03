@@ -1,6 +1,6 @@
 // Prints example Euclidean rhythms, then accepts your own from stdin.
-// Build from the repository root: g++ -std=c++17 tools/bjorklund_demo.cpp -o bjorklund_demo
-#include "../plugin/Source/Bjorklund.h"
+// Build from the repository root: cmake --build build --target bjorklund_demo
+#include "algo/Euclid.h"
 
 #include <iostream>
 #include <vector>
@@ -41,7 +41,7 @@ int main ()
 
     for (auto& ex : examples)
     {
-        auto bits = bjorklund (ex.hits, ex.steps);
+        auto bits = algo::bjorklund (ex.hits, ex.steps);
         std::cout << "E(" << ex.hits << "," << ex.steps << ")  "
                   << toPattern (bits)
                   << "  — " << ex.name << "\n";
@@ -55,7 +55,7 @@ int main ()
         if (hits == 0 && steps == 0) break;
         try
         {
-            auto bits = bjorklund (hits, steps);
+            auto bits = algo::bjorklund (hits, steps);
             std::cout << "E(" << hits << "," << steps << ")  "
                       << toPattern (bits) << "\n";
         }

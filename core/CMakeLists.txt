@@ -6,6 +6,12 @@ add_library(algo_core STATIC
     src/progression_library.cpp
     src/data_validation.cpp
     src/data.cpp
+    src/pitch.cpp
+    src/scale.cpp
+    src/diatonic.cpp
+    src/nashville.cpp
+    src/fretboard.cpp
+    src/euclid.cpp
 )
 add_library(algo::core ALIAS algo_core)
 

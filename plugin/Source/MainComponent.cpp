@@ -1,5 +1,10 @@
 #include "MainComponent.h"
 
+#include "algo/Pitch.h"
+#include "algo/Scale.h"
+
+#include <array>
+
 // =============================================================================
 // Static data
 // =============================================================================
@@ -12,6 +17,12 @@ static const std::vector<std::string> CHORD_CYCLE = {
     "Major", "Minor", "Maj7", "M7", "Dom7",
     "Sus2", "Sus4", "Add9", "Dim", "Dim7", "M7b5"
 };
+
+static std::set<int> scalePitchClassSet (const std::string& key, const std::string& scale)
+{
+    const auto pcs = algo::scalePitchClasses (algo::Key { algo::parsePitchClass (key), scale });
+    return { pcs.begin (), pcs.end () };
+}
 
 // =============================================================================
 // Construction
@@ -58,20 +69,20 @@ MainComponent::~MainComponent () {}
 void MainComponent::pickNewNote ()
 {
     // Refresh scale pitch-class set
-    scalePCs = GuitarFretboard::getScalePitchClasses (currentKey, currentScale);
+    scalePCs = scalePitchClassSet (currentKey, currentScale);
 
     // Gather all in-scale positions on frets 0-12
-    std::vector<GuitarFretboard::Position> pool;
-    for (int s = 0; s < GuitarFretboard::NUM_STRINGS; ++s)
+    std::vector<algo::FretPos> pool;
+    for (int s = 0; s < algo::kNumStrings; ++s)
         for (int f = 0; f <= 12; ++f)
-            if (scalePCs.count (fb.getMidiNote (s, f) % 12))
+            if (scalePCs.count (fb.midiNoteAt (s, f) % 12))
                 pool.push_back ({ s, f });
 
     if (pool.empty ()) return;
 
     std::uniform_int_distribution<int> dist (0, (int) pool.size () - 1);
     rootPos = pool[dist (rng)];
-    voicing = fb.buildTightVoicing (rootPos, currentChordName);
+    voicing = buildTightVoicing (fb, rootPos, currentChordName);
     repaint ();
 }
 
@@ -93,7 +104,7 @@ void MainComponent::pickNewChord ()
         next = CHORD_CYCLE[std::min (idx, (int) CHORD_CYCLE.size () - 1)];
     }
     currentChordName = next;
-    voicing          = fb.buildTightVoicing (rootPos, currentChordName);
+    voicing          = buildTightVoicing (fb, rootPos, currentChordName);
     repaint ();
 }
 
@@ -113,8 +124,7 @@ void MainComponent::pickNewKey ()
         next = ALL_KEYS[std::min (idx, (int) ALL_KEYS.size () - 1)];
     }
     currentKey = next;
-    scalePCs   = GuitarFretboard::getScalePitchClasses (currentKey, currentScale);
-    pickNewNote (); // also picks a new root in the new key
+    pickNewNote (); // also refreshes the scale and picks a new root in the new key
 }
 
 void MainComponent::pickNewStrum ()
@@ -175,9 +185,9 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::drawHeader (juce::Graphics& g, juce::Rectangle<int> r) const
 {
-    static const std::array<std::string, GuitarFretboard::NUM_STRINGS> STRING_NAMES = { "E2", "A2", "D3", "G3", "B3", "E4" };
+    static const std::array<std::string, algo::kNumStrings> STRING_NAMES = { "E2", "A2", "D3", "G3", "B3", "E4" };
 
-    const std::string rootFull = fb.getNoteName (rootPos.string, rootPos.fret);
+    const std::string rootFull = fb.noteNameAt (rootPos.string, rootPos.fret);
     const std::string fretLbl  = rootPos.fret == 0
                                      ? "open"
                                      : "fret " + std::to_string (rootPos.fret);
@@ -201,8 +211,8 @@ void MainComponent::drawHeader (juce::Graphics& g, juce::Rectangle<int> r) const
 
 void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bounds) const
 {
-    static const std::array<std::string, GuitarFretboard::NUM_STRINGS> STRING_NAMES = { "E2", "A2", "D3", "G3", "B3", "E4" };
-    static const std::set<int>                                         INLAY_FRETS  = { 3, 5, 7, 9, 12 };
+    static const std::array<std::string, algo::kNumStrings> STRING_NAMES = { "E2", "A2", "D3", "G3", "B3", "E4" };
+    static const std::set<int>                              INLAY_FRETS  = { 3, 5, 7, 9, 12 };
 
     const int numFrets  = 13; // 0-12
     const int labelColW = 32;
@@ -214,7 +224,7 @@ void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bound
     const int bh = bounds.getHeight () - fretNumH;
 
     const float colW = (float) (bw - labelColW) / numFrets;
-    const float rowH = (float) bh / GuitarFretboard::NUM_STRINGS;
+    const float rowH = (float) bh / algo::kNumStrings;
     const float dotR = std::min (colW, rowH) * 0.30f;
 
     // Build a set of {string,fret} positions that are in the voiced chord
@@ -238,9 +248,9 @@ void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bound
     }
 
     // ---- Strings + labels ----
-    for (int s = 0; s < GuitarFretboard::NUM_STRINGS; ++s)
+    for (int s = 0; s < algo::kNumStrings; ++s)
     {
-        int   row = GuitarFretboard::NUM_STRINGS - 1 - s; // high E at top
+        int   row = algo::kNumStrings - 1 - s; // high E at top
         float sy  = (float) by + rowH * row + rowH * 0.5f;
 
         g.setColour (juce::Colours::grey.withAlpha (0.4f));
@@ -278,14 +288,14 @@ void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bound
     }
 
     // ---- Note dots ----
-    for (int s = 0; s < GuitarFretboard::NUM_STRINGS; ++s)
+    for (int s = 0; s < algo::kNumStrings; ++s)
     {
-        int   row = GuitarFretboard::NUM_STRINGS - 1 - s;
+        int   row = algo::kNumStrings - 1 - s;
         float sy  = (float) by + rowH * row + rowH * 0.5f;
 
         for (int f = 0; f < numFrets; ++f)
         {
-            int pc = fb.getMidiNote (s, f) % 12;
+            int pc = fb.midiNoteAt (s, f) % 12;
             if (scalePCs.count (pc) == 0) continue;
 
             float fx = (float) (bx + labelColW) + colW * (f + 0.5f);
@@ -307,7 +317,7 @@ void MainComponent::drawFretboard (juce::Graphics& g, juce::Rectangle<int> bound
 
             // Note label — pitch name without octave
             std::string label;
-            for (char c : fb.getNoteName (s, f))
+            for (char c : fb.noteNameAt (s, f))
                 if (!std::isdigit ((unsigned char) c) && c != '-') label += c;
 
             g.setFont (juce::FontOptions (dotR > 9.f ? 10.f : 8.f));

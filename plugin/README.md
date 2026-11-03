@@ -14,12 +14,9 @@ plugin/
     ├── Main.cpp            # Application entry point
     ├── MainComponent.h     # Main window component header
     ├── MainComponent.cpp   # Main window component implementation
-    ├── Fretboard.h         # Guitar fretboard model
+    ├── Fretboard.h         # Tight chord voicing (the model is in core/)
     ├── Fretboard.cpp
-    ├── ScaleRegistry.h     # Scale definitions
-    ├── ChordRegistry.h     # Chord definitions
-    ├── StrumPattern.h      # Strum pattern generator
-    └── Bjorklund.h         # Euclidean rhythm algorithm
+    └── StrumPattern.h      # Strum pattern generator
 ```
 
 ## Building

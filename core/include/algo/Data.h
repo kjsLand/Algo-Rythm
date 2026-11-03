@@ -62,6 +62,9 @@ namespace algo
     // Loads the data files that are compiled into the binary.
     DataSet loadBundledData ();
 
+    // The bundled data, loaded once. The theory functions use it if the caller gives no other data.
+    const DataSet& bundledData ();
+
     // Loads the data files from a folder. If a file is not in the folder, the bundled file is used.
     // Throws DataError if the folder does not exist or a file is not valid.
     DataSet loadDataFolder (const std::filesystem::path& folder);

@@ -4,6 +4,11 @@
 #include "Fretboard.h"
 #include "StrumPattern.h"
 
+#include <random>
+#include <set>
+#include <string>
+#include <vector>
+
 class MainComponent : public juce::Component
 {
 public:
@@ -27,7 +32,7 @@ private:
     void drawStrumPanel (juce::Graphics& g, juce::Rectangle<int> bounds) const;
 
     // ---- fretboard state ----
-    GuitarFretboard fb;
+    algo::Fretboard fb;
 
     // All available keys (chromatic)
     static const std::vector<std::string> ALL_KEYS;
@@ -36,9 +41,9 @@ private:
     std::string currentScale { "Major" };
     std::string currentChordName { "Major" };
 
-    GuitarFretboard::Position    rootPos { 1, 5 }; // A2 fret 5 = D... prime on load
-    GuitarFretboard::VoicedChord voicing;
-    std::set<int>                scalePCs;
+    algo::FretPos rootPos { 1, 5 }; // A2 fret 5 = D... prime on load
+    VoicedChord   voicing;
+    std::set<int> scalePCs;
 
     std::mt19937 rng { std::random_device {}() };
 

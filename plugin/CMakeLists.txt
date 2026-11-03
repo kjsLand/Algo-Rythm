@@ -14,9 +14,6 @@ target_sources(AlgoRythm
         Source/MainComponent.h
         Source/Fretboard.cpp
         Source/Fretboard.h
-        Source/Bjorklund.h
-        Source/ChordRegistry.h
-        Source/ScaleRegistry.h
         Source/StrumPattern.h
 )
 
@@ -29,6 +26,7 @@ target_include_directories(AlgoRythm
 # Link JUCE modules
 target_link_libraries(AlgoRythm
     PRIVATE
+        algo::core
         juce::juce_core
         juce::juce_data_structures
         juce::juce_events

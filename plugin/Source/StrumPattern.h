@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Bjorklund.h"
+#include "algo/Euclid.h"
 
 #include <algorithm>
 #include <string>
@@ -70,14 +70,14 @@ public:
             std::uniform_int_distribution<int> dist (minH, maxH);
             r.strumHits = dist (rng);
         }
-        r.strumBits = bjorklund (r.strumHits, r.steps);
+        r.strumBits = algo::bjorklund (r.strumHits, r.steps);
 
         // ── Layer 2: rest mask (1 to steps/4 rests) ─────────────────────────
         {
             std::uniform_int_distribution<int> dist (1, r.steps / 4);
             r.restHits = dist (rng);
         }
-        r.restBits = bjorklund (r.restHits, r.steps);
+        r.restBits = algo::bjorklund (r.restHits, r.steps);
 
         // ── Keep beat 1 audible ─────────────────────────────────────────────
         // A Bjorklund pattern always starts with a 1, so the rest mask would

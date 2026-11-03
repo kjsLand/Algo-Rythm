@@ -10,6 +10,7 @@ option(ALGO_BUILD_APP    "Build the desktop app"     ON)
 option(ALGO_BUILD_CLI    "Build the algo-cli tool"   ON)
 option(ALGO_BUILD_TESTS  "Build the unit tests"      ON)
 option(ALGO_BUILD_PLUGIN "Build the audio plugin"    OFF)
+option(ALGO_BUILD_TOOLS  "Build the developer tools" ON)
 
 include(cmake/Dependencies.cmake)
 include(cmake/Warnings.cmake)
@@ -19,6 +20,10 @@ add_subdirectory(core)
 
 if (ALGO_BUILD_APP)
     add_subdirectory(plugin)
+endif()
+
+if (ALGO_BUILD_TOOLS)
+    add_subdirectory(tools)
 endif()
 
 if (ALGO_BUILD_TESTS)

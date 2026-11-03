@@ -59,6 +59,7 @@ jobs:
       - name: The core must not write to the console
         run: |
           ! grep -rnE 'std::c(out|err)' core/
+          ! grep -rnE '#[[:space:]]*include[[:space:]]*<iostream>' core/
 
   format:
     name: Check the code format

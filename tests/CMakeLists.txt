@@ -13,7 +13,12 @@ add_executable(algo_tests
     progression_library_test.cpp
     strum_data_test.cpp
     shape_data_test.cpp
-    ${PROJECT_SOURCE_DIR}/plugin/Source/Fretboard.cpp
+    pitch_test.cpp
+    scale_test.cpp
+    diatonic_test.cpp
+    nashville_test.cpp
+    fretboard_test.cpp
+    euclid_test.cpp
 )
 
 target_include_directories(algo_tests

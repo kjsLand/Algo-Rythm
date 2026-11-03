@@ -1,9 +1,11 @@
 #include "algo/ProgressionLibrary.h"
 
+#include "algo/Nashville.h"
+
 #include "data_reader.h"
 
 #include <algorithm>
-#include <regex>
+#include <stdexcept>
 #include <utility>
 
 namespace algo
@@ -15,17 +17,20 @@ namespace algo
             return std::find (items.begin (), items.end (), item) != items.end ();
         }
 
-        // Accepts "1", "6m", "b7", "4maj7", "5/7" and "#4dim".
         void checkNumeral (const detail::EntryReader& entry, const std::string& numeral, const ChordRegistry& chords)
         {
-            static const std::regex format ("[b#]?[1-7]([^/]*)(/[b#]?[1-7])?");
-
-            std::smatch match;
-            if (!std::regex_match (numeral, match, format))
+            ChordSymbol symbol;
+            try
+            {
+                symbol = parseNumeral (numeral);
+            }
+            catch (const std::invalid_argument&)
+            {
                 entry.fail ("the numeral '" + numeral + "' is not valid");
+            }
 
-            if (!chords.containsSymbol (match[1].str ()))
-                entry.fail ("the numeral '" + numeral + "' has the unknown chord symbol '" + match[1].str () + "'");
+            if (symbol.quality != kDiatonicQuality && !chords.containsSymbol (symbol.quality))
+                entry.fail ("the numeral '" + numeral + "' has the unknown chord symbol '" + symbol.quality + "'");
         }
     }
 

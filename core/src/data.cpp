@@ -129,6 +129,12 @@ namespace algo
         return loadAll (bundledText);
     }
 
+    const DataSet& bundledData ()
+    {
+        static const DataSet data = loadBundledData ();
+        return data;
+    }
+
     DataSet loadDataFolder (const std::filesystem::path& folder)
     {
         std::error_code error;

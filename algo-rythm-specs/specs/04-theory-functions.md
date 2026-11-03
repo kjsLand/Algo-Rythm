@@ -40,7 +40,7 @@ Out of scope:
 
 ### T04-01: Write the pitch and note-name functions
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-02
 - **Files:** `core/include/algo/Pitch.h`, `core/src/pitch.cpp`, `tests/pitch_test.cpp`
 
@@ -55,13 +55,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `parsePitchClass("Cb") == 11` and `parsePitchClass("B#") == 0`.
-- [ ] `pitchClassName(10, Key{5, "Major"})` returns "Bb".
-- [ ] `pitchClassName(10, Key{7, "Major"})` returns "A#".
+- [x] `parsePitchClass("Cb") == 11` and `parsePitchClass("B#") == 0`.
+- [x] `pitchClassName(10, Key{5, "Major"})` returns "Bb".
+- [x] `pitchClassName(10, Key{7, "Major"})` returns "A#".
 
 ### T04-02: Write the scale functions
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-04, T04-01
 - **Files:** `core/include/algo/Scale.h`, `core/src/scale.cpp`, `tests/scale_test.cpp`
 
@@ -74,13 +74,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] C major gives {0, 2, 4, 5, 7, 9, 11}.
-- [ ] A Minor Pentatonic gives {9, 0, 2, 4, 7}.
-- [ ] A test checks all 15 scales in all 12 keys.
+- [x] C major gives {0, 2, 4, 5, 7, 9, 11}.
+- [x] A Minor Pentatonic gives {9, 0, 2, 4, 7}.
+- [x] A test checks all 15 scales in all 12 keys.
 
 ### T04-03: Write the diatonic chord builder
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-02, T03-05
 - **Files:** `core/include/algo/Diatonic.h`, `core/src/diatonic.cpp`, `tests/diatonic_test.cpp`
 
@@ -95,14 +95,14 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Major gives Major, Minor, Minor, Major, Major, Minor, Dim.
-- [ ] Major 7th chords give Maj7, M7, M7, Maj7, Dom7, M7, M7b5.
-- [ ] In Dorian, degree 2 is Minor and degree 4 is Major.
-- [ ] A test builds triads and 7th chords for all 9 seven-note scales with no error.
+- [x] Major gives Major, Minor, Minor, Major, Major, Minor, Dim.
+- [x] Major 7th chords give Maj7, M7, M7, Maj7, Dom7, M7, M7b5.
+- [x] In Dorian, degree 2 is Minor and degree 4 is Major.
+- [x] A test builds triads and 7th chords for all 9 seven-note scales with no error.
 
 ### T04-04: Write the Nashville number conversion
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-03
 - **Files:** `core/include/algo/Nashville.h`, `core/src/nashville.cpp`, `tests/nashville_test.cpp`
 
@@ -117,13 +117,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] "b7" in C major gives the name "Bb".
-- [ ] "5/7" in G major gives the name "D/F#".
-- [ ] For all 12 major keys, "1 5 6 4" gives the correct 4 chord names.
+- [x] "b7" in C major gives the name "Bb".
+- [x] "5/7" in G major gives the name "D/F#".
+- [x] For all 12 major keys, "1 5 6 4" gives the correct 4 chord names.
 
 ### T04-05: Move the fretboard model to the core
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-01
 - **Files:** `core/include/algo/Fretboard.h`, `core/src/fretboard.cpp`, `tools/fretboard_print.cpp`, `tests/fretboard_test.cpp`
 
@@ -138,13 +138,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] With capo 2, fret 0 of string 0 gives MIDI note 42.
-- [ ] With drop D tuning, fret 0 of string 0 gives MIDI note 38.
-- [ ] No file in `core/` includes `<iostream>`.
+- [x] With capo 2, fret 0 of string 0 gives MIDI note 42.
+- [x] With drop D tuning, fret 0 of string 0 gives MIDI note 38.
+- [x] No file in `core/` includes `<iostream>`.
 
 ### T04-06: Move the Bjorklund function to the core
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-01
 - **Files:** `core/include/algo/Euclid.h`, `core/src/euclid.cpp`, `tests/euclid_test.cpp`
 
@@ -158,12 +158,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] E(3,8) gives `X..X..X.` and E(5,8) gives `X.XX.XX.`.
-- [ ] For all values 0 ≤ k ≤ n ≤ 32, `hitCount(bjorklund(k, n)) == k`.
-- [ ] `rotate` does not change the hit count.
+- [x] E(3,8) gives `X..X..X.` and E(5,8) gives `X.XX.XX.`.
+- [x] For all values 0 ≤ k ≤ n ≤ 32, `hitCount(bjorklund(k, n)) == k`.
+- [x] `rotate` does not change the hit count.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] All unit tests from Coding Spec Section 9.1 pass.
-- [ ] The app still compiles and shows the fretboard.
+- [x] The app still compiles and shows the fretboard.
