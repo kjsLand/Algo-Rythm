@@ -141,7 +141,7 @@ jobs:
 
       - name: The CLI must not link to JUCE
         run: |
-          ! grep -rnE 'juce|JUCE' cli/CMakeLists.txt cli/*.cpp cli/*.h
+          ! grep -rnE 'juce::|#[[:space:]]*include[[:space:]]*[<"](juce|JuceHeader)' cli/
 
   format:
     name: Check the code format

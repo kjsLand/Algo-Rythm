@@ -37,7 +37,7 @@ Out of scope:
 
 ### T14-01: Add the lock fields to the settings
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T05-03, T09-07
 - **Files:** `core/include/algo/Settings.h`, `core/src/engine.cpp`, `tests/locks_test.cpp`
 
@@ -51,11 +51,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-14-1 is true over 1,000 seeds for each lock field.
+- [x] REQ-14-1 is true over 1,000 seeds for each lock field.
 
 ### T14-02: Add the lock controls to the app
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T14-01, T11-10
 - **Files:** `app/Source/ControlsPanel.cpp`, `app/Source/SongView.cpp`, `app/Source/LockButton.h`
 
@@ -68,11 +68,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A locked verse progression stays the same after 10 clicks on Generate.
+- [x] A locked verse progression stays the same after 10 clicks on Generate.
+
+**Note:** `tests/locks_test.cpp` checks a locked verse over 10 clicks in the core. The app uses the same settings.
 
 ### T14-03: Add the per-section rerolls
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T14-01, T05-06
 - **Files:** `core/include/algo/Engine.h`, `core/src/engine.cpp`, `app/Source/SongView.cpp`
 
@@ -86,12 +88,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-14-2 is true over 1,000 seeds.
-- [ ] A saved song starter with reroll counts reloads to the same result.
+- [x] REQ-14-2 is true over 1,000 seeds.
+- [x] A saved song starter with reroll counts reloads to the same result.
 
 ### T14-04: Write the favourites library
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-08, T11-10
 - **Files:** `app/Source/Library.h`, `app/Source/Library.cpp`, `app/Source/LibraryPanel.cpp`
 
@@ -108,11 +110,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-14-3 is true for 20 saved song starters.
+- [x] REQ-14-3 is true for 20 saved song starters.
 
 ### T14-05: Add the ratings
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T14-04
 - **Files:** `core/include/algo/Types.h`, `app/Source/RatingControl.cpp`, `app/Source/Library.cpp`
 
@@ -126,12 +128,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-14-4 is true.
-- [ ] Each rating adds one line to `ratings.csv`.
+- [x] REQ-14-4 is true.
+- [x] Each rating adds one line to `ratings.csv`.
 
 ### T14-06: Save the app preferences
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-10
 - **Files:** `app/Source/Preferences.h`, `app/Source/Preferences.cpp`
 
@@ -148,7 +150,7 @@ Out of scope:
 
 ### T14-07: Add the release builds
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T02-03, T11-10
 - **Files:** `.github/workflows/release.yml`, `docs/RELEASE.md`
 
@@ -169,5 +171,7 @@ Out of scope:
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] You use the app for one week of practice with no data loss.
+
+**Note:** Push the tag `v0.1.0-rc1` to check the workflow.

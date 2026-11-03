@@ -38,7 +38,7 @@ Out of scope:
 
 ### T08-01: Move the strum generator to the core
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-06, T05-01
 - **Files:** `core/include/algo/Strum.h`, `core/src/strum.cpp`, `plugin/Source/StrumPattern.h`
 
@@ -54,12 +54,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The app shows strum patterns from the core.
-- [ ] The banned-name check from T05-04 passes.
+- [x] The app shows strum patterns from the core.
+- [x] The banned-name check from T05-04 passes.
 
 ### T08-02: Write the grid and downbeat rules
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T08-01
 - **Files:** `core/src/strum.cpp`, `tests/strum_test.cpp`
 
@@ -73,12 +73,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 seeds, REQ-08-1 and REQ-08-4 are true.
-- [ ] The defect test from T01-05 passes with the core function.
+- [x] Over 10,000 seeds, REQ-08-1 and REQ-08-4 are true.
+- [x] The defect test from T01-05 passes with the core function.
 
 ### T08-03: Add the library patterns
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-09, T08-02
 - **Files:** `core/src/strum.cpp`, `core/include/algo/StrumLibrary.h`
 
@@ -92,11 +92,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 Beginner seeds, 30% or more of the patterns come from the library.
+- [x] Over 10,000 Beginner seeds, 30% or more of the patterns come from the library.
 
 ### T08-04: Write the section density and accents
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T08-03
 - **Files:** `core/src/strum.cpp`, `tests/strum_test.cpp`
 
@@ -113,12 +113,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 seeds, REQ-08-5 is true when the grid has space for more hits.
-- [ ] Each accent value is in the range 0 to 1.
+- [x] Over 10,000 seeds, REQ-08-5 is true when the grid has space for more hits.
+- [x] Each accent value is in the range 0 to 1.
 
 ### T08-05: Add the Mute and Chuck strokes
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T08-04
 - **Files:** `core/src/strum.cpp`, `tests/strum_test.cpp`
 
@@ -131,12 +131,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 seeds, REQ-08-6 is true.
-- [ ] Over 10,000 Advanced seeds, 1 or more patterns contain a Chuck.
+- [x] Over 10,000 seeds, REQ-08-6 is true.
+- [x] Over 10,000 Advanced seeds, 1 or more patterns contain a Chuck.
 
 ### T08-06: Write the strum stage function and property tests
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T08-05, T06-02, T02-05
 - **Files:** `core/src/strum.cpp`, `tests/strum_property_test.cpp`
 
@@ -149,10 +149,10 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The "Strum" property test from Coding Spec Section 9.2 passes for 10,000 seeds.
-- [ ] A reroll of the verse strum does not change the chorus strum or the base hit count.
+- [x] The "Strum" property test from Coding Spec Section 9.2 passes for 10,000 seeds.
+- [x] A reroll of the verse strum does not change the chorus strum or the base hit count.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
-- [ ] No generated pattern has a silent beat 1.
+- [x] All tasks in this spec are Done.
+- [x] No generated pattern has a silent beat 1.

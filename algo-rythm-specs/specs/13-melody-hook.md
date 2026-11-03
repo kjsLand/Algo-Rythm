@@ -38,7 +38,7 @@ Out of scope:
 
 ### T13-01: Write the contour function
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T05-01
 - **Files:** `core/include/algo/Contour.h`, `core/src/contour.cpp`, `tests/contour_test.cpp`
 
@@ -53,11 +53,13 @@ Out of scope:
 **Acceptance:**
 
 - [ ] For the same seed, the C++ contour gives the same coefficients on all 3 CI systems.
-- [ ] No contour is a flat line.
+- [x] No contour is a flat line.
+
+**Note:** The contour uses only the portable Rng. Check the same coefficients in the next CI run on all three systems.
 
 ### T13-02: Write the hook rhythm
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-06, T13-01
 - **Files:** `core/include/algo/Hook.h`, `core/src/hook.cpp`
 
@@ -71,11 +73,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Each bar has 5 to 9 note starts.
+- [x] Each bar has 5 to 9 note starts.
 
 ### T13-03: Write the pitch map
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T13-02, T04-02, T06-08
 - **Files:** `core/src/hook.cpp`
 
@@ -92,11 +94,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-13-1, REQ-13-2 and REQ-13-3 are true over 10,000 seeds.
+- [x] REQ-13-1, REQ-13-2 and REQ-13-3 are true over 10,000 seeds.
 
 ### T13-04: Write the end of the hook and the note lengths
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T13-03
 - **Files:** `core/src/hook.cpp`, `tests/hook_property_test.cpp`
 
@@ -111,11 +113,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-13-4 and REQ-13-5 are true over 10,000 seeds.
+- [x] REQ-13-4 and REQ-13-5 are true over 10,000 seeds.
 
 ### T13-05: Add the hook to the engine, render and export
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T13-04, T09-07
 - **Files:** `core/src/engine.cpp`, `core/src/render.cpp`, `core/src/tab.cpp`
 
@@ -129,12 +131,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-13-6 is true.
-- [ ] With the hook on, the MIDI file has a hook track with 10 or more notes.
+- [x] REQ-13-6 is true.
+- [x] With the hook on, the MIDI file has a hook track with 10 or more notes.
 
 ### T13-06: Update the Python sandbox (optional)
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T13-04, T01-08
 - **Files:** `sandbox/hook.py`
 
@@ -146,9 +148,9 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `python sandbox/hook.py --seed 1` writes a MIDI file that obeys REQ-13-1 to REQ-13-5.
+- [x] `python sandbox/hook.py --seed 1` writes a MIDI file that obeys REQ-13-1 to REQ-13-5.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
-- [ ] The "Hook" property test from Coding Spec Section 9.2 passes.
+- [x] All tasks in this spec are Done.
+- [x] The "Hook" property test from Coding Spec Section 9.2 passes.

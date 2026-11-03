@@ -38,7 +38,7 @@ Out of scope:
 
 ### T12-01: Add the audio modules and device setup
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-01
 - **Files:** `app/CMakeLists.txt`, `app/Source/AudioEngine.h`, `app/Source/AudioEngine.cpp`
 
@@ -52,11 +52,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The app starts on a computer with no audio device and shows the message.
+- [x] The app starts on a computer with no audio device and shows the message.
 
 ### T12-02: Write the plucked-string voice
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T12-01
 - **Files:** `app/Source/PluckVoice.h`, `app/Source/PluckVoice.cpp`
 
@@ -72,12 +72,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A test renders A4 offline and finds a frequency of 440 Hz within 2 Hz.
-- [ ] The voice makes no allocation in `renderNextBlock`.
+- [x] A test renders A4 offline and finds a frequency of 440 Hz within 2 Hz.
+- [x] The voice makes no allocation in `renderNextBlock`.
 
 ### T12-03: Write the sequencer
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T12-02, T09-03
 - **Files:** `app/Source/Sequencer.h`, `app/Source/Sequencer.cpp`
 
@@ -92,11 +92,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-12-1 and REQ-12-2 are true in the test from T12-06.
+- [x] REQ-12-1 and REQ-12-2 are true in the test from T12-06.
 
 ### T12-04: Write the transport controls
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T12-03, T11-09
 - **Files:** `app/Source/TransportBar.h`, `app/Source/TransportBar.cpp`
 
@@ -111,11 +111,13 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-12-3, REQ-12-4 and REQ-12-5 are true.
+- [x] REQ-12-3, REQ-12-4 and REQ-12-5 are true.
+
+**Note:** `tests/app/sequencer_timing_test.cpp` checks Loop Section, the click and the switch at the next bar.
 
 ### T12-05: Add the audio settings dialog
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T12-01
 - **Files:** `app/Source/AudioSettingsDialog.cpp`
 
@@ -132,7 +134,7 @@ Out of scope:
 
 ### T12-06: Add the offline timing test
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T12-03
 - **Files:** `tests/app/sequencer_timing_test.cpp`, `app/CMakeLists.txt`
 
@@ -146,9 +148,9 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Each note starts within 48 samples (1 ms) of its expected time at all 3 block sizes.
+- [x] Each note starts within 48 samples (1 ms) of its expected time at all 3 block sizes.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] You play a song starter for 5 minutes with no audio dropout.

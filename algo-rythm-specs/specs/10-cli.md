@@ -35,7 +35,7 @@ Out of scope:
 
 ### T10-01: Make the CLI target
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-07
 - **Files:** `cli/CMakeLists.txt`, `cli/main.cpp`, `cmake/Dependencies.cmake`
 
@@ -51,12 +51,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `algo-cli --version` prints "0.1.0".
-- [ ] `algo-cli --help` lists the 4 subcommands.
+- [x] `algo-cli --version` prints "0.1.0".
+- [x] `algo-cli --help` lists the 4 subcommands.
 
 ### T10-02: Write the generate command
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T10-01, T09-08
 - **Files:** `cli/cmd_generate.cpp`, `cli/SettingsArgs.h`
 
@@ -72,13 +72,15 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The example command in Coding Spec Section 7.2 writes 3 files.
-- [ ] Two runs with the same seed write identical files.
-- [ ] An incorrect key name gives exit code 2 and a clear error.
+- [x] The example command in Coding Spec Section 7.2 writes 3 files.
+- [x] Two runs with the same seed write identical files.
+- [x] An incorrect key name gives exit code 2 and a clear error.
+
+**Note:** The Coding Spec Section 7.2 command is not in this repository. The CTest `cli_generate` uses the example command in the root README.
 
 ### T10-03: Write the render command
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T10-01, T09-08
 - **Files:** `cli/cmd_render.cpp`
 
@@ -91,11 +93,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `algo-cli render starter.json --out starter.mid` writes a MIDI file that the T09-05 reader can read.
+- [x] `algo-cli render starter.json --out starter.mid` writes a MIDI file that the T09-05 reader can read.
 
 ### T10-04: Write the batch command
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T10-02
 - **Files:** `cli/cmd_batch.cpp`
 
@@ -109,11 +111,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `algo-cli batch --count 200` writes 200 song starters and `index.csv` in less than 60 seconds.
+- [x] `algo-cli batch --count 200` writes 200 song starters and `index.csv` in less than 60 seconds.
 
 ### T10-05: Write the check command
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T10-01, T07-03, T09-08
 - **Files:** `cli/cmd_check.cpp`, `core/include/algo/Validate.h`, `core/src/validate.cpp`
 
@@ -128,12 +130,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A changed JSON file with two notes on one string fails with exit code 1.
-- [ ] All golden JSON files pass.
+- [x] A changed JSON file with two notes on one string fails with exit code 1.
+- [x] All golden JSON files pass.
 
 ### T10-06: Add CLI smoke tests and documentation
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T10-02, T10-03, T10-04, T10-05
 - **Files:** `cli/CMakeLists.txt`, `README.md`
 
@@ -150,5 +152,7 @@ Out of scope:
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] You generate 20 Beginner song starters with `batch` and play them on guitar.
+
+**Note:** The CLI tests run in CTest. Check them in the next CI run on all three operating systems.

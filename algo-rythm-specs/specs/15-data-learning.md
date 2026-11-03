@@ -38,7 +38,7 @@ Out of scope:
 
 ### T15-01: Define the song log format
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-04
 - **Files:** `data/songlog/README.md`, `data/songlog/schema.json`, `data/songlog/example.json`
 
@@ -52,12 +52,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The example entry passes the schema check.
-- [ ] REQ-15-1 is true for the schema.
+- [x] The example entry passes the schema check.
+- [x] REQ-15-1 is true for the schema.
 
 ### T15-02: Write the transition analysis script
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T15-01, T14-05
 - **Files:** `tools/analyze_corpus.py`, `tools/requirements.txt`, `tests/tools/test_analyze_corpus.py`
 
@@ -75,12 +75,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A test with 3 known songs gives the expected values.
-- [ ] REQ-15-3 is true for the output.
+- [x] A test with 3 known songs gives the expected values.
+- [x] REQ-15-3 is true for the output.
 
 ### T15-03: Write the strum weight analysis
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T15-02
 - **Files:** `tools/analyze_corpus.py`
 
@@ -92,11 +92,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Each pattern in `strums.json` has a weight of 0.05 or more.
+- [x] Each pattern in `strums.json` has a weight of 0.05 or more.
 
 ### T15-04: Add the table selection
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T15-02, T10-02, T11-03
 - **Files:** `core/src/transitions.cpp`, `core/src/strum.cpp`, `cli/SettingsArgs.h`, `app/Source/ControlsPanel.cpp`
 
@@ -110,11 +110,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-15-4 is true in the CLI and in the app.
+- [x] REQ-15-4 is true in the CLI and in the app.
 
 ### T15-05: Write the A/B test mode
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T15-04, T14-05
 - **Files:** `app/Source/AbTest.cpp`, `app/Source/ControlsPanel.cpp`
 
@@ -127,12 +127,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-15-5 is true.
-- [ ] Over 100 clicks, each table type occurs 40 to 60 times.
+- [x] REQ-15-5 is true.
+- [x] Over 100 clicks, each table type occurs 40 to 60 times.
 
 ### T15-06: Write the A/B report
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T15-05
 - **Files:** `tools/ab_report.py`
 
@@ -147,9 +147,9 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The report runs on a test file with 40 ratings and prints the expected values.
+- [x] The report runs on a test file with 40 ratings and prints the expected values.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] You collect 40 or more A/B ratings and decide which table type to use by default.

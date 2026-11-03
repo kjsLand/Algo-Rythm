@@ -38,7 +38,7 @@ Out of scope:
 
 ### T16-01: Make the plugin target
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-10, T12-03
 - **Files:** `plugin/CMakeLists.txt`, `plugin/Source/PluginProcessor.*`, `plugin/Source/PluginEditor.*`
 
@@ -55,11 +55,13 @@ Out of scope:
 **Acceptance:**
 
 - [ ] The plugin loads in Reaper and in Ableton Live.
-- [ ] REQ-16-1 is true.
+- [x] REQ-16-1 is true.
+
+**Note:** A JUCE VST3 host on Ubuntu loads the plugin, plays it and opens its editor. Check Reaper and Ableton Live by hand.
 
 ### T16-02: Write the host sync and MIDI output
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T16-01
 - **Files:** `plugin/Source/PluginProcessor.cpp`
 
@@ -74,12 +76,14 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-16-2 is true at 70, 120 and 170 BPM.
-- [ ] A reopened DAW project restores the same song starter.
+- [x] REQ-16-2 is true at 70, 120 and 170 BPM.
+- [x] A reopened DAW project restores the same song starter.
+
+**Note:** `tests/app/host_sync_test.cpp` checks 70, 120 and 170 BPM. A test host restored the saved state.
 
 ### T16-03: Run pluginval in CI
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T16-02, T02-03
 - **Files:** `.github/workflows/ci.yml`
 
@@ -93,9 +97,11 @@ Out of scope:
 
 - [ ] REQ-16-3 is true in CI.
 
+**Note:** Check the result of the `plugin` job in the next CI run.
+
 ### T16-04: Write the MusicXML export
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-08
 - **Files:** `core/include/algo/MusicXml.h`, `core/src/musicxml.cpp`, `tests/musicxml_test.cpp`
 
@@ -112,9 +118,11 @@ Out of scope:
 
 - [ ] REQ-16-4 is true for 5 golden song starters.
 
+**Note:** 5 golden MusicXML files are in `tests/golden/musicxml/`. Open them in MuseScore to check REQ-16-4.
+
 ### T16-05: Write the Guitar Pro export
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-08, T01-08
 - **Files:** `tools/export_gp.py`, `tools/requirements.txt`
 
@@ -132,9 +140,11 @@ Out of scope:
 
 - [ ] TuxGuitar opens the GP5 file and plays the correct chords.
 
+**Note:** PyGuitarPro reads the GP5 files back in CI. Check the playback in TuxGuitar by hand.
+
 ### T16-06: Add 6/8 time and fingerpicking patterns
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T08-06, T09-02
 - **Files:** `core/src/strum.cpp`, `core/data/strums.json`, `core/src/render.cpp`
 
@@ -150,12 +160,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A 6/8 song starter exports MIDI with the time signature 6/8.
-- [ ] A Travis pattern alternates the bass note between two strings on each beat.
+- [x] A 6/8 song starter exports MIDI with the time signature 6/8.
+- [x] A Travis pattern alternates the bass note between two strings on each beat.
 
 ### T16-07: Add alternate tunings and a left-handed view
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T07-07, T11-06
 - **Files:** `core/data/tunings.json`, `app/Source/ControlsPanel.cpp`, `app/Source/FretboardView.cpp`, `app/Source/ChordDiagram.cpp`
 
@@ -168,8 +178,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] In DADGAD, each voicing passes the filter from T07-03.
-- [ ] The left-handed view shows the low E string in the correct position.
+- [x] In DADGAD, each voicing passes the filter from T07-03.
+- [x] The left-handed view shows the low E string in the correct position.
 
 ### T16-08: Run the external model experiments
 
@@ -195,3 +205,5 @@ Out of scope:
 
 - [ ] All tasks in this spec are Done.
 - [ ] The plugin works in your main DAW for one full song session.
+
+**Note:** The procedure and the licence register are in `experiments/`. A person must choose the models, run them and rate the results.

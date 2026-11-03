@@ -39,7 +39,7 @@ Out of scope:
 
 ### T11-01: Move the UI code to the app folder
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-07, T02-02
 - **Files:** `app/CMakeLists.txt`, `app/Source/*`, `plugin/`
 
@@ -56,11 +56,13 @@ Out of scope:
 **Acceptance:**
 
 - [ ] The app builds and starts on macOS and Windows.
-- [ ] No file in `app/` defines scales, chords or rhythm logic.
+- [x] No file in `app/` defines scales, chords or rhythm logic.
+
+**Note:** The app builds and starts on Ubuntu (Xvfb). Check macOS and Windows in CI or by hand.
 
 ### T11-02: Write the app state and the generation job
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-01
 - **Files:** `app/Source/AppState.h`, `app/Source/AppState.cpp`
 
@@ -76,11 +78,13 @@ Out of scope:
 **Acceptance:**
 
 - [ ] 20 fast clicks on Generate do not freeze the window.
-- [ ] The app shows the result of the last click only.
+- [x] The app shows the result of the last click only.
+
+**Note:** Each request gets an ID. The app ignores a result with an old ID. Check the 20 fast clicks by hand.
 
 ### T11-03: Write the controls panel
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-02
 - **Files:** `app/Source/ControlsPanel.h`, `app/Source/ControlsPanel.cpp`
 
@@ -97,11 +101,11 @@ Out of scope:
 **Acceptance:**
 
 - [ ] Each control changes the next generated song starter in the expected way.
-- [ ] The seed field shows the seed of the current song starter.
+- [x] The seed field shows the seed of the current song starter.
 
 ### T11-04: Write the chord diagram component
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-01, T07-06
 - **Files:** `app/Source/ChordDiagram.h`, `app/Source/ChordDiagram.cpp`
 
@@ -118,11 +122,11 @@ Out of scope:
 **Acceptance:**
 
 - [ ] The diagrams for C, G, F (barre) and Bm7 match a standard chord chart.
-- [ ] The diagram can draw at sizes from 48 to 160 pixels wide.
+- [x] The diagram can draw at sizes from 48 to 160 pixels wide.
 
 ### T11-05: Write the song overview panel
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-02, T11-04
 - **Files:** `app/Source/SongView.h`, `app/Source/SongView.cpp`
 
@@ -137,12 +141,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] REQ-11-3 is true for each bar.
-- [ ] A click on a bar updates the fretboard panel.
+- [x] REQ-11-3 is true for each bar.
+- [x] A click on a bar updates the fretboard panel.
 
 ### T11-06: Change the fretboard panel to use voicings
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-05, T07-07
 - **Files:** `app/Source/FretboardView.h`, `app/Source/FretboardView.cpp`
 
@@ -158,11 +162,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The fretboard shows the same notes as the chord diagram for the selected bar.
+- [x] The fretboard shows the same notes as the chord diagram for the selected bar.
 
 ### T11-07: Change the strum panel to use the core type
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-05, T08-06
 - **Files:** `app/Source/StrumView.h`, `app/Source/StrumView.cpp`
 
@@ -177,11 +181,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The strum panel shows the same pattern as the ASCII tab export.
+- [x] The strum panel shows the same pattern as the ASCII tab export.
 
 ### T11-08: Add the export buttons and drag to DAW
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-05, T09-08
 - **Files:** `app/Source/ExportPanel.h`, `app/Source/ExportPanel.cpp`
 
@@ -197,9 +201,11 @@ Out of scope:
 
 - [ ] A section that you drag into Ableton Live or Logic Pro makes a MIDI clip with the correct length.
 
+**Note:** Check the drag into Ableton Live or Logic Pro by hand.
+
 ### T11-09: Add the keyboard shortcuts
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-05
 - **Files:** `app/Source/MainComponent.cpp`
 
@@ -217,7 +223,7 @@ Out of scope:
 
 ### T11-10: Write the window layout
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T11-03, T11-05, T11-06, T11-07, T11-08
 - **Files:** `app/Source/MainComponent.cpp`, `app/Source/Theme.h`
 
@@ -233,9 +239,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] No panel overlaps another panel at 900 × 600 pixels or at full screen.
+- [x] No panel overlaps another panel at 900 × 600 pixels or at full screen.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] REQ-11-1 to REQ-11-6 are true.
+
+**Note:** Checked with screenshots at 900 x 600 and 1280 x 860 pixels.

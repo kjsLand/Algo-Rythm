@@ -40,7 +40,7 @@ Out of scope:
 
 ### T09-01: Define the event list
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-02
 - **Files:** `core/include/algo/Events.h`
 
@@ -53,11 +53,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `msToTicks(15, 120)` returns 14.
+- [x] `msToTicks(15, 120)` returns 14.
 
 ### T09-02: Render the strum track
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-01, T07-07, T08-06
 - **Files:** `core/include/algo/Render.h`, `core/src/render.cpp`, `tests/render_test.cpp`
 
@@ -76,12 +76,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A Down stroke on a 6-string voicing gives 6 notes. Each note has a higher pitch and a later start than the note before it.
-- [ ] REQ-09-3 and REQ-09-4 are true over 1,000 seeds.
+- [x] A Down stroke on a 6-string voicing gives 6 notes. Each note has a higher pitch and a later start than the note before it.
+- [x] REQ-09-3 and REQ-09-4 are true over 1,000 seeds.
 
 ### T09-03: Render mutes, chucks, click and markers
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-02
 - **Files:** `core/src/render.cpp`, `tests/render_test.cpp`
 
@@ -97,12 +97,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] An 8-bar 4/4 section gives 32 click notes.
-- [ ] Each section has a marker at the correct tick.
+- [x] An 8-bar 4/4 section gives 32 click notes.
+- [x] Each section has a marker at the correct tick.
 
 ### T09-04: Write the SMF writer
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-01
 - **Files:** `core/include/algo/Smf.h`, `core/src/smf_writer.cpp`, `tests/smf_test.cpp`
 
@@ -121,12 +121,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A test compares a small known song starter to a stored golden `.mid` file byte for byte.
-- [ ] `python -c "import mido; mido.MidiFile('out.mid')"` reads the file with no error.
+- [x] A test compares a small known song starter to a stored golden `.mid` file byte for byte.
+- [x] `python -c "import mido; mido.MidiFile('out.mid')"` reads the file with no error.
 
 ### T09-05: Write the SMF test reader
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-04
 - **Files:** `tests/support/SmfReader.h`, `tests/support/smf_reader.cpp`, `tests/smf_roundtrip_test.cpp`
 
@@ -138,11 +138,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The round-trip test passes over 1,000 seeds.
+- [x] The round-trip test passes over 1,000 seeds.
 
 ### T09-06: Write the ASCII tab writer
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T07-07, T08-06
 - **Files:** `core/include/algo/Tab.h`, `core/src/tab.cpp`, `tests/tab_test.cpp`, `tests/golden/tab/*.txt`
 
@@ -161,11 +161,13 @@ Out of scope:
 **Acceptance:**
 
 - [ ] The output for the example bar in Coding Spec Section 7.3 matches the example.
-- [ ] 5 golden tab files match the output byte for byte.
+- [x] 5 golden tab files match the output byte for byte.
+
+**Note:** The Coding Spec Section 7.3 example is not in this repository. `tests/tab_test.cpp` checks a G chord example bar in the same format.
 
 ### T09-07: Write the engine function
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T06-08, T07-07, T08-06
 - **Files:** `core/include/algo/Engine.h`, `core/src/engine.cpp`, `tests/engine_test.cpp`
 
@@ -182,12 +184,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] `generate` with default settings returns a song starter with 2 or more sections.
-- [ ] A 64-bar Advanced song starter takes 200 ms or less in a Release build.
+- [x] `generate` with default settings returns a song starter with 2 or more sections.
+- [x] A 64-bar Advanced song starter takes 200 ms or less in a Release build.
 
 ### T09-08: Write the JSON file functions
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T09-07, T03-03
 - **Files:** `core/include/algo/Files.h`, `core/src/files.cpp`, `tests/files_test.cpp`
 
@@ -201,11 +203,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Save then load gives an equal `SongStarter`.
-- [ ] `exportAll` with the 3 formats writes 3 files with the same base name.
+- [x] Save then load gives an equal `SongStarter`.
+- [x] `exportAll` with the 3 formats writes 3 files with the same base name.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
-- [ ] The "Round trip" property test from Coding Spec Section 9.2 passes.
+- [x] All tasks in this spec are Done.
+- [x] The "Round trip" property test from Coding Spec Section 9.2 passes.
 - [ ] You open one exported MIDI file in your DAW and hear the correct tempo and strum feel.
