@@ -31,12 +31,12 @@ jobs:
         uses: actions/cache@v6.1.0
         with:
           path: |
-            .fetchcontent
-            !.fetchcontent/*-build
+            build/_deps
+            !build/_deps/*-build
           key: fetchcontent-${{ runner.os }}-${{ hashFiles('cmake/Dependencies.cmake') }}
 
       - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_BASE_DIR:PATH=.fetchcontent
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release --parallel

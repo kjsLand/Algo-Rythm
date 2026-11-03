@@ -61,7 +61,7 @@ Out of scope:
 
 ### T02-02: Get JUCE with a pinned version
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T02-01, T01-04
 - **Files:** `cmake/Dependencies.cmake`, `plugin/CMakeLists.txt`, `README.md`
 
@@ -75,8 +75,8 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A clean clone builds the app with `cmake -B build && cmake --build build`.
-- [ ] The JUCE version occurs in one location only.
+- [x] A clean clone builds the app with `cmake -B build && cmake --build build`.
+- [x] The JUCE version occurs in one location only.
 
 ### T02-03: Add the CI workflow
 
@@ -121,7 +121,7 @@ Out of scope:
 
 ### T02-05: Add the property-test helper
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T02-01
 - **Files:** `tests/support/PropertyTest.h`, `tests/property_helper_test.cpp`
 
@@ -135,12 +135,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A failed property test shows the seed that caused the failure.
-- [ ] With `ALGO_PROP_SEEDS=5`, `forEachSeed` calls the function 5 times.
+- [x] A failed property test shows the seed that caused the failure.
+- [x] With `ALGO_PROP_SEEDS=5`, `forEachSeed` calls the function 5 times.
 
 ### T02-06: Add compiler warnings for the core
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T02-01
 - **Files:** `cmake/Warnings.cmake`
 
@@ -153,11 +153,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A target with `algo_set_warnings` fails to compile if it has an unused variable.
-- [ ] The JUCE modules compile without errors from these flags.
+- [x] A target with `algo_set_warnings` fails to compile if it has an unused variable.
+- [x] The JUCE modules compile without errors from these flags.
 
 ## 5. Done criteria
 
 - [ ] All tasks in this spec are Done.
 - [ ] CI passes on all three operating systems.
-- [ ] The README tells a new developer how to build and test in 5 commands or fewer.
+- [x] The README tells a new developer how to build and test in 5 commands or fewer.
