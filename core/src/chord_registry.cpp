@@ -57,6 +57,14 @@ namespace algo
         return m_symbols.count (symbol) > 0;
     }
 
+    const ChordDefinition& ChordRegistry::getBySymbol (const std::string& symbol) const
+    {
+        const auto it = m_symbols.find (symbol);
+        if (it == m_symbols.end ())
+            throw std::out_of_range ("Unknown chord symbol: " + symbol);
+        return m_chords[it->second];
+    }
+
     std::vector<std::string> ChordRegistry::allNames () const
     {
         std::vector<std::string> names;

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "forms": [
+    { "name": "Verse-Chorus",        "sections": [ { "name": "Verse", "role": "verse", "bars": 8 }, { "name": "Chorus", "role": "chorus", "bars": 8 } ] },
+    { "name": "Verse-Chorus-Bridge", "sections": [ { "name": "Verse", "role": "verse", "bars": 8 }, { "name": "Chorus", "role": "chorus", "bars": 8 }, { "name": "Bridge", "role": "bridge", "bars": 4 } ] },
+    { "name": "Loop",                "sections": [ { "name": "Loop", "role": "loop", "bars": 4 } ] }
+  ]
+}

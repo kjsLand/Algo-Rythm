@@ -23,6 +23,10 @@ namespace algo
     // if the scale does not have 7 notes or the degree is not valid.
     PitchClass chordRootPc (const ChordSymbol& symbol, const Key& key, const DataSet& data = bundledData ());
 
+    // True if all notes of the chord, and its slash bass note, are in the scale.
+    // Throws as resolve and chordRootPc do.
+    bool isDiatonic (const ChordSymbol& symbol, const Key& key, const DataSet& data = bundledData ());
+
     // Returns text such as "Em", "Bb" or "D/F#". A note with an accidental
     // follows the accidental and not the key, so "b7" in C major is "Bb".
     std::string chordName (const ChordSymbol& symbol, const Key& key, const DataSet& data = bundledData ());

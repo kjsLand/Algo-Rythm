@@ -80,6 +80,28 @@ TEST_CASE ("All bundled data files pass validation")
     REQUIRE_FALSE (data.progressions.all ().empty ());
     REQUIRE_FALSE (data.strums.empty ());
     REQUIRE_FALSE (data.shapes.empty ());
+    REQUIRE_FALSE (data.forms.empty ());
+    REQUIRE_FALSE (data.transitions.source ().empty ());
+}
+
+TEST_CASE ("A form that is not valid causes an error")
+{
+    const auto requireFormError = [] (const std::string& entryJson, const std::string& problem)
+    {
+        const std::string text = R"({ "schemaVersion": 1, "forms": [ )" + entryJson + " ] }";
+        requireDataError ([&]
+        {
+            parseForms (text);
+        }, "forms.json", "A", problem);
+    };
+
+    requireFormError (R"({ "name": "A" })", "'sections' is missing");
+    requireFormError (R"({ "name": "A", "sections": [] })", "'sections' must not be empty");
+    requireFormError (R"({ "name": "A", "sections": [5] })", "must be an object");
+    requireFormError (R"({ "name": "A", "sections": [ { "role": "verse", "bars": 8 } ] })", "'name' is missing");
+    requireFormError (R"({ "name": "A", "sections": [ { "name": "Intro", "role": "intro", "bars": 8 } ] })", "role 'intro' is not valid");
+    requireFormError (R"({ "name": "A", "sections": [ { "name": "Verse", "role": "verse", "bars": 0 } ] })", "'bars' must be larger than 0");
+    requireFormError (R"({ "name": "A", "sections": [ { "name": "Verse", "role": "verse", "bars": "8" } ] })", "'bars' must be an integer");
 }
 
 TEST_CASE ("A file that is not valid JSON causes an error")

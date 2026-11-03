@@ -15,6 +15,9 @@ add_library(algo_core STATIC
     src/rng.cpp
     src/seeds.cpp
     src/settings.cpp
+    src/transitions.cpp
+    src/plan.cpp
+    src/chords.cpp
 )
 add_library(algo::core ALIAS algo_core)
 

@@ -39,8 +39,6 @@ namespace algo
                                                          const ChordRegistry& chords,
                                                          const std::string&   file)
     {
-        static const std::vector<std::string> validRoles { "verse", "chorus", "bridge", "loop" };
-
         ProgressionLibrary library;
         for (const auto& entry : detail::readEntries (text, file, "progressions"))
         {
@@ -62,7 +60,7 @@ namespace algo
             if (def.roles.empty ())
                 entry.fail ("the field 'roles' must not be empty");
             for (const auto& role : def.roles)
-                if (!hasItem (validRoles, role))
+                if (!detail::isSectionRole (role))
                     entry.fail ("the role '" + role + "' is not valid");
 
             library.m_progressions.push_back (std::move (def));

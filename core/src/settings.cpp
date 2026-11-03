@@ -3,15 +3,15 @@
 #include "algo/Fretboard.h"
 
 #include <algorithm>
-#include <array>
+#include <cstddef>
 #include <stdexcept>
 
 namespace algo
 {
     namespace
     {
-        // The form templates of SPEC-06.
-        const std::array<const char*, 3> kFormNames { "Verse-Chorus", "Verse-Chorus-Bridge", "Loop" };
+        // The chord stage builds chords from scale degrees 1 to 7.
+        constexpr std::size_t kChordScaleNotes = 7;
 
         bool isBpmInRange (int bpm)
         {
@@ -53,6 +53,8 @@ namespace algo
 
         if (settings.scale && !data.scales.contains (*settings.scale))
             errors.push_back ("Unknown scale: " + *settings.scale);
+        else if (settings.scale && data.scales.get (*settings.scale).steps.size () != kChordScaleNotes)
+            errors.push_back ("The scale must have 7 notes: " + *settings.scale);
 
         if (!isBpmInRange (settings.bpmMin) || !isBpmInRange (settings.bpmMax))
             errors.push_back ("The BPM range must be in " + rangeText (kMinBpm, kMaxBpm) + ": " + rangeText (settings.bpmMin, settings.bpmMax));
@@ -60,7 +62,15 @@ namespace algo
         if (settings.bpmMin > settings.bpmMax)
             errors.push_back ("The BPM minimum must not be more than the maximum: " + rangeText (settings.bpmMin, settings.bpmMax));
 
-        if (std::find (kFormNames.begin (), kFormNames.end (), settings.form) == kFormNames.end ())
+        // The plan stage always gives an even BPM, so a range must contain an even number.
+        if (settings.bpmMin == settings.bpmMax && settings.bpmMin % 2 != 0)
+            errors.push_back ("The BPM range must contain an even number: " + rangeText (settings.bpmMin, settings.bpmMax));
+
+        const auto isForm = [&settings] (const FormDefinition& form)
+        {
+            return form.name == settings.form;
+        };
+        if (std::none_of (data.forms.begin (), data.forms.end (), isForm))
             errors.push_back ("Unknown form: " + settings.form);
 
         if (settings.capo < 0 || settings.capo > Fretboard::kMaxCapo)

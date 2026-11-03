@@ -3,6 +3,7 @@
 #include "Rng.h"
 
 #include <cstdint>
+#include <functional>
 
 namespace algo
 {
@@ -22,4 +23,7 @@ namespace algo
 
     // Returns a new Rng with the seed from deriveSeed.
     Rng rngFor (std::uint64_t master, Stage stage, int sectionIndex, int rerollCount);
+
+    // Gives a stage the stream of one section. The caller holds the master seed and the reroll counts.
+    using RngFactory = std::function<Rng (Stage stage, int sectionIndex)>;
 }

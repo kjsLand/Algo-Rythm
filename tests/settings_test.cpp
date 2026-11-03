@@ -78,6 +78,14 @@ TEST_CASE ("validate checks the BPM range")
     REQUIRE (validate (withBpm (96, 96)).empty ());
 }
 
+TEST_CASE ("validate needs an even number in the BPM range")
+{
+    REQUIRE (hasError (validate (withBpm (91, 91)), "even number"));
+
+    REQUIRE (validate (withBpm (91, 92)).empty ());
+    REQUIRE (validate (withBpm (90, 91)).empty ());
+}
+
 TEST_CASE ("validate checks the capo")
 {
     REQUIRE (validate (withCapo (0)).empty ());
@@ -110,6 +118,23 @@ TEST_CASE ("validate checks the scale name with the scale registry")
 
     settings.scale = "Klingon";
     REQUIRE (hasError (validate (settings), "Unknown scale: Klingon"));
+}
+
+TEST_CASE ("validate needs a scale with 7 notes")
+{
+    GenerationSettings settings;
+
+    for (const char* scale : { "Major", "Natural Minor", "Harmonic Minor", "Melodic Minor", "Dorian", "Phrygian", "Lydian", "Mixolydian", "Locrian" })
+    {
+        settings.scale = scale;
+        REQUIRE (validate (settings).empty ());
+    }
+
+    for (const char* scale : { "Major Pentatonic", "Blues", "Whole Tone", "Diminished (HW)" })
+    {
+        settings.scale = scale;
+        REQUIRE (hasError (validate (settings), "must have 7 notes"));
+    }
 }
 
 TEST_CASE ("validate checks the form name")

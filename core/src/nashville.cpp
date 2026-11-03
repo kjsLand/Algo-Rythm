@@ -2,6 +2,7 @@
 
 #include "algo/Diatonic.h"
 #include "algo/Pitch.h"
+#include "algo/Scale.h"
 
 #include <regex>
 #include <stdexcept>
@@ -67,6 +68,16 @@ namespace algo
     PitchClass chordRootPc (const ChordSymbol& symbol, const Key& key, const DataSet& data)
     {
         return pitchClassOf (degreePitchClass (key, symbol.degree, data) + symbol.accidental);
+    }
+
+    bool isDiatonic (const ChordSymbol& symbol, const Key& key, const DataSet& data)
+    {
+        const auto& chord = data.chords.getBySymbol (resolve (symbol, key, data).quality);
+        for (PitchClass pc : ChordRegistry::pitchClasses (chordRootPc (symbol, key, data), chord))
+            if (!isInScale (pc, key, data))
+                return false;
+
+        return symbol.bassDegree == 0 || isInScale (degreePitchClass (key, symbol.bassDegree, data) + symbol.bassAccidental, key, data);
     }
 
     std::string chordName (const ChordSymbol& symbol, const Key& key, const DataSet& data)

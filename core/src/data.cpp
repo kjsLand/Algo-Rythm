@@ -34,6 +34,8 @@ namespace algo
             data.progressions = ProgressionLibrary::fromJsonText (read ("progressions.json"), data.scales, data.chords);
             data.strums       = parseStrums (read ("strums.json"));
             data.shapes       = parseShapes (read ("shapes.json"), data.chords);
+            data.forms        = parseForms (read ("forms.json"));
+            data.transitions  = TransitionTable::fromJsonText (read ("transitions.json"));
             return data;
         }
     }
@@ -122,6 +124,38 @@ namespace algo
             shapes.push_back (std::move (shape));
         }
         return shapes;
+    }
+
+    std::vector<FormDefinition> parseForms (const std::string& text, const std::string& file)
+    {
+        std::vector<FormDefinition> forms;
+        for (const auto& entry : detail::readEntries (text, file, "forms"))
+        {
+            FormDefinition form;
+            form.name = entry.name ();
+
+            for (const Json& item : entry.getList ("sections"))
+            {
+                if (!item.is_object ())
+                    entry.fail ("each value in 'sections' must be an object");
+
+                const detail::EntryReader reader (item, file, entry.name ());
+                FormSection               section { reader.getString ("name"), reader.getString ("role"), reader.getInt ("bars") };
+
+                if (!detail::isSectionRole (section.role))
+                    entry.fail ("the role '" + section.role + "' is not valid");
+                if (section.bars <= 0)
+                    entry.fail ("the field 'bars' must be larger than 0");
+
+                form.sections.push_back (std::move (section));
+            }
+
+            if (form.sections.empty ())
+                entry.fail ("the field 'sections' must not be empty");
+
+            forms.push_back (std::move (form));
+        }
+        return forms;
     }
 
     DataSet loadBundledData ()

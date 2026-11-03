@@ -9,6 +9,9 @@ namespace algo::detail
 {
     std::string toLower (std::string text);
 
+    // True for "verse", "chorus", "bridge" and "loop".
+    bool isSectionRole (const std::string& role);
+
     // Reads one entry of a data file. Each get function checks that the field
     // is present and has the correct JSON type. If not, it throws DataError.
     class EntryReader
@@ -31,6 +34,7 @@ namespace algo::detail
         std::vector<double>      getNumberList (const char* key) const;
         std::vector<std::string> getStringList (const char* key) const;
         const Json&              getList (const char* key) const;
+        const Json&              getObject (const char* key) const;
 
         [[noreturn]] void fail (const std::string& problem) const;
 

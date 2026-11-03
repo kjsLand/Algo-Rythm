@@ -34,6 +34,9 @@ namespace algo
         // A symbol lookup is case-sensitive, because "m7" and "M7" are different symbols.
         bool containsSymbol (const std::string& symbol) const;
 
+        // Throws std::out_of_range if the symbol is unknown.
+        const ChordDefinition& getBySymbol (const std::string& symbol) const;
+
         std::vector<std::string>            allNames () const;
         const std::vector<ChordDefinition>& all () const
         {

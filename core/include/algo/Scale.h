@@ -4,6 +4,7 @@
 #include "Types.h"
 
 #include <optional>
+#include <string>
 #include <vector>
 
 namespace algo
@@ -20,4 +21,7 @@ namespace algo
 
     // If two notes have the same distance, returns the lower note.
     MidiNote nearestScaleNote (MidiNote midiNote, const Key& key, const DataSet& data = bundledData ());
+
+    // True if the scale has the tag "minor".
+    bool isMinorScale (const std::string& scale, const DataSet& data = bundledData ());
 }

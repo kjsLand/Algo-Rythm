@@ -3,6 +3,7 @@
 #include "ChordRegistry.h"
 #include "ProgressionLibrary.h"
 #include "ScaleRegistry.h"
+#include "Transitions.h"
 #include "Types.h"
 
 #include <array>
@@ -45,6 +46,19 @@ namespace algo
         }
     };
 
+    struct FormSection
+    {
+        std::string name;
+        std::string role; // "verse", "chorus", "bridge" or "loop"
+        int         bars { 8 };
+    };
+
+    struct FormDefinition
+    {
+        std::string              name;
+        std::vector<FormSection> sections;
+    };
+
     // All data that the generator stages use.
     struct DataSet
     {
@@ -53,11 +67,14 @@ namespace algo
         ProgressionLibrary           progressions;
         std::vector<StrumDefinition> strums;
         std::vector<ChordShape>      shapes;
+        std::vector<FormDefinition>  forms;
+        TransitionTable              transitions;
     };
 
     // Throw DataError if the text is not valid.
     std::vector<StrumDefinition> parseStrums (const std::string& text, const std::string& file = "strums.json");
     std::vector<ChordShape>      parseShapes (const std::string& text, const ChordRegistry& chords, const std::string& file = "shapes.json");
+    std::vector<FormDefinition>  parseForms (const std::string& text, const std::string& file = "forms.json");
 
     // Loads the data files that are compiled into the binary.
     DataSet loadBundledData ();

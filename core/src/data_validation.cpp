@@ -20,6 +20,11 @@ namespace algo::detail
         return text;
     }
 
+    bool isSectionRole (const std::string& role)
+    {
+        return role == "verse" || role == "chorus" || role == "bridge" || role == "loop";
+    }
+
     EntryReader::EntryReader (Json item, std::string file, std::string name)
         : m_item (std::move (item)), m_file (std::move (file)), m_name (std::move (name))
     {
@@ -88,6 +93,14 @@ namespace algo::detail
         const Json& value = field (key);
         if (!value.is_array ())
             fail ("the field '" + std::string (key) + "' must be a list");
+        return value;
+    }
+
+    const Json& EntryReader::getObject (const char* key) const
+    {
+        const Json& value = field (key);
+        if (!value.is_object ())
+            fail ("the field '" + std::string (key) + "' must be an object");
         return value;
     }
 

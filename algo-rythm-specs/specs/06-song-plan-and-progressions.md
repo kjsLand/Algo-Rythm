@@ -39,7 +39,7 @@ Out of scope:
 
 ### T06-01: Write the key and scale choice
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-02, T05-03
 - **Files:** `core/include/algo/Plan.h`, `core/src/plan.cpp`, `tests/plan_test.cpp`
 
@@ -55,12 +55,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 Beginner seeds, each key is one of the 8 permitted keys.
-- [ ] A key and a scale from the settings never change.
+- [x] Over 10,000 Beginner seeds, each key is one of the 8 permitted keys.
+- [x] A key and a scale from the settings never change.
 
 ### T06-02: Write the tempo and form choice
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T06-01
 - **Files:** `core/src/plan.cpp`, `core/data/forms.json`, `tests/plan_test.cpp`
 
@@ -75,12 +75,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] The BPM is always even and in the range.
-- [ ] The template Verse-Chorus-Bridge gives 3 sections with 8, 8 and 4 bars.
+- [x] The BPM is always even and in the range.
+- [x] The template Verse-Chorus-Bridge gives 3 sections with 8, 8 and 4 bars.
 
 ### T06-03: Write the transition data file
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T04-04
 - **Files:** `core/data/transitions.json`, `core/include/algo/Transitions.h`, `core/src/transitions.cpp`
 
@@ -96,12 +96,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Each diatonic numeral has a row in each table.
-- [ ] Data validation fails if a row does not add up to 1.0.
+- [x] Each diatonic numeral has a row in each table.
+- [x] Data validation fails if a row does not add up to 1.0.
 
 ### T06-04: Write the library progression choice
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T03-08, T06-02
 - **Files:** `core/include/algo/Chords.h`, `core/src/chords.cpp`
 
@@ -114,11 +114,11 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] A Beginner chorus in a major key always gets a progression with the role "chorus".
+- [x] A Beginner chorus in a major key always gets a progression with the role "chorus".
 
 ### T06-05: Write the Markov walk
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T06-03
 - **Files:** `core/src/chords.cpp`, `tests/chords_test.cpp`
 
@@ -133,12 +133,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Each loop has 4 numerals with no direct repeats.
-- [ ] Each verse loop starts on 1.
+- [x] Each loop has 4 numerals with no direct repeats.
+- [x] Each verse loop starts on 1.
 
 ### T06-06: Write the section rule check
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T06-04, T06-05
 - **Files:** `core/src/chords.cpp`, `tests/chords_test.cpp`
 
@@ -154,12 +154,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 seeds, each loop passes `checkLoop`.
-- [ ] A test with a forced failure uses the library after 50 attempts.
+- [x] Over 10,000 seeds, each loop passes `checkLoop`.
+- [x] A test with a forced failure uses the library after 50 attempts.
 
 ### T06-07: Write the colour chord rules
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T06-06
 - **Files:** `core/src/chords.cpp`, `core/include/algo/ColourRules.h`, `tests/colour_test.cpp`
 
@@ -174,12 +174,12 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] Over 10,000 Beginner seeds, each chord is a major or minor triad.
-- [ ] Over 10,000 seeds, each non-diatonic chord has the tag "borrowed" or "secondary".
+- [x] Over 10,000 Beginner seeds, each chord is a major or minor triad.
+- [x] Over 10,000 seeds, each non-diatonic chord has the tag "borrowed" or "secondary".
 
 ### T06-08: Write the harmonic rhythm and the stage function
 
-- **Status:** [ ] Open
+- **Status:** [x] Done
 - **Prerequisites:** T06-07
 - **Files:** `core/src/chords.cpp`, `tests/chords_test.cpp`
 
@@ -193,10 +193,10 @@ Out of scope:
 
 **Acceptance:**
 
-- [ ] An 8-bar verse with 1 chord in each bar plays its 4-chord loop 2 times.
-- [ ] A reroll of section 1 does not change section 0.
+- [x] An 8-bar verse with 1 chord in each bar plays its 4-chord loop 2 times.
+- [x] A reroll of section 1 does not change section 0.
 
 ## 5. Done criteria
 
-- [ ] All tasks in this spec are Done.
+- [x] All tasks in this spec are Done.
 - [ ] The "In key" property test from Coding Spec Section 9.2 passes in CI.

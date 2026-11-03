@@ -41,4 +41,10 @@ namespace algo
 
         return inScale (midiNote - distance) ? midiNote - distance : midiNote + distance;
     }
+
+    bool isMinorScale (const std::string& scale, const DataSet& data)
+    {
+        const auto& tags = data.scales.get (scale).tags;
+        return std::find (tags.begin (), tags.end (), "minor") != tags.end ();
+    }
 }
